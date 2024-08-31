@@ -39,9 +39,6 @@
 
 	<ItemGroup>
 		<None Remove="MainIcon.ico" />
-		<None Remove="Resources\Components\msedge.dll.gz" />
-		<None Remove="Resources\Components\resources.pak" />
-		<None Remove="Resources\Components\webview2_runtime.zip" />
 		<None Remove="Resources\Images\bfme1.png" />
 		<None Remove="Resources\Images\BFME1LanguageSupport.png" />
 		<None Remove="Resources\Images\BGMap_acrylic.png" />
@@ -66,12 +63,6 @@
 		<None Remove="Resources\Images\twitch.png" />
 		<None Remove="Resources\Images\uac.png" />
 		<None Remove="Resources\Images\youtube.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="Resources\Components\msedge.dll.gz" />
-	  <EmbeddedResource Include="Resources\Components\resources.pak" />
-	  <EmbeddedResource Include="Resources\Components\webview2_runtime.zip" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -111,8 +102,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="1.7.6" />
-	  <PackageReference Include="BfmeFoundationProject.RegistryKit" Version="1.1.0" />
-	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="1.8.0" />
+	  <PackageReference Include="BfmeFoundationProject.RegistryKit" Version="1.1.1" />
+	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="1.8.1" />
 	  <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
 	  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
