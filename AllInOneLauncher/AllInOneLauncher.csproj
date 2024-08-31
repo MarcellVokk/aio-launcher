@@ -117,26 +117,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Elements\Workshop\WorkshopTile.xaml.cs">
-		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Elements\Library\LibraryTileEmpty.xaml.cs">
-		  <SubType>Code</SubType>
-		</Compile>
 		<Compile Update="Pages\Subpages\Settings\Bfme\Settings_BfmeGeneral.xaml.cs">
 			<SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Popups\LauncherChangelogPopup.xaml.cs">
-		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Popups\LauncherUpdatePopup.xaml.cs">
-		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Popups\ErrorPopup.xaml.cs">
-		  <SubType>Code</SubType>
-		</Compile>
-		<Compile Update="Popups\MessagePopup.xaml.cs">
-		  <SubType>Code</SubType>
 		</Compile>
 		<Compile Update="Properties\Resources.Designer.cs">
 		  <DesignTime>True</DesignTime>
@@ -162,6 +144,128 @@
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	  <Folder Include="Views\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="Views\Pages\Primary\Guides.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Primary\Offline.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Primary\Online.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Primary\Patreons.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Primary\Settings.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Subpages\Offline\OfflineLibrary.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Subpages\Offline\OfflineNews.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Subpages\Offline\OfflineWorkshop.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Subpages\Settings\Bfme\SettingsBfmeGeneral.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Subpages\Settings\Launcher\SettingsLauncherGeneral.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Pages\Subpages\Settings\Launcher\SettingsLauncherLibrary.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Popups\ErrorPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Popups\InstallGameDialog.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Popups\LauncherChangelogPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Popups\LauncherUpdatePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Popups\MessagePopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Popups\SelectNewLocationPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Disk\LibraryDriveElement.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Disk\LibraryDriveHeader.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\Acrylic.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\Divider.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\DropdownPicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\HTab.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\HTabs.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\MenuVisualizer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\MiniSpinner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\NanoSpinner.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\PopupVisualizer.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\Selectable.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Generic\Toggleable.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Library\LibraryTile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Library\LibraryTileEmpty.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Library\LibraryTileHorizontal.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Menues\ContextMenuShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Offline\EnabledEnhancementTile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Offline\LaunchButton.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\Workshop\WorkshopTile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Views\Elements\NoConnection.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

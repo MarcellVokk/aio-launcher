@@ -1,22 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Controls;
-using AllInOneLauncher.Pages.Primary;
-using System.Windows.Media.Effects;
-using AllInOneLauncher.Logic;
-using AllInOneLauncher.Elements;
-using AllInOneLauncher.Popups;
 using System.Reflection;
-using BfmeFoundationProject.WorkshopKit.Logic;
-using BfmeFoundationProject.WorkshopKit.Data;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Effects;
 using AllInOneLauncher.Data;
+using AllInOneLauncher.Logic;
+using AllInOneLauncher.Views.Elements.Generic;
+using AllInOneLauncher.Views.Pages.Primary;
+using AllInOneLauncher.Views.Popups;
 using BfmeFoundationProject.RegistryKit;
 using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.WorkshopKit.Data;
+using BfmeFoundationProject.WorkshopKit.Logic;
+using Settings = AllInOneLauncher.Properties.Settings;
 
 namespace AllInOneLauncher
 {
@@ -41,15 +43,15 @@ namespace AllInOneLauncher
             Width = SystemParameters.WorkArea.Width * 0.72;
             Height = SystemParameters.WorkArea.Height * 0.85;
 
-            if (Properties.Settings.Default.LibraryLocations.Contains("NotSet"))
+            if (Settings.Default.LibraryLocations.Contains("NotSet"))
             {
-                Properties.Settings.Default.LibraryLocations = [Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")];
-                Properties.Settings.Default.Save();
+                Settings.Default.LibraryLocations = [Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")];
+                Settings.Default.Save();
             }
-            else if (!Properties.Settings.Default.LibraryLocations.Contains(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")))
+            else if (!Settings.Default.LibraryLocations.Contains(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")))
             {
-                Properties.Settings.Default.LibraryLocations.Add(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary"));
-                Properties.Settings.Default.Save();
+                Settings.Default.LibraryLocations.Add(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary"));
+                Settings.Default.Save();
             }
 
             foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)).Cast<BfmeGame>().Where(g => g != BfmeGame.NONE))
@@ -113,9 +115,9 @@ namespace AllInOneLauncher
             Instance.tabs.Visibility = newContent != null ? Visibility.Collapsed : Visibility.Visible;
             Instance.icons.Visibility = newContent != null ? Visibility.Collapsed : Visibility.Visible;
 
-            Instance.background.Effect = newContent is Settings ? new BlurEffect() { Radius = 20 } : null;
+            Instance.background.Effect = newContent is Views.Pages.Primary.Settings ? new BlurEffect() { Radius = 20 } : null;
 
-            if (Settings.NeedsResync)
+            if (Views.Pages.Primary.Settings.NeedsResync)
             {
                 foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)))
                 {
@@ -137,7 +139,7 @@ namespace AllInOneLauncher
                 }
             }
 
-            Settings.NeedsResync = false;
+            Views.Pages.Primary.Settings.NeedsResync = false;
         }
 
 
@@ -210,7 +212,7 @@ namespace AllInOneLauncher
         private void OnGuidesTabClicked(object sender, MouseButtonEventArgs e) => ShowGuides();
         private void OnPatreonsTabClicked(object sender, MouseButtonEventArgs e) => ShowPatreons();
 
-        private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Settings("LauncherGeneral"));
+        private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Views.Pages.Primary.Settings("LauncherGeneral"));
         private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo("explorer", ((FrameworkElement)sender).Tag.ToString() ?? ""));
 
         private void OnLoad(object sender, RoutedEventArgs e) => CheckSize();
@@ -220,9 +222,9 @@ namespace AllInOneLauncher
 
         private void OnTrayIconDoubleClicked(object sender, RoutedEventArgs e) => LauncherStateManager.Visible = true;
 
-        private void LauncherMainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void LauncherMainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (Properties.Settings.Default.HideToTrayOnClose)
+            if (Settings.Default.HideToTrayOnClose)
             {
                 e.Cancel = true;
                 ReloadContextMenu();

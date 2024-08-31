@@ -1,6 +1,4 @@
-﻿using AllInOneLauncher.Elements;
-using AllInOneLauncher.Popups;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -9,6 +7,9 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
+using AllInOneLauncher.Views.Elements.Generic;
+using AllInOneLauncher.Views.Popups;
 
 namespace AllInOneLauncher.Logic
 {
@@ -62,7 +63,7 @@ namespace AllInOneLauncher.Logic
 
         public static async Task<string> Get(string apiEndpointPath, Dictionary<string, string>? requestParameters = null)
         {
-            NameValueCollection requestQueryParameters = System.Web.HttpUtility.ParseQueryString(string.Empty);
+            NameValueCollection requestQueryParameters = HttpUtility.ParseQueryString(string.Empty);
 
             requestParameters?.ToList().ForEach(x => requestQueryParameters.Add(x.Key, x.Value == "" ? "~" : x.Value));
 
