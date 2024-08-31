@@ -1,0 +1,134 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=netstandard">
+
+    <!--=====================  TrayIcon  =====================-->
+    <system:String x:Key="TrayIconShowApplication">Alkalmazás előhívása</system:String>
+    <system:String x:Key="TrayIconCloseApplication">Kilépés</system:String>
+    
+    
+    
+    <!--=====================  Generic  =====================-->
+    <system:String x:Key="GenericCancel">MÉGSEM</system:String>
+    <system:String x:Key="GenericClose">BEZÁR</system:String>
+    <system:String x:Key="GenericInstall">TELEPÍTTÉS</system:String>
+    <system:String x:Key="GenericLoading">BETÖLTÉS</system:String>
+    <system:String x:Key="GenericPlay">INDÍTTÁS</system:String>
+    <system:String x:Key="GenericAdd">HOZZÁADÁS</system:String>
+    <system:String x:Key="GenericFree">SZABAD</system:String>
+
+
+
+    <!--=====================  MainWindow  =====================-->
+    <system:String x:Key="MainWindowTitle">All-in-One Launcher by Ravo92 &amp; the Bfme Foundation Project</system:String>
+    <system:String x:Key="MainWindowSingleplayerTab">EGYJÁTÉKOS MÓD</system:String>
+    <system:String x:Key="MainWindowMultiplayerTab">TÖBBJÁTÉKOS MÓD</system:String>
+    <system:String x:Key="MainWindowGuidesTab">ÚTMUTATÓK</system:String>
+
+
+
+    <!--=====================  Offline  =====================-->
+    <system:String x:Key="OfflinePageNewsTab">Hírek</system:String>
+    <system:String x:Key="OfflinePageLibraryTab">Könyvtár</system:String>
+    <system:String x:Key="OfflinePageWorkshopTab">Műhely</system:String>
+    <system:String x:Key="OfflinePageEnabledEnhancements">Aktív kiegészítők</system:String>
+    <system:String x:Key="OfflinePageNoEnhancementsActive">Nincs aktív kiegészítő</system:String>
+    <system:String x:Key="OfflinePageLaunchOptions">Indíttási beállítások</system:String>
+    <system:String x:Key="OfflinePageLaunchOptionsWindowedMode">Ablak mód</system:String>
+    <system:String x:Key="OfflinePageLaunchOptionsAltTabMode">ALT+TAB támogatás engedélyezése</system:String>
+
+    <!--=====================  Offline/Library  =====================-->
+    <system:String x:Key="LibraryPageSearchPlaceholder">Keresés a könyvtárban...</system:String>
+    <system:String x:Key="LibraryPageMakeSnapshot">Mentés készítése</system:String>
+
+    <system:String x:Key="LibraryPageFilterPatchesAndMods">Játékok és modok</system:String>
+    <system:String x:Key="LibraryPageFilterEnhancements">Kiegészítők</system:String>
+    <system:String x:Key="LibraryPageFilterSnapshots">Mentések</system:String>
+    <system:String x:Key="LibraryPageFilterEverything">Minden</system:String>
+
+    <!--=====================  Offline/Workshop  =====================-->
+    <system:String x:Key="WorkshopPageSearchPlaceholder">Keresés a Műhelyben...</system:String>
+
+    <system:String x:Key="WorkshopPageFilterPatchesAndMods">Játékok és modok</system:String>
+    <system:String x:Key="WorkshopPageFilterEnhancements">Kiegészíttők</system:String>
+    <system:String x:Key="WorkshopPageFilterEverything">Minden</system:String>
+    
+    <system:String x:Key="WorkshopPageSortByMostDownloads">Legtöbb letöltés</system:String>
+    <system:String x:Key="WorkshopPageSortByMostRecent">Legfrissebb</system:String>
+    <system:String x:Key="WorkshopPageSortAlphabetical">Betűren</system:String>
+
+    <!--=====================  LibraryTile  =====================-->
+    <system:String x:Key="LibraryTileSyncing">Szinkronizálás</system:String>
+    <system:String x:Key="LibraryTileActive">Aktív</system:String>
+    <system:String x:Key="LibraryTilePatchType">Játék</system:String>
+    <system:String x:Key="LibraryTileModType">Mod</system:String>
+    <system:String x:Key="LibraryTileEnhancementType">Kiegészítő</system:String>
+    <system:String x:Key="LibraryTileMapPackType">Map csomag</system:String>
+    <system:String x:Key="LibraryTileSnapshotType">Mentés</system:String>
+
+    <!--=====================  LibraryTileHorizontal  =====================-->
+    <system:String x:Key="LibraryTileHorizontalNoPatchSelected">Nincs aktív játék</system:String>
+    <system:String x:Key="LibraryTileHorizontalSyncAgain">Újraszinkronizálás</system:String>
+    <system:String x:Key="LibraryTileHorizontalUpdate">Frissítés</system:String>
+
+    <!--=====================  LibraryTileEmpty  =====================-->
+    <system:String x:Key="LibraryTileEmptyInstallMore">Irány a Műhely</system:String>
+    <system:String x:Key="LibraryTileEmptyDiscoverMore">Fedezz fel új dolgokat a Műhelyben!</system:String>
+    
+    
+
+    <!--=====================  Settings  =====================-->
+    <system:String x:Key="SettingsPageLauncherSectionHeader">Indító beállítások</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneral">Általános</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibrary">Könyvtár</system:String>
+
+    <system:String x:Key="SettingsPageBFME1SectionHeader">Harc Középföldéért™</system:String>
+    <system:String x:Key="SettingsPageBFME2SectionHeader">Harc Középföldéért™ II</system:String>
+    <system:String x:Key="SettingsPageRotWKSectionHeader">Harc Középföldéért™ II: A boszorkánykirály felemelkedése</system:String>
+    <system:String x:Key="SettingsPageBFMESectionGeneral">Általános</system:String>
+
+    <!--=====================  Settings/Launcher Settings/General  =====================-->
+    <system:String x:Key="SettingsPageLauncherSectionGeneralLanguage">Nyelv</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralCloseToTray">Indító elrejtése a tálcára</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralCreateDesktopIcon">Indítóikon létrehozása az asztalon</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Könyvtár beállítások</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Könyvtár hozzáadása</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralDriveSizeText">szabad a(z)</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Helyi Lemez</system:String>
+
+    <!--=====================  Settings/Launcher Settings/Library  =====================-->
+    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Új hely hozzáadása</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">szabad a(z)</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">-ból</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">JÁTÉKTÁR</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">MŰHELY</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">EGYÉB</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">SZABAD</system:String>
+
+    <!--=====================  Settings/BFME Settings/General  =====================-->
+    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">CD Kulcs</system:String>
+    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Új generálása</system:String>
+
+    <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
+    <system:String x:Key="SettingsPageBFMESectionVideoResolution">Játék felbontása</system:String>
+    <system:String x:Key="SettingsPageBFMESectionVideoGraphicsApi">Grafikus API</system:String>
+
+    <!--=====================  Settings/BFME Settings/Language & Sound  =====================-->
+    <system:String x:Key="SettingsPageBFMESectionLanguageLanguage">Játék nyelv</system:String>
+    
+    
+
+    <!--=====================  InstallGameDialog  =====================-->
+    <system:String x:Key="InstallGameDialogTitle">TELEPÍTTÉS</system:String>
+    <system:String x:Key="InstallGameDialogLanguage">Nyelv</system:String>
+    <system:String x:Key="InstallGameDialogLocation">Hely</system:String>
+
+    <!--=====================  SelectNewLocationPopup  =====================-->
+    <system:String x:Key="SelectNewLocationPopupTitle">ÚJ HELY HOZZÁADÁSA</system:String>
+    <system:String x:Key="SelectNewLocationPopupSelectCustom">Egyedi helyet választok</system:String>
+
+    <!--=====================  ErrorPopup  =====================-->
+    <system:String x:Key="ErrorPopupTitle">HIBA</system:String>
+    <system:String x:Key="ErrorPopupCopyError">Másolás</system:String>
+    <system:String x:Key="ErrorPopupCopyErrorClicked">Kimásolva!</system:String>
+</ResourceDictionary>

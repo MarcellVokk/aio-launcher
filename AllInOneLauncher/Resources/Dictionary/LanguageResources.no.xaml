@@ -1,0 +1,133 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=netstandard">
+
+    <!--=====================  TrayIcon  =====================-->
+    <system:String x:Key="TrayIconShowApplication">Vis Launcher-vindu</system:String>
+    <system:String x:Key="TrayIconCloseApplication">Lukk Launcher</system:String>
+
+
+
+    <!--=====================  Generic  =====================-->
+    <system:String x:Key="GenericCancel">AVBRYT</system:String>
+    <system:String x:Key="GenericClose">LUKK</system:String>
+    <system:String x:Key="GenericInstall">INSTALLER</system:String>
+    <system:String x:Key="GenericLoading">LASTER</system:String>
+    <system:String x:Key="GenericPlay">SPILL</system:String>
+    <system:String x:Key="GenericAdd">LEGG TIL</system:String>
+    <system:String x:Key="GenericFree">GRATIS</system:String>
+
+
+
+    <!--=====================  MainWindow  =====================-->
+    <system:String x:Key="MainWindowTitle">All-in-One Launcher av Ravo92 &amp; Bfme Foundation Project</system:String>
+    <system:String x:Key="MainWindowSingleplayerTab">ENSPILLER</system:String>
+    <system:String x:Key="MainWindowMultiplayerTab">FLERSPILLER</system:String>
+    <system:String x:Key="MainWindowGuidesTab">GUIDER</system:String>
+
+
+
+    <!--=====================  Offline  =====================-->
+    <system:String x:Key="OfflinePageNewsTab">Endringslogg</system:String>
+    <system:String x:Key="OfflinePageLibraryTab">Bibliotek</system:String>
+    <system:String x:Key="OfflinePageWorkshopTab">Verksted</system:String>
+    <system:String x:Key="OfflinePageEnabledEnhancements">Aktiverte forbedringer</system:String>
+    <system:String x:Key="OfflinePageNoEnhancementsActive">Ingen forbedringer aktivert</system:String>
+    <system:String x:Key="OfflinePageLaunchOptions">Startalternativer</system:String>
+    <system:String x:Key="OfflinePageLaunchOptionsWindowedMode">Vindu-modus</system:String>
+    <system:String x:Key="OfflinePageLaunchOptionsAltTabMode">Aktiver ALT+TAB-støtte</system:String>
+
+    <!--=====================  Offline/Library  =====================-->
+    <system:String x:Key="LibraryPageSearchPlaceholder">Søk i biblioteket...</system:String>
+    <system:String x:Key="LibraryPageMakeSnapshot">Ta skjermbilder</system:String>
+
+    <system:String x:Key="LibraryPageFilterPatchesAndMods">Oppdateringer og modifikasjoner</system:String>
+    <system:String x:Key="LibraryPageFilterEnhancements">Forbedringer</system:String>
+    <system:String x:Key="LibraryPageFilterSnapshots">Skjermbilder</system:String>
+    <system:String x:Key="LibraryPageFilterEverything">Alt</system:String>
+
+    <!--=====================  Offline/Workshop  =====================-->
+    <system:String x:Key="WorkshopPageSearchPlaceholder">Søk i Verkstedet...</system:String>
+
+    <system:String x:Key="WorkshopPageFilterPatchesAndMods">Oppdateringer og modifikasjoner</system:String>
+    <system:String x:Key="WorkshopPageFilterEnhancements">Forbedringer</system:String>
+    <system:String x:Key="WorkshopPageFilterEverything">Alt</system:String>
+
+    <system:String x:Key="WorkshopPageSortByMostDownloads">Mest nedlastet</system:String>
+    <system:String x:Key="WorkshopPageSortByMostRecent">Nyeste</system:String>
+    <system:String x:Key="WorkshopPageSortAlphabetical">Alfabetisk</system:String>
+
+    <!--=====================  LibraryTile  =====================-->
+    <system:String x:Key="LibraryTileSyncing">Synkroniserer</system:String>
+    <system:String x:Key="LibraryTileActive">Aktiv</system:String>
+    <system:String x:Key="LibraryTilePatchType">Oppdatering</system:String>
+    <system:String x:Key="LibraryTileModType">Mod</system:String>
+    <system:String x:Key="LibraryTileEnhancementType">Forbedring</system:String>
+    <system:String x:Key="LibraryTileMapPackType">Kartpakke</system:String>
+    <system:String x:Key="LibraryTileSnapshotType">Skjermbilde</system:String>
+
+    <!--=====================  LibraryTileHorizontal  =====================-->
+    <system:String x:Key="LibraryTileHorizontalNoPatchSelected">Ingen oppdatering valgt</system:String>
+    <system:String x:Key="LibraryTileHorizontalSyncAgain">Synkroniser igjen</system:String>
+    <system:String x:Key="LibraryTileHorizontalUpdate">Update</system:String>
+
+    <!--=====================  LibraryTileEmpty  =====================-->
+    <system:String x:Key="LibraryTileEmptyInstallMore">Installer mer</system:String>
+    <system:String x:Key="LibraryTileEmptyDiscoverMore">Oppdag nytt innhold i Verkstedet!</system:String>
+
+
+
+    <!--=====================  Settings  =====================-->
+    <system:String x:Key="SettingsPageLauncherSectionHeader">Launcher-innstillinger</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneral">Generelt</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibrary">Bibliotek</system:String>
+
+    <system:String x:Key="SettingsPageBFME1SectionHeader">The Battle for Middle-earth™</system:String>
+    <system:String x:Key="SettingsPageBFME2SectionHeader">The Battle for Middle-earth™ II</system:String>
+    <system:String x:Key="SettingsPageRotWKSectionHeader">Rise of the Witchking™</system:String>
+    <system:String x:Key="SettingsPageBFMESectionGeneral">Generelt</system:String>
+
+    <!--=====================  Settings/Launcher Settings/General  =====================-->
+    <system:String x:Key="SettingsPageLauncherSectionGeneralLanguage">Launcher-språk</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralCloseToTray">Lukk Launcher til systemkurv</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralCreateDesktopIcon">Opprett snarvei på skrivebordet for launcheren</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Bibliotekinnstillinger</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Legg til bibliotekplassering</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Lokal disk</system:String>
+
+    <!--=====================  Settings/Launcher Settings/Library  =====================-->
+    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Legg til ny plassering</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">ledig av</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">SPILL</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">VERKSTED</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">IKKE-LAUNCHER</system:String>
+    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">LEDIG</system:String>
+
+    <!--=====================  Settings/BFME Settings/General  =====================-->
+    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Serienummer</system:String>
+    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Tilfeldiggjør</system:String>
+
+    <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
+    <system:String x:Key="SettingsPageBFMESectionVideoResolution">Spilloppløsning</system:String>
+    <system:String x:Key="SettingsPageBFMESectionVideoGraphicsApi">Grafikk-API</system:String>
+
+    <!--=====================  Settings/BFME Settings/Language & Sound  =====================-->
+    <system:String x:Key="SettingsPageBFMESectionLanguageLanguage">Spillspråk</system:String>
+
+
+
+    <!--=====================  InstallGameDialog  =====================-->
+    <system:String x:Key="InstallGameDialogTitle">INSTALLER SPILL</system:String>
+    <system:String x:Key="InstallGameDialogLanguage">Språk</system:String>
+    <system:String x:Key="InstallGameDialogLocation">Plassering</system:String>
+
+    <!--=====================  SelectNewLocationPopup  =====================-->
+    <system:String x:Key="SelectNewLocationPopupTitle">LEGG TIL NYTT BIBLIOTEK</system:String>
+    <system:String x:Key="SelectNewLocationPopupSelectCustom">Velg tilpasset plassering</system:String>
+
+    <!--=====================  ErrorPopup  =====================-->
+    <system:String x:Key="ErrorPopupTitle">FEIL</system:String>
+    <system:String x:Key="ErrorPopupCopyError">Kopier tekst</system:String>
+    <system:String x:Key="ErrorPopupCopyErrorClicked">Tekst kopiert til utklippstavlen!</system:String>
+</ResourceDictionary>

@@ -1,0 +1,184 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Label="Globals">
+	  <WebView2LoaderPreference>Dynamic</WebView2LoaderPreference>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<StartupObject>AllInOneLauncher.App</StartupObject>
+		<AssemblyName>AllInOneLauncher</AssemblyName>
+		<ApplicationIcon>MainIcon.ico</ApplicationIcon>
+		<Version>2.0.2.0</Version>
+		<AssemblyVersion>2.0.2.0</AssemblyVersion>
+		<FileVersion>2.0.2.0</FileVersion>
+		<BaseOutputPath>..\build</BaseOutputPath>
+		<Copyright>Raphael Vogel</Copyright>
+		<PackageId>BFME Launcher</PackageId>
+		<Authors>Patch 2.22 Team</Authors>
+		<Product>BFME Launcher</Product>
+		<UseWindowsForms>False</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<PlatformTarget>x64</PlatformTarget>
+		<SignAssembly>False</SignAssembly>
+		<RunPostBuildEvent>Always</RunPostBuildEvent>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<WarningLevel>6</WarningLevel>
+		<DebugType>full</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<WarningLevel>6</WarningLevel>
+		<DebugType>full</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="MainIcon.ico" />
+		<None Remove="Resources\Components\msedge.dll.gz" />
+		<None Remove="Resources\Components\resources.pak" />
+		<None Remove="Resources\Components\webview2_runtime.zip" />
+		<None Remove="Resources\Images\bfme1.png" />
+		<None Remove="Resources\Images\BFME1LanguageSupport.png" />
+		<None Remove="Resources\Images\BGMap_acrylic.png" />
+		<None Remove="Resources\Images\de_bfme1_title.png" />
+		<None Remove="Resources\Images\de_bfme2_title.png" />
+		<None Remove="Resources\Images\de_RotWK_title.png" />
+		<None Remove="Resources\Images\discord.png" />
+		<None Remove="Resources\Images\en_bfme1_title.png" />
+		<None Remove="Resources\Images\bfme2.png" />
+		<None Remove="Resources\Images\en_bfme2_title.png" />
+		<None Remove="Resources\Images\github.png" />
+		<None Remove="Resources\Images\harddrive.png" />
+		<None Remove="Resources\Images\MainIcon.png" />
+		<None Remove="Resources\Images\patch222.png" />
+		<None Remove="Resources\Images\RotWK.png" />
+		<None Remove="Resources\Images\en_RotWK_title.png" />
+		<None Remove="Resources\Images\BGMap.png" />
+		<None Remove="Resources\Images\en_RotWK_title.png" />
+		<None Remove="Resources\Images\moddb.png" />
+		<None Remove="Resources\Images\patreon.png" />
+		<None Remove="Resources\Images\RotWK.png" />
+		<None Remove="Resources\Images\twitch.png" />
+		<None Remove="Resources\Images\uac.png" />
+		<None Remove="Resources\Images\youtube.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Components\msedge.dll.gz" />
+	  <EmbeddedResource Include="Resources\Components\resources.pak" />
+	  <EmbeddedResource Include="Resources\Components\webview2_runtime.zip" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="MainIcon.ico" />
+		<Resource Include="Resources\Images\bfme1.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\BFME1LanguageSupport.png" />
+		<Resource Include="Resources\Images\BGMap_acrylic.png" />
+		<Resource Include="Resources\Images\de_bfme1_title.png" />
+		<Resource Include="Resources\Images\de_bfme2_title.png" />
+		<Resource Include="Resources\Images\de_RotWK_title.png" />
+		<Resource Include="Resources\Images\discord.png" />
+		<Resource Include="Resources\Images\en_bfme1_title.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\bfme2.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\en_bfme2_title.png">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\BGMap.png">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Resources\Images\en_RotWK_title.png" />
+		<Resource Include="Resources\Images\harddrive.png" />
+		<Resource Include="Resources\Images\MainIcon.png" />
+		<Resource Include="Resources\Images\moddb.png" />
+		<Resource Include="Resources\Images\patch222.png" />
+		<Resource Include="Resources\Images\patreon.png" />
+		<Resource Include="Resources\Images\RotWK.png" />
+		<Resource Include="Resources\Images\twitch.png" />
+		<Resource Include="Resources\Images\uac.png" />
+		<Resource Include="Resources\Images\youtube.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="1.7.6" />
+	  <PackageReference Include="BfmeFoundationProject.RegistryKit" Version="1.1.0" />
+	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="1.8.0" />
+	  <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+	  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="WindowsShortcutFactory" Version="1.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Resources\Images\github.png">
+	    <Generator></Generator>
+	  </Resource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Elements\Workshop\WorkshopTile.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Elements\Library\LibraryTileEmpty.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Pages\Subpages\Settings\Bfme\Settings_BfmeGeneral.xaml.cs">
+			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Popups\LauncherChangelogPopup.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Popups\LauncherUpdatePopup.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Popups\ErrorPopup.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Popups\MessagePopup.xaml.cs">
+		  <SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Properties\Resources.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Properties\Resources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	  <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\scripts\PreBuildAPIScript.ps1&quot;" />
+	</Target>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\scripts\PostBuildAPIScript.ps1&quot;" />
+	</Target>
+
+</Project>
