@@ -1,9 +1,29 @@
-# All in One Lotr Launcher by Ravo92
+# All in One Lotr Launcher originaly by Ravo92
+#### This project is part of the Bfme Foundation Project!
 
 ## Welcome
 Welcome to the official github repository of the All in One Lotr Launcher!
 <br>
 
-### This project is abandoned!
-Sadly some people only thinking for themselves and for money, wanting to monetizing parts of the Launcher with an protected IP (Lord of the Rings)
-is strongly against my vision for this MIT-Open-Source-Projekt, so I discontinued the work on it.
+![image](https://github.com/user-attachments/assets/fce13418-6b1d-4775-8699-e209ef493274)
+
+
+### If you are looking for the ultimate Lord of the Rings launcher, we have some good news for you: you found it!
+The All in One Launcher uses state of the art technology to make sure you can game in peace.
+<br>
+With **built in Multiplayer support trough Arena**, Multiplayer gaming has never been this easy, join the more than 15,000 registered players, and battle it out in Arena!
+<br>
+Using the Bfme Workshop, **switching between patches and mods is effortless**, and downloading new patches, mods or maps can be done in just about 4 clicks.
+
+## Features
+- Modern user interface
+- Built in Online Arena support - Play online right from the launcher
+- Built in Workshop support - Bfme modding like never before
+- Smart patch switching - No more switching or missmatch errors
+- Built in Bfme guides - New to the game? don't worry, we'll help!
+
+## Download
+
+https://bfmeladder.com/download
+
+###### Developed by: Ravo92 (*@ravo92*), Gazdag Marcell (*@marcellvokk*), Riza (*@sirriza*) and Dimek (*@dimek*)
