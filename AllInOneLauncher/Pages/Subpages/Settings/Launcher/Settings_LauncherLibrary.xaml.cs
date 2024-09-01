@@ -21,7 +21,8 @@ public partial class Settings_LauncherLibrary : UserControl
     {
         libraryDrives.Children.Clear();
         int i = 0;
-        foreach (string libraryDrive in Properties.Settings.Default.LibraryLocations.OfType<string>().Where(x => x != null))
+        foreach (string libraryDrive in Properties.Settings.Default.LibraryLocations.OfType<string>()
+                     .Where(x => x != null))
         {
             if (i != 0) libraryDrives.Children.Add(new Divider());
             libraryDrives.Children.Add(new LibraryDriveElement(libraryDrive));

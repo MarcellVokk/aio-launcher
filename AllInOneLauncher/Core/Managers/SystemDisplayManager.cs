@@ -61,7 +61,12 @@ public static class SystemDisplayManager
         }
 
         allResolutions = allResolutions
-            .Select(r => new { Resolution = r, Width = int.Parse(r.Split(' ')[0]), Height = int.Parse(r.Split(' ')[1]) })
+            .Select(r => new
+            {
+                Resolution = r, 
+                Width = int.Parse(r.Split(' ')[0]), 
+                Height = int.Parse(r.Split(' ')[1])
+            })
             .OrderBy(r => r.Width)
             .ThenBy(r => r.Height)
             .Select(r => r.Resolution)

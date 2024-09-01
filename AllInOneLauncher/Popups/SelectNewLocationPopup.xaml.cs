@@ -9,13 +9,16 @@ namespace AllInOneLauncher.Popups;
 
 public partial class SelectNewLocationPopup : PopupBody
 {
-    private DriveInfo[] Drives = DriveInfo.GetDrives().Where(x => x.DriveType == DriveType.Fixed && !Settings.Default.LibraryLocations.OfType<string>().Any(y => Path.GetPathRoot(y) == x.Name)).ToArray();
+    private DriveInfo[] Drives = DriveInfo.GetDrives().Where(x =>
+        x.DriveType == DriveType.Fixed &&
+        !Settings.Default.LibraryLocations.OfType<string>().Any(y => Path.GetPathRoot(y) == x.Name)).ToArray();
 
     public SelectNewLocationPopup()
     {
         InitializeComponent();
 
-        foreach (var drive in Drives) LocationDropdown.Options.Add($"{drive.VolumeLabel} ({drive.Name.Replace(@"\", "")})");
+        foreach (var drive in Drives)
+            LocationDropdown.Options.Add($"{drive.VolumeLabel} ({drive.Name.Replace(@"\", "")})");
         LocationDropdown.Options.Add(App.Current.FindResource("SelectNewLocationPopupSelectCustom").ToString() ?? "");
     }
 

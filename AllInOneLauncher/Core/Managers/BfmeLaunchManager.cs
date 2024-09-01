@@ -14,7 +14,8 @@ internal static class BfmeLaunchManager
         ProcessStartInfo startInfo = new()
         {
             WorkingDirectory = BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath),
-            FileName = Path.Combine(BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath), BfmeDefaults.DefaultGameExecutableNames[(int)game])
+            FileName = Path.Combine(BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath), 
+                BfmeDefaults.DefaultGameExecutableNames[(int)game])
         };
 
         if (displayMode == 1)

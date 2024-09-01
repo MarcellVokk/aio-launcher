@@ -19,8 +19,10 @@ namespace AllInOneLauncher
 
         public App()
         {
-            _mutexName = ConfigurationManager.AppSettings["mutexName"] ?? throw new ArgumentNullException($"mutexName needs to be specified inside the appsettings");
-            _pipeName = ConfigurationManager.AppSettings["pipeName"] ?? throw new ArgumentNullException($"pipeName needs to be specified inside the appsettings");
+            _mutexName = ConfigurationManager.AppSettings["mutexName"] ?? 
+                         throw new ArgumentNullException($"mutexName needs to be specified inside the appsettings");
+            _pipeName = ConfigurationManager.AppSettings["pipeName"] ?? 
+                        throw new ArgumentNullException($"pipeName needs to be specified inside the appsettings");
         }
 
         public static CoreWebView2Environment? GlobalWebView2Environment { get; private set; }
@@ -43,8 +45,11 @@ namespace AllInOneLauncher
 
             base.OnStartup(e);
 
-            string parentDirectory = Directory.GetParent(Directory.GetParent(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)!.FullName)!.FullName;
-            GlobalWebView2Environment = await CoreWebView2Environment.CreateAsync(null, Path.Combine(parentDirectory, "temp"));
+            string parentDirectory = Directory.GetParent(Directory.GetParent(ConfigurationManager.OpenExeConfiguration(
+                ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)!.FullName)!.FullName;
+            GlobalWebView2Environment = await CoreWebView2Environment.CreateAsync(
+                null, 
+                Path.Combine(parentDirectory, "temp"));
 
             StartServer();
 
@@ -56,7 +61,12 @@ namespace AllInOneLauncher
         {
             Task.Run(() =>
             {
-                using var server = new NamedPipeServerStream(_pipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                using var server = new NamedPipeServerStream(
+                    _pipeName, 
+                    PipeDirection.In, 
+                    1, 
+                    PipeTransmissionMode.Byte, 
+                    PipeOptions.Asynchronous);
 
                 while (true)
                 {

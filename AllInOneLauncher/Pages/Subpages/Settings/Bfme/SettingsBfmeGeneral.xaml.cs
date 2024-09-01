@@ -34,7 +34,8 @@ public partial class SettingsBfmeGeneral : UserControl
         };
 
         string cdKey = BfmeRegistryManager.GetKeyValue(Game, BfmeRegistryKey.SerialKey);
-        curentSerialNumber.Text = $"Current serial number: {string.Join("-", Enumerable.Range(0, cdKey.Length / 4).Select(i => cdKey.Substring(i * 4, 4)))}";
+        curentSerialNumber.Text =
+            $"Current serial number: {string.Join("-", Enumerable.Range(0, cdKey.Length / 4).Select(i => cdKey.Substring(i * 4, 4)))}";
     }
 
     private void OnLanguageOptionSelected(object sender, System.EventArgs e)
@@ -52,8 +53,11 @@ public partial class SettingsBfmeGeneral : UserControl
 
     private void ButtonChangeCdKey_Click(object sender, RoutedEventArgs e)
     {
-        string cdKey = string.Concat(from s in Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 20) select s[System.Random.Shared.Next(s.Length)]);
-        curentSerialNumber.Text = $"Current serial number: {string.Join("-", Enumerable.Range(0, cdKey.Length / 4).Select(i => cdKey.Substring(i * 4, 4)))}";
-        BfmeRegistryManager.SetKeyValue(Game, BfmeRegistryKey.SerialKey, cdKey, Microsoft.Win32.RegistryValueKind.String);
+        string cdKey = string.Concat(from s in Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 20)
+            select s[System.Random.Shared.Next(s.Length)]);
+        curentSerialNumber.Text =
+            $"Current serial number: {string.Join("-", Enumerable.Range(0, cdKey.Length / 4).Select(i => cdKey.Substring(i * 4, 4)))}";
+        BfmeRegistryManager.SetKeyValue(Game, BfmeRegistryKey.SerialKey, cdKey,
+            Microsoft.Win32.RegistryValueKind.String);
     }
 }

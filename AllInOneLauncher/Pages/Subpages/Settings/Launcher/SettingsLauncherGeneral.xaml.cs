@@ -10,7 +10,10 @@ namespace AllInOneLauncher.Pages.Subpages.Settings.Launcher;
 
 public partial class SettingsLauncherGeneral : UserControl
 {
-    private readonly string desktopShortCutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), Constants.C_LAUNCHER_SHORTCUT_NAME);
+    private readonly string desktopShortCutFilePath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.Desktop), 
+        Constants.C_LAUNCHER_SHORTCUT_NAME);
+
     public SettingsLauncherGeneral()
     {
         InitializeComponent();
@@ -30,6 +33,7 @@ public partial class SettingsLauncherGeneral : UserControl
             CreateDesktopIcon.IsToggled = false;
             Properties.Settings.Default.CreateLauncherDesktopIcon = false;
         }
+
         Properties.Settings.Default.Save();
     }
 
@@ -40,7 +44,8 @@ public partial class SettingsLauncherGeneral : UserControl
             using var shortcut = new WindowsShortcut
             {
                 Path = Environment.ProcessPath,
-                Description = "All-in-One Lord of the Rings Launcher by Ravo92, MarcellVokk & the Bfme Foundation Project"
+                Description =
+                    "All-in-One Lord of the Rings Launcher by Ravo92, MarcellVokk & the Bfme Foundation Project"
             };
             shortcut.Save(desktopShortCutFilePath);
         }

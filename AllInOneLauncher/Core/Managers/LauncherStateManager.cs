@@ -15,7 +15,8 @@ internal static class LauncherStateManager
 
     internal static void Init()
     {
-        if (!File.Exists(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath))
+        if (!File.Exists(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal)
+                .FilePath))
         {
             Properties.Settings.Default.Upgrade();
             Properties.Settings.Default.Reload();
@@ -41,11 +42,15 @@ internal static class LauncherStateManager
                 {
                     MainWindow.Instance!.WindowState = WindowState.Normal;
                 }
-                catch { }
+                catch
+                {
+                }
+
                 MainWindow.Instance!.ShowInTaskbar = true;
                 MainWindow.Instance!.Activate();
             }
-            else if (!value && MainWindow.Instance!.WindowState == WindowState.Normal || MainWindow.Instance!.WindowState == WindowState.Maximized)
+            else if (!value && MainWindow.Instance!.WindowState == WindowState.Normal ||
+                     MainWindow.Instance!.WindowState == WindowState.Maximized)
             {
                 MainWindow.Instance!.WindowState = WindowState.Minimized;
                 MainWindow.Instance!.ShowInTaskbar = false;
@@ -56,6 +61,7 @@ internal static class LauncherStateManager
     }
 
     private static int _language;
+
     internal static int Language
     {
         get => _language;
@@ -82,7 +88,8 @@ internal static class LauncherStateManager
             ResourceDictionary resourceDictionary = [];
             if (languageDictionary.TryGetValue(value, out string? resourceFileName))
             {
-                resourceDictionary.Source = new Uri($"..\\..\\..\\Resources\\Dictionary\\{resourceFileName}", UriKind.Relative);
+                resourceDictionary.Source = new Uri($"..\\..\\..\\Resources\\Dictionary\\{resourceFileName}",
+                    UriKind.Relative);
                 Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
             }
             else
@@ -104,7 +111,9 @@ internal static class LauncherStateManager
         {
             UseShellExecute = true,
             WorkingDirectory = Path.GetDirectoryName(Environment.ProcessPath) ?? "./",
-            FileName = update ? Environment.ProcessPath?.Replace(".exe", "_new.exe") : Environment.ProcessPath?.Replace("_new.exe", ".exe"),
+            FileName = update
+                ? Environment.ProcessPath?.Replace(".exe", "_new.exe")
+                : Environment.ProcessPath?.Replace("_new.exe", ".exe"),
             Verb = "runas"
         };
         Process.Start(elevated);
