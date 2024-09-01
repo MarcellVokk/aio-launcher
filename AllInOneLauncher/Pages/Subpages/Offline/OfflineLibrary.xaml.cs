@@ -12,9 +12,9 @@ using BfmeFoundationProject.WorkshopKit.Logic;
 
 namespace AllInOneLauncher.Pages.Subpages.Offline;
 
-public partial class Offline_Library : UserControl
+public partial class OfflineLibrary : UserControl
 {
-    public Offline_Library()
+    public OfflineLibrary()
     {
         InitializeComponent();
         filter.Options = ["{LibraryPageFilterPatchesAndMods}", "{LibraryPageFilterEnhancements}", "{LibraryPageFilterSnapshots}", "{LibraryPageFilterEverything}"];

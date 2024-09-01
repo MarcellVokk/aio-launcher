@@ -8,10 +8,10 @@ using WindowsShortcutFactory;
 
 namespace AllInOneLauncher.Pages.Subpages.Settings.Launcher;
 
-public partial class Settings_LauncherGeneral : UserControl
+public partial class SettingsLauncherGeneral : UserControl
 {
     private readonly string desktopShortCutFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), Constants.C_LAUNCHER_SHORTCUT_NAME);
-    public Settings_LauncherGeneral()
+    public SettingsLauncherGeneral()
     {
         InitializeComponent();
         DataContext = this;

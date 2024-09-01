@@ -8,11 +8,11 @@ using BfmeFoundationProject.RegistryKit.Data;
 
 namespace AllInOneLauncher.Pages.Subpages.Settings.Bfme;
 
-public partial class Settings_BfmeGeneral : UserControl
+public partial class SettingsBfmeGeneral : UserControl
 {
     public BfmeGame Game = BfmeGame.NONE;
 
-    public Settings_BfmeGeneral(BfmeGame game)
+    public SettingsBfmeGeneral(BfmeGame game)
     {
         Game = game;
         InitializeComponent();

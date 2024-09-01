@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AllInOneLauncher.Pages.Subpages.Offline.Offline_News"
+﻿<UserControl x:Class="AllInOneLauncher.Pages.Subpages.Offline.OfflineNews"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

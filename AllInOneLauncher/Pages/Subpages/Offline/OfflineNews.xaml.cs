@@ -7,7 +7,7 @@ using AllInOneLauncher.Elements.Generic;
 
 namespace AllInOneLauncher.Pages.Subpages.Offline;
 
-public partial class Offline_News : UserControl
+public partial class OfflineNews : UserControl
 {
     public BfmeGame AvailableBFMEGame { get; set; }
 
@@ -15,7 +15,7 @@ public partial class Offline_News : UserControl
     private static string ChangelogBFME2 = "";
     private static string ChangelogRotwk = "";
 
-    public Offline_News()
+    public OfflineNews()
     {
         InitializeComponent();
         InitPages();

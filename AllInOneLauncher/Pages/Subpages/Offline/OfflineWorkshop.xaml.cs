@@ -8,9 +8,9 @@ using BfmeFoundationProject.WorkshopKit.Logic;
 
 namespace AllInOneLauncher.Pages.Subpages.Offline;
 
-public partial class Offline_Workshop : UserControl
+public partial class OfflineWorkshop : UserControl
 {
-    public Offline_Workshop()
+    public OfflineWorkshop()
     {
         InitializeComponent();
         typeFilter.Options = ["{WorkshopPageFilterPatchesAndMods}", "{WorkshopPageFilterEnhancements}", "{WorkshopPageFilterEverything}"];

@@ -123,7 +123,7 @@
 		<Compile Update="Elements\Library\LibraryTileEmpty.xaml.cs">
 		  <SubType>Code</SubType>
 		</Compile>
-		<Compile Update="Pages\Subpages\Settings\Bfme\Settings_BfmeGeneral.xaml.cs">
+		<Compile Update="Pages\Subpages\Settings\Bfme\SettingsBfmeGeneral.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
 		<Compile Update="Popups\LauncherChangelogPopup.xaml.cs">

@@ -169,9 +169,9 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-                    <subpages:Offline_News Grid.Row="2" x:Name="news" d:Visibility="Visible" Visibility="Visible"/>
-                    <subpages:Offline_Library Grid.Row="2" x:Name="library" d:Visibility="Hidden" Visibility="Hidden"/>
-                    <subpages:Offline_Workshop Grid.Row="2" x:Name="workshop" d:Visibility="Hidden" Visibility="Hidden"/>
+                    <subpages:OfflineNews Grid.Row="2" x:Name="news" d:Visibility="Visible" Visibility="Visible"/>
+                    <subpages:OfflineLibrary Grid.Row="2" x:Name="library" d:Visibility="Hidden" Visibility="Hidden"/>
+                    <subpages:OfflineWorkshop Grid.Row="2" x:Name="workshop" d:Visibility="Hidden" Visibility="Hidden"/>
                 </Grid>
             </Grid>
         </Grid>
