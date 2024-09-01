@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="AllInOneLauncher.Elements.LibraryTileHorizontal"
+﻿<UserControl x:Class="AllInOneLauncher.Elements.Library.LibraryTileHorizontal"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              d:DesignHeight="140" d:DesignWidth="360">
     <Border Grid.Row="2" CornerRadius="15">
@@ -15,7 +16,7 @@
             </VisualBrush>
         </Border.OpacityMask>
         <Grid>
-            <elements:Acrylic/>
+            <generic:Acrylic/>
             <Grid Margin="10" x:Name="activeEntry" UseLayoutRounding="True" SnapsToDevicePixels="True" Visibility="Hidden" d:Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -55,7 +56,7 @@
                     </Border>
                     <Border x:Name="activeEntryLoading" Background="#016FB3" CornerRadius="14" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                         <StackPanel Margin="10,6,12,6" Orientation="Horizontal">
-                            <elements:NanoSpinner x:Name="loadingSpinner" HorizontalAlignment="Right" VerticalAlignment="Center" IsLoading="False" d:IsLoading="True"/>
+                            <generic:NanoSpinner x:Name="loadingSpinner" HorizontalAlignment="Right" VerticalAlignment="Center" IsLoading="False" d:IsLoading="True"/>
                             <TextBlock Text="{DynamicResource LibraryTileSyncing}" FontSize="12" FontWeight="Bold" Margin="7,0,0,0" VerticalAlignment="Center" Foreground="White"/>
                         </StackPanel>
                     </Border>

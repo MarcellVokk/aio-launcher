@@ -5,60 +5,56 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements.Generic;
+
+public partial class HTabs : UserControl
 {
-    /// <summary>
-    /// Interaction logic for HTabs.xaml
-    /// </summary>
-    public partial class HTabs : UserControl
+    private bool HasLoaded = false;
+
+    public HTabs()
     {
-        private bool HasLoaded = false;
+        InitializeComponent();
+    }
 
-        public HTabs()
+    public event EventHandler? SelectedIndexChanged;
+
+    private List<ImageSource> _tabs = [];
+    public List<ImageSource> Tabs
+    {
+        get => _tabs;
+        set
         {
-            InitializeComponent();
+            _tabs = value;
+            foreach (var tab in _tabs)
+                tabs.Children.Add(new HTab() { Owner = this, Icon = tab });
         }
+    }
 
-        public event EventHandler? SelectedIndexChanged;
-
-        private List<ImageSource> _tabs = [];
-        public List<ImageSource> Tabs
+    public int SelectedIndex
+    {
+        get => HasLoaded ? tabs.Children.OfType<HTab>().ToList().FindIndex(x => x.Selected) : InitialSelectedIndex;
+        set
         {
-            get => _tabs;
-            set
+            int i = 0;
+            foreach (var tab in tabs.Children.OfType<HTab>())
             {
-                _tabs = value;
-                foreach (var tab in _tabs)
-                    tabs.Children.Add(new HTab() { Owner = this, Icon = tab });
+                tab.Selected = i == value;
+                i++;
             }
+
+            SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
         }
+    }
 
-        public int SelectedIndex
-        {
-            get => HasLoaded ? tabs.Children.OfType<HTab>().ToList().FindIndex(x => x.Selected) : InitialSelectedIndex;
-            set
-            {
-                int i = 0;
-                foreach (var tab in tabs.Children.OfType<HTab>())
-                {
-                    tab.Selected = i == value;
-                    i++;
-                }
+    public int InitialSelectedIndex { get; set; } = 0;
 
-                SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (HasLoaded)
+            return;
 
-        public int InitialSelectedIndex { get; set; } = 0;
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (HasLoaded)
-                return;
-
-            HasLoaded = true;
-            Tabs = _tabs;
-            SelectedIndex = InitialSelectedIndex;
-        }
+        HasLoaded = true;
+        Tabs = _tabs;
+        SelectedIndex = InitialSelectedIndex;
     }
 }

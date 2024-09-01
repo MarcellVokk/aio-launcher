@@ -7,64 +7,60 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements.Generic;
+
+public partial class Toggleable : UserControl
 {
-    /// <summary>
-    /// Interaction logic for Toggleable.xaml
-    /// </summary>
-    public partial class Toggleable : UserControl
+    public Toggleable()
     {
-        public Toggleable()
+        InitializeComponent();
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+
+    public event EventHandler? OnToggledChanged;
+
+    private bool _isToggled = false;
+    public bool IsToggled
+    {
+        get
         {
-            InitializeComponent();
+            return _isToggled;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-
-        public event EventHandler? OnToggledChanged;
-
-        private bool _isToggled = false;
-        public bool IsToggled
+        set
         {
-            get
+            if(value != _isToggled)
             {
-                return _isToggled;
-            }
+                _isToggled = value;
 
-            set
-            {
-                if(value != _isToggled)
+                if (value)
                 {
-                    _isToggled = value;
+                    ThicknessAnimation ta = new() { To = new Thickness(20, 0, 0, 0), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
+                    ColorAnimation ca = new() { To = (Color)ColorConverter.ConvertFromString("#028BDB"), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
 
-                    if (value)
-                    {
-                        ThicknessAnimation ta = new() { To = new Thickness(20, 0, 0, 0), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
-                        ColorAnimation ca = new() { To = (Color)ColorConverter.ConvertFromString("#028BDB"), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
-
-                        border_thumb.BeginAnimation(MarginProperty, ta);
-                        border_shell.Background.BeginAnimation(SolidColorBrush.ColorProperty, ca);
-                    }
-                    else
-                    {
-                        ThicknessAnimation ta = new() { To = new Thickness(0, 0, 0, 0), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
-                        ColorAnimation ca = new() { To = (Color)ColorConverter.ConvertFromString("#26FFFFFF"), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
-
-                        border_thumb.BeginAnimation(MarginProperty, ta);
-                        border_shell.Background.BeginAnimation(SolidColorBrush.ColorProperty, ca);
-                    }
-
-                    OnToggledChanged?.Invoke(this, EventArgs.Empty);
-                    OnPropertyChanged();
+                    border_thumb.BeginAnimation(MarginProperty, ta);
+                    border_shell.Background.BeginAnimation(SolidColorBrush.ColorProperty, ca);
                 }
+                else
+                {
+                    ThicknessAnimation ta = new() { To = new Thickness(0, 0, 0, 0), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
+                    ColorAnimation ca = new() { To = (Color)ColorConverter.ConvertFromString("#26FFFFFF"), EasingFunction = new QuadraticEase(), Duration = TimeSpan.FromSeconds(0.2) };
+
+                    border_thumb.BeginAnimation(MarginProperty, ta);
+                    border_shell.Background.BeginAnimation(SolidColorBrush.ColorProperty, ca);
+                }
+
+                OnToggledChanged?.Invoke(this, EventArgs.Empty);
+                OnPropertyChanged();
             }
         }
+    }
 
-        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            IsToggled = !IsToggled;
-        }
+    private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+        IsToggled = !IsToggled;
     }
 }

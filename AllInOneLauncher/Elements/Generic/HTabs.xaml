@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="AllInOneLauncher.Elements.HTabs"
+﻿<UserControl x:Class="AllInOneLauncher.Elements.Generic.HTabs"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              d:DesignWidth="800" Height="64" Loaded="OnLoaded">
     <Border CornerRadius="15" x:Name="border">
@@ -18,7 +19,7 @@
             </VisualBrush>
         </Border.OpacityMask>
         <Grid>
-            <local:Acrylic/>
+            <generic:Acrylic/>
             <StackPanel x:Name="tabs" Orientation="Horizontal" Margin="5"/>
         </Grid>
     </Border>

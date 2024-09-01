@@ -1,18 +1,35 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace AllInOneLauncher.Core.Managers;
 
 internal partial class SystemInputManager
 {
     private static IntPtr _targetHWnd;
 
-    private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+    private delegate void WinEventDelegate(
+        IntPtr hWinEventHook, 
+        uint eventType, 
+        IntPtr hwnd, 
+        int idObject, 
+        int idChild, 
+        uint dwEventThread, 
+        uint dwmsEventTime);
+    
     private static readonly WinEventDelegate _winEventDelegate = new(WinEventProc);
 
     public static void SetTargetHWnd(IntPtr hWnd)
     {
         _targetHWnd = hWnd;
-        _ = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, _winEventDelegate, 0, 0, WINEVENT_OUTOFCONTEXT);
+        _ = SetWinEventHook(
+            EVENT_SYSTEM_FOREGROUND, 
+            EVENT_SYSTEM_FOREGROUND, 
+            IntPtr.Zero,
+            _winEventDelegate, 
+            0, 
+            0, 
+            WINEVENT_OUTOFCONTEXT);
         ActivateWindow(_targetHWnd);
     }
 

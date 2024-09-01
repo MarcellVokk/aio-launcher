@@ -6,6 +6,9 @@
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
              xmlns:subpages="clr-namespace:AllInOneLauncher.Pages.Subpages.Offline"
              xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
+             xmlns:library="clr-namespace:AllInOneLauncher.Elements.Library"
+             xmlns:offline="clr-namespace:AllInOneLauncher.Elements.Offline"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1500">
     <Grid>
@@ -15,13 +18,13 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <elements:HTabs Grid.Row="0" x:Name="gameTabs" SelectedIndexChanged="TabChanged">
-                <elements:HTabs.Tabs>
+            <generic:HTabs Grid.Row="0" x:Name="gameTabs" SelectedIndexChanged="TabChanged">
+                <generic:HTabs.Tabs>
                     <BitmapImage UriSource="pack://application:,,,/Resources/Images/bfme1.png"/>
                     <BitmapImage UriSource="pack://application:,,,/Resources/Images/bfme2.png"/>
                     <BitmapImage UriSource="pack://application:,,,/Resources/Images/RotWK.png"/>
-                </elements:HTabs.Tabs>
-            </elements:HTabs>
+                </generic:HTabs.Tabs>
+            </generic:HTabs>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="360"/>
@@ -49,13 +52,13 @@
                             </VisualBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <elements:Acrylic/>
+                            <generic:Acrylic/>
                             <StackPanel Margin="20">
                                 <Image x:Name="titleImage" HorizontalAlignment="Center" Width="300" Height="150" RenderOptions.BitmapScalingMode="HighQuality"/>
                             </StackPanel>
                         </Grid>
                     </Border>
-                    <elements:LibraryTileHorizontal Grid.Row="2" x:Name="activeEntry"/>
+                    <library:LibraryTileHorizontal Grid.Row="2" x:Name="activeEntry"/>
                     <Border Grid.Row="4" CornerRadius="15">
                         <Border.OpacityMask>
                             <VisualBrush>
@@ -65,7 +68,7 @@
                             </VisualBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <elements:Acrylic/>
+                            <generic:Acrylic/>
                             <Grid Margin="5">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -73,9 +76,9 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Text="{DynamicResource OfflinePageEnabledEnhancements}" Foreground="White" FontSize="18" FontWeight="Black" Margin="10,10,10,0"></TextBlock>
-                                <elements:SmoothScrollViewer Grid.Row="2">
+                                <generic:SmoothScrollViewer Grid.Row="2">
                                     <StackPanel x:Name="enabledEnhancements" Margin="5"/>
-                                </elements:SmoothScrollViewer>
+                                </generic:SmoothScrollViewer>
                                 <TextBlock Grid.Row="2" x:Name="activeEnhancementsNullIndicator" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#1EFFFFFF" Text="{DynamicResource OfflinePageNoEnhancementsActive}" FontSize="16" FontWeight="Medium"/>
                             </Grid>
                         </Grid>
@@ -89,7 +92,7 @@
                             </VisualBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <elements:Acrylic/>
+                            <generic:Acrylic/>
                             <Grid Margin="5">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -125,10 +128,10 @@
                             </VisualBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <elements:Acrylic/>
+                            <generic:Acrylic/>
                             <Grid Margin="10">
                                 <StackPanel VerticalAlignment="Bottom">
-                                    <elements:LaunchButton x:Name="launchButton" Margin="0,0,0,0" OnLaunchClicked="OnLaunchGameClicked" OnInstallClicked="OnInstallGameClicked"/>
+                                    <offline:LaunchButton x:Name="launchButton" Margin="0,0,0,0" OnLaunchClicked="OnLaunchGameClicked" OnInstallClicked="OnInstallGameClicked"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -152,7 +155,7 @@
                             </VisualBrush>
                         </Border.OpacityMask>
                         <Grid>
-                            <elements:Acrylic/>
+                            <generic:Acrylic/>
                             <StackPanel x:Name="innerTabs" Orientation="Horizontal" Margin="5">
                                 <Border x:Name="newsTab" Margin="0,0,2,0" Background="#1EFFFFFF" CornerRadius="18" Cursor="Hand" MouseDown="OnNewsTabClicked">
                                     <TextBlock Text="{DynamicResource OfflinePageNewsTab}" FontSize="14" FontWeight="Bold" Margin="20,10,20,10" Foreground="White"/>
@@ -166,9 +169,9 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-                    <subpages:Offline_News Grid.Row="2" x:Name="news" d:Visibility="Visible" Visibility="Visible"/>
-                    <subpages:Offline_Library Grid.Row="2" x:Name="library" d:Visibility="Hidden" Visibility="Hidden"/>
-                    <subpages:Offline_Workshop Grid.Row="2" x:Name="workshop" d:Visibility="Hidden" Visibility="Hidden"/>
+                    <subpages:OfflineNews Grid.Row="2" x:Name="news" d:Visibility="Visible" Visibility="Visible"/>
+                    <subpages:OfflineLibrary Grid.Row="2" x:Name="library" d:Visibility="Hidden" Visibility="Hidden"/>
+                    <subpages:OfflineWorkshop Grid.Row="2" x:Name="workshop" d:Visibility="Hidden" Visibility="Hidden"/>
                 </Grid>
             </Grid>
         </Grid>

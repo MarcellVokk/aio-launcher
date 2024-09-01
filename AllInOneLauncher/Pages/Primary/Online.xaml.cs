@@ -1,31 +1,26 @@
-﻿using AllInOneLauncher.Logic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace AllInOneLauncher.Pages.Primary
+namespace AllInOneLauncher.Pages.Primary;
+
+public partial class Online : UserControl
 {
-    /// <summary>
-    /// Interaction logic for Online.xaml
-    /// </summary>
-    public partial class Online : UserControl
+    internal static Online Instance = new();
+    private bool FirstLoad = true;
+
+    public Online()
     {
-        internal static Online Instance = new();
-        private bool FirstLoad = true;
+        InitializeComponent();
+    }
 
-        public Online()
-        {
-            InitializeComponent();
-        }
+    public void Unload() => arena.Unload();
 
-        public void Unload() => arena.Unload();
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        if (!FirstLoad)
+            return;
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            if (!FirstLoad)
-                return;
-
-            FirstLoad = false;
-            arena.Load();
-        }
+        FirstLoad = false;
+        arena.Load();
     }
 }

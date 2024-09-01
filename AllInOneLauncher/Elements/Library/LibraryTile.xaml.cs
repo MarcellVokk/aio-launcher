@@ -1,163 +1,159 @@
-﻿using BfmeFoundationProject.WorkshopKit.Data;
-using BfmeFoundationProject.WorkshopKit.Logic;
-using AllInOneLauncher.Popups;
-using System;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Threading.Tasks;
+using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Elements.Menues;
-using AllInOneLauncher.Pages.Primary;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using AllInOneLauncher.Logic;
-using AllInOneLauncher.Data;
+using AllInOneLauncher.Popups;
 using BfmeFoundationProject.RegistryKit;
 using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.WorkshopKit.Data;
+using BfmeFoundationProject.WorkshopKit.Logic;
+using Settings = AllInOneLauncher.Properties.Settings;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements.Library;
+
+public partial class LibraryTile : UserControl
 {
-    /// <summary>
-    /// Interaction logic for LibraryTile.xaml
-    /// </summary>
-    public partial class LibraryTile : UserControl
+    public LibraryTile()
     {
-        public LibraryTile()
-        {
-            InitializeComponent();
-            Properties.Settings.Default.SettingsSaving += (s, e) => UpdateType();
+        InitializeComponent();
+        Settings.Default.SettingsSaving += (s, e) => UpdateType();
 
-            BfmeWorkshopSyncManager.OnSyncBegin += OnSyncBegin;
-            BfmeWorkshopSyncManager.OnSyncUpdate += OnSyncUpdate;
-            BfmeWorkshopSyncManager.OnSyncEnd += OnSyncEnd;
+        BfmeWorkshopSyncManager.OnSyncBegin += OnSyncBegin;
+        BfmeWorkshopSyncManager.OnSyncUpdate += OnSyncUpdate;
+        BfmeWorkshopSyncManager.OnSyncEnd += OnSyncEnd;
+    }
+
+    BfmeWorkshopEntryPreview _workshopEntry;
+    public BfmeWorkshopEntryPreview WorkshopEntry
+    {
+        get => _workshopEntry;
+        set
+        {
+            _workshopEntry = value;
+            title.Text = value.Name;
+            version.Text = value.Version;
+            author.Text = value.Author;
+
+            IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Game);
+            content.Opacity = IsHitTestVisible ? 1 : 0.5;
+            if (IsHitTestVisible)
+                try { icon.Source = new BitmapImage(new Uri(value.ArtworkUrl)); } catch { }
+            else
+                try { icon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(value.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1); } catch { }
+
+            UpdateType();
+            Task.Run(UpdateIsActive);
         }
+    }
 
-        BfmeWorkshopEntryPreview _workshopEntry;
-        public BfmeWorkshopEntryPreview WorkshopEntry
+    BfmeWorkshopEntryMetadata _workshopMetadata;
+    public BfmeWorkshopEntryMetadata WorkshopMetadata
+    {
+        get => _workshopMetadata;
+        set => _workshopMetadata = value;
+    }
+
+    public bool IsLoading
+    {
+        get => loadingBar.Visibility == Visibility.Visible;
+        set
         {
-            get => _workshopEntry;
-            set
-            {
-                _workshopEntry = value;
-                title.Text = value.Name;
-                version.Text = value.Version;
-                author.Text = value.Author;
+            loadingBar.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+            tags.Visibility = value ? Visibility.Hidden : Visibility.Visible;
+            loadingIcon.IsLoading = value;
+            isActiveIcon.Visibility = value ? Visibility.Collapsed : Visibility.Visible;
 
-                IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Game);
-                content.Opacity = IsHitTestVisible ? 1 : 0.5;
+            if (value)
+                LoadProgress = 0;
+        }
+    }
+
+    public double LoadProgress
+    {
+        get => (double)GetValue(LoadProgressProperty);
+        set
+        {
+            SetValue(LoadProgressProperty, value);
+            progressText.Text = $"{value}%";
+        }
+    }
+    public static readonly DependencyProperty LoadProgressProperty = DependencyProperty.Register("LoadProgress", typeof(double), typeof(LibraryTile), new PropertyMetadata(OnLoadProgressChangedCallBack));
+    private static void OnLoadProgressChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+        LibraryTile progressBar = (LibraryTile)sender;
+        if (progressBar != null)
+        {
+            DoubleAnimation da = new() { To = (double)e.NewValue / 100d, Duration = TimeSpan.FromSeconds((double)e.NewValue == 0d ? 0d : 0.5d) };
+            progressBar.progressGradientStop1.BeginAnimation(GradientStop.OffsetProperty, da, HandoffBehavior.Compose);
+            progressBar.progressGradientStop2.BeginAnimation(GradientStop.OffsetProperty, da, HandoffBehavior.Compose);
+        }
+    }
+
+    private void OnLoad(object sender, RoutedEventArgs e) => Task.Run(CheckForUpdates);
+    private void OnEnter(object sender, MouseEventArgs e) => hoverEffect.Opacity = 1;
+    private void OnLeave(object sender, MouseEventArgs e) => hoverEffect.Opacity = 0;
+
+    private void OnSyncBegin(BfmeWorkshopEntry entry)
+    {
+        if (entry.Game != WorkshopEntry.Game)
+            return;
+
+        Dispatcher.Invoke(() =>
+        {
+            IsHitTestVisible = false;
+            if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
+                IsLoading = entry.Guid == WorkshopEntry.Guid;
+        });
+    }
+
+    private void OnSyncUpdate(int progress)
+    {
+        Dispatcher.Invoke(() =>
+        {
+            if (IsLoading)
+                LoadProgress = progress;
+        });
+    }
+
+    private void OnSyncEnd()
+    {
+        UpdateIsActive();
+        Dispatcher.Invoke(() =>
+        {
+            IsLoading = false;
+            IsHitTestVisible = BfmeRegistryManager.IsInstalled(WorkshopEntry.Game);
+            content.Opacity = IsHitTestVisible ? 1 : 0.5;
+            try
+            {
                 if (IsHitTestVisible)
-                    try { icon.Source = new BitmapImage(new Uri(value.ArtworkUrl)); } catch { }
+                    icon.Source = new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl));
                 else
-                    try { icon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(value.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1); } catch { }
-
-                UpdateType();
-                Task.Run(UpdateIsActive);
+                    icon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1);
             }
-        }
+            catch { }
+        });
+    }
 
-        BfmeWorkshopEntryMetadata _workshopMetadata;
-        public BfmeWorkshopEntryMetadata WorkshopMetadata
+    private void OnClicked(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == MouseButton.Left)
         {
-            get => _workshopMetadata;
-            set => _workshopMetadata = value;
+            Sync();
         }
-
-        public bool IsLoading
+        else if (e.ChangedButton == MouseButton.Right)
         {
-            get => loadingBar.Visibility == Visibility.Visible;
-            set
+            if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
             {
-                loadingBar.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-                tags.Visibility = value ? Visibility.Hidden : Visibility.Visible;
-                loadingIcon.IsLoading = value;
-                isActiveIcon.Visibility = value ? Visibility.Collapsed : Visibility.Visible;
-
-                if (value)
-                    LoadProgress = 0;
-            }
-        }
-
-        public double LoadProgress
-        {
-            get => (double)GetValue(LoadProgressProperty);
-            set
-            {
-                SetValue(LoadProgressProperty, value);
-                progressText.Text = $"{value}%";
-            }
-        }
-        public static readonly DependencyProperty LoadProgressProperty = DependencyProperty.Register("LoadProgress", typeof(double), typeof(LibraryTile), new PropertyMetadata(OnLoadProgressChangedCallBack));
-        private static void OnLoadProgressChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            LibraryTile progressBar = (LibraryTile)sender;
-            if (progressBar != null)
-            {
-                DoubleAnimation da = new() { To = (double)e.NewValue / 100d, Duration = TimeSpan.FromSeconds((double)e.NewValue == 0d ? 0d : 0.5d) };
-                progressBar.progressGradientStop1.BeginAnimation(GradientStop.OffsetProperty, da, HandoffBehavior.Compose);
-                progressBar.progressGradientStop2.BeginAnimation(GradientStop.OffsetProperty, da, HandoffBehavior.Compose);
-            }
-        }
-
-        private void OnLoad(object sender, RoutedEventArgs e) => Task.Run(CheckForUpdates);
-        private void OnEnter(object sender, MouseEventArgs e) => hoverEffect.Opacity = 1;
-        private void OnLeave(object sender, MouseEventArgs e) => hoverEffect.Opacity = 0;
-
-        private void OnSyncBegin(BfmeWorkshopEntry entry)
-        {
-            if (entry.Game != WorkshopEntry.Game)
-                return;
-
-            Dispatcher.Invoke(() =>
-            {
-                IsHitTestVisible = false;
-                if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
-                    IsLoading = entry.Guid == WorkshopEntry.Guid;
-            });
-        }
-
-        private void OnSyncUpdate(int progress)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (IsLoading)
-                    LoadProgress = progress;
-            });
-        }
-
-        private void OnSyncEnd()
-        {
-            UpdateIsActive();
-            Dispatcher.Invoke(() =>
-            {
-                IsLoading = false;
-                IsHitTestVisible = BfmeRegistryManager.IsInstalled(WorkshopEntry.Game);
-                content.Opacity = IsHitTestVisible ? 1 : 0.5;
-                try
-                {
-                    if (IsHitTestVisible)
-                        icon.Source = new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl));
-                    else
-                        icon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1);
-                }
-                catch { }
-            });
-        }
-
-        private void OnClicked(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                Sync();
-            }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
-                if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
-                {
-                    MenuVisualizer.ShowMenu(
+                MenuVisualizer.ShowMenu(
                     menu: [
                         new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Switch to \"{WorkshopEntry.Name}\"" : "Sync again", true, clicked: () => Sync()),
                         new ContextMenuSeparatorItem(),
@@ -181,10 +177,10 @@ namespace AllInOneLauncher.Elements
                     tint: true,
                     minWidth: 200,
                     targetCursor: true);
-                }
-                else
-                {
-                    MenuVisualizer.ShowMenu(
+            }
+            else
+            {
+                MenuVisualizer.ShowMenu(
                     menu: [
                         new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Enable \"{WorkshopEntry.Name}\"" : "Disable", true, clicked: () => Sync()),
                         new ContextMenuSeparatorItem(),
@@ -200,84 +196,83 @@ namespace AllInOneLauncher.Elements
                     tint: true,
                     minWidth: 200,
                     targetCursor: true);
-                }
             }
         }
+    }
 
-        private void UpdateType()
-        {
-            if (WorkshopEntry.Type == 0)
-                entryType.Text = Application.Current.FindResource("LibraryTilePatchType").ToString()!;
-            else if (WorkshopEntry.Type == 1)
-                entryType.Text = Application.Current.FindResource("LibraryTileModType").ToString()!;
-            else if (WorkshopEntry.Type == 2)
-                entryType.Text = Application.Current.FindResource("LibraryTileEnhancementType").ToString()!;
-            else if (WorkshopEntry.Type == 3)
-                entryType.Text = Application.Current.FindResource("LibraryTileMapPackType").ToString()!;
-            else if (WorkshopEntry.Type == 4)
-                entryType.Text = Application.Current.FindResource("LibraryTileSnapshotType").ToString()!;
-        }
+    private void UpdateType()
+    {
+        if (WorkshopEntry.Type == 0)
+            entryType.Text = Application.Current.FindResource("LibraryTilePatchType").ToString()!;
+        else if (WorkshopEntry.Type == 1)
+            entryType.Text = Application.Current.FindResource("LibraryTileModType").ToString()!;
+        else if (WorkshopEntry.Type == 2)
+            entryType.Text = Application.Current.FindResource("LibraryTileEnhancementType").ToString()!;
+        else if (WorkshopEntry.Type == 3)
+            entryType.Text = Application.Current.FindResource("LibraryTileMapPackType").ToString()!;
+        else if (WorkshopEntry.Type == 4)
+            entryType.Text = Application.Current.FindResource("LibraryTileSnapshotType").ToString()!;
+    }
 
-        private void UpdateIsActive()
+    private void UpdateIsActive()
+    {
+        if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
         {
-            if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
+            bool isActive = BfmeWorkshopStateManager.IsPatchActive(WorkshopEntry.Game, WorkshopEntry.Guid);
+            Dispatcher.Invoke(() =>
             {
-                bool isActive = BfmeWorkshopStateManager.IsPatchActive(WorkshopEntry.Game, WorkshopEntry.Guid);
-                Dispatcher.Invoke(() =>
-                {
-                    activeText.Visibility = Visibility.Visible;
-                    isActiveIcon.Opacity = isActive ? 1d : 0d;
-                });
-            }
+                activeText.Visibility = Visibility.Visible;
+                isActiveIcon.Opacity = isActive ? 1d : 0d;
+            });
+        }
+        else
+        {
+            bool isActive = BfmeWorkshopStateManager.IsEnhancementActive(WorkshopEntry.Game, WorkshopEntry.Guid);
+            Dispatcher.Invoke(() =>
+            {
+                activeText.Visibility = Visibility.Collapsed;
+                isActiveIcon.Opacity = isActive ? 1d : 0d;
+            });
+        }
+    }
+
+    private async void Sync(string version = "")
+    {
+        try
+        {
+            if (version == "")
+                await BfmeWorkshopSyncManager.Sync((await BfmeWorkshopLibraryManager.Get(WorkshopEntry.Guid)).Value);
             else
-            {
-                bool isActive = BfmeWorkshopStateManager.IsEnhancementActive(WorkshopEntry.Game, WorkshopEntry.Guid);
-                Dispatcher.Invoke(() =>
-                {
-                    activeText.Visibility = Visibility.Collapsed;
-                    isActiveIcon.Opacity = isActive ? 1d : 0d;
-                });
-            }
+                await BfmeWorkshopSyncManager.Sync(await BfmeWorkshopDownloadManager.Download($"{WorkshopEntry.Guid}:{version}"));
         }
-
-        private async void Sync(string version = "")
+        catch (BfmeWorkshopEnhancementIncompatibleSyncException ex)
         {
-            try
-            {
-                if (version == "")
-                    await BfmeWorkshopSyncManager.Sync((await BfmeWorkshopLibraryManager.Get(WorkshopEntry.Guid)).Value);
-                else
-                    await BfmeWorkshopSyncManager.Sync(await BfmeWorkshopDownloadManager.Download($"{WorkshopEntry.Guid}:{version}"));
-            }
-            catch (BfmeWorkshopEnhancementIncompatibleSyncException ex)
-            {
-                PopupVisualizer.ShowPopup(new MessagePopup("COMPATIBILITY ERROR", ex.Message));
-            }
-            catch (Exception ex)
-            {
-                PopupVisualizer.ShowPopup(new ErrorPopup(ex));
-            }
+            PopupVisualizer.ShowPopup(new MessagePopup("COMPATIBILITY ERROR", ex.Message));
         }
-
-        private async void CheckForUpdates()
+        catch (Exception ex)
         {
-            try
-            {
-                var workshopVersion = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Guid);
-                WorkshopMetadata = workshopVersion.metadata;
-                if (WorkshopEntry.Version != workshopVersion.entry.Version)
-                {
-                    Dispatcher.Invoke(() => WorkshopEntry = workshopVersion.entry);
-                    BfmeWorkshopLibraryManager.AddOrUpdate(await BfmeWorkshopDownloadManager.Download(workshopVersion.entry.Guid));
-                }
-            }
-            catch { }
+            PopupVisualizer.ShowPopup(new ErrorPopup(ex));
         }
+    }
 
-        private void RemoveFromLibrary()
+    private async void CheckForUpdates()
+    {
+        try
         {
-            BfmeWorkshopLibraryManager.Remove(WorkshopEntry.Guid);
-            Offline.Instance.library.libraryTiles.Children.Remove(this);
+            var workshopVersion = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Guid);
+            WorkshopMetadata = workshopVersion.metadata;
+            if (WorkshopEntry.Version != workshopVersion.entry.Version)
+            {
+                Dispatcher.Invoke(() => WorkshopEntry = workshopVersion.entry);
+                BfmeWorkshopLibraryManager.AddOrUpdate(await BfmeWorkshopDownloadManager.Download(workshopVersion.entry.Guid));
+            }
         }
+        catch { }
+    }
+
+    private void RemoveFromLibrary()
+    {
+        BfmeWorkshopLibraryManager.Remove(WorkshopEntry.Guid);
+        Pages.Primary.Offline.Instance.library.libraryTiles.Children.Remove(this);
     }
 }

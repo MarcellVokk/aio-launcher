@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="AllInOneLauncher.Elements.LibraryTileEmpty"
+﻿<UserControl x:Class="AllInOneLauncher.Elements.Library.LibraryTileEmpty"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              Height="370" Width="250">
     <Border CornerRadius="15" Cursor="Hand" MouseEnter="OnEnter" MouseLeave="OnLeave">
@@ -15,7 +16,7 @@
             </VisualBrush>
         </Border.OpacityMask>
         <Grid>
-            <elements:Acrylic/>
+            <generic:Acrylic/>
             <Grid Margin="12" x:Name="content">
                 <Border x:Name="plusCircle" Background="#1EFFFFFF" CornerRadius="300" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0">
                     <Path Fill="#B2FFFFFF" Stretch="Uniform" Width="40" Margin="30" Data="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>

@@ -1,15 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements;
+
+public partial class NoConnection : UserControl
 {
-    /// <summary>
-    /// Interaction logic for NoConnection.xaml
-    /// </summary>
-    public partial class NoConnection : UserControl
+    public NoConnection()
     {
-        public NoConnection()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

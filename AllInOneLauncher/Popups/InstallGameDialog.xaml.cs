@@ -1,41 +1,47 @@
-﻿using AllInOneLauncher.Elements;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using AllInOneLauncher.Elements.Disk;
+using AllInOneLauncher.Elements.Generic;
+using AllInOneLauncher.Properties;
 
-namespace AllInOneLauncher.Popups
+namespace AllInOneLauncher.Popups;
+
+public partial class InstallGameDialog : PopupBody
 {
-    /// <summary>
-    /// Interaction logic for InstallGameDialog.xaml
-    /// </summary>
-    public partial class InstallGameDialog : PopupBody
+    private static readonly Dictionary<string, DriveInfo> Drives =
+        DriveInfo.GetDrives().ToDictionary(x => x.RootDirectory.FullName);
+
+    public InstallGameDialog()
     {
-        private static readonly Dictionary<string, DriveInfo> Drives = DriveInfo.GetDrives().ToDictionary(x => x.RootDirectory.FullName);
+        InitializeComponent();
 
-        public InstallGameDialog()
+        locations.Children.Clear();
+        foreach (string libraryPath in Settings.Default.LibraryLocations.OfType<string>().Where(x => x != null))
         {
-            InitializeComponent();
+            DriveInfo drive = Drives[$@"{libraryPath.Split(@":\").First()}:\"];
 
-            locations.Children.Clear();
-            foreach (string libraryPath in Properties.Settings.Default.LibraryLocations.OfType<string>().Where(x => x != null))
+            locations.Children.Add(new Selectable()
             {
-                DriveInfo drive = Drives[$@"{libraryPath.Split(@":\").First()}:\"];
-
-                locations.Children.Add(new Selectable()
+                Title = new LibraryDriveHeader()
                 {
-                    Title = new LibraryDriveHeader() { LibraryDriveName = string.Concat(drive.VolumeLabel, " (", drive.Name.Replace(@"\", ""), ")"), LibraryDriveSize = $"{Math.Floor(drive.AvailableFreeSpace / Math.Pow(1024, 3)):N0} GB {App.Current.FindResource("GenericFree")}", Mini = true },
-                    Tag = libraryPath,
-                    Margin = new Thickness(0, 0, 0, 5),
-                    UseLayoutRounding = true,
-                    SnapsToDevicePixels = true
-                });
-            }
+                    LibraryDriveName = string.Concat(drive.VolumeLabel, " (", drive.Name.Replace(@"\", ""), ")"),
+                    LibraryDriveSize =
+                        $"{Math.Floor(drive.AvailableFreeSpace / Math.Pow(1024, 3)):N0} GB {App.Current.FindResource("GenericFree")}",
+                    Mini = true
+                },
+                Tag = libraryPath,
+                Margin = new Thickness(0, 0, 0, 5),
+                UseLayoutRounding = true,
+                SnapsToDevicePixels = true
+            });
         }
-
-        private void ButtonAcceptClicked(object sender, RoutedEventArgs e) => Submit(LanguageDropdown.SelectedValue, Selectable.GetSelectedTagInContainer(locations)!.ToString()!);
-
-        private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
     }
+
+    private void ButtonAcceptClicked(object sender, RoutedEventArgs e) => Submit(LanguageDropdown.SelectedValue,
+        Selectable.GetSelectedTagInContainer(locations)!.ToString()!);
+
+    private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
 }

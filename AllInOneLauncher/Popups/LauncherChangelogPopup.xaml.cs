@@ -1,23 +1,19 @@
-﻿using AllInOneLauncher.Elements;
-using System.Windows;
+﻿using System.Windows;
+using AllInOneLauncher.Elements.Generic;
 
-namespace AllInOneLauncher.Popups
+namespace AllInOneLauncher.Popups;
+
+public partial class LauncherChangelogPopup : PopupBody
 {
-    /// <summary>
-    /// Interaction logic for LauncherChangelogPopup.xaml
-    /// </summary>
-    public partial class LauncherChangelogPopup : PopupBody
+    public LauncherChangelogPopup()
     {
-        public LauncherChangelogPopup()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void ButtonCancelClicked(object sender, RoutedEventArgs e)
-        {
-            ChangelogPage.Visibility = Visibility.Collapsed;
+    private void ButtonCancelClicked(object sender, RoutedEventArgs e)
+    {
+        ChangelogPage.Visibility = Visibility.Collapsed;
 
-            Dismiss();
-        }
+        Dismiss();
     }
 }

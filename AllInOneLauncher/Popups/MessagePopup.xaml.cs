@@ -1,21 +1,25 @@
-﻿using AllInOneLauncher.Elements;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
+using AllInOneLauncher.Elements.Generic;
 
-namespace AllInOneLauncher.Popups
+namespace AllInOneLauncher.Popups;
+
+public partial class MessagePopup : PopupBody
 {
-    /// <summary>
-    /// Interaction logic for MessagePopup.xaml
-    /// </summary>
-    public partial class MessagePopup : PopupBody
+    public MessagePopup(string title, string message)
     {
-        public MessagePopup(string title, string message)
-        {
-            InitializeComponent();
-            this.title.Text = string.Join("", title.Split("{").Select(x => !x.Contains("}") ? x : ((Application.Current.FindResource(x.Split("}")[0]).ToString() ?? "") + x.Split("}")[1])));
-            this.message.Text = string.Join("", message.Split("{").Select(x => !x.Contains("}") ? x : ((Application.Current.FindResource(x.Split("}")[0]).ToString() ?? "") + x.Split("}")[1])));
-        }
-
-        private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
+        InitializeComponent();
+        this.title.Text = string.Join("",
+            title.Split("{").Select(x =>
+                !x.Contains("}")
+                    ? x
+                    : ((Application.Current.FindResource(x.Split("}")[0]).ToString() ?? "") + x.Split("}")[1])));
+        this.message.Text = string.Join("",
+            message.Split("{").Select(x =>
+                !x.Contains("}")
+                    ? x
+                    : ((Application.Current.FindResource(x.Split("}")[0]).ToString() ?? "") + x.Split("}")[1])));
     }
+
+    private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
 }

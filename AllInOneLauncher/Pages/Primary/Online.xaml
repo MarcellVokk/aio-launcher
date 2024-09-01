@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:onlineKit="clr-namespace:BfmeFoundationProject.OnlineKit;assembly=BfmeFoundationProject.OnlineKit"
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              d:DesignHeight="1000" d:DesignWidth="1500" Loaded="OnLoaded">
     <Grid>
@@ -20,7 +21,7 @@
                 </VisualBrush>
             </Border.OpacityMask>
             <Grid>
-                <elements:Acrylic/>
+                <generic:Acrylic/>
                 <onlineKit:OnlineMenu x:Name="arena" AccessToken="ReplaceAPIKeyHere" CornerRadius="11" Margin="5"/>
             </Grid>
         </Border>

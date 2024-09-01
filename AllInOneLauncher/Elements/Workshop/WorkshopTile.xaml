@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="AllInOneLauncher.Elements.WorkshopTile"
+﻿<UserControl x:Class="AllInOneLauncher.Elements.Workshop.WorkshopTile"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              Height="370" Width="250">
     <Border CornerRadius="15" Cursor="Hand" MouseEnter="OnEnter" MouseLeave="OnLeave" MouseUp="OnClicked">
@@ -15,7 +16,7 @@
             </VisualBrush>
         </Border.OpacityMask>
         <Grid>
-            <elements:Acrylic/>
+            <generic:Acrylic/>
             <Grid Margin="12" x:Name="content">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="260"/>
