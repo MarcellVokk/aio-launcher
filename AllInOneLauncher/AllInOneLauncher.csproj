@@ -164,10 +164,6 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Core\Services\" />
-	</ItemGroup>
-
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 	  <Exec Command="powershell -ExecutionPolicy Bypass -File &quot;$(ProjectDir)..\scripts\PreBuildAPIScript.ps1&quot;" />
 	</Target>

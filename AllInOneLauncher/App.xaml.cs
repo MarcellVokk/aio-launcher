@@ -47,12 +47,17 @@ namespace AllInOneLauncher
 
             string parentDirectory = Directory.GetParent(Directory.GetParent(ConfigurationManager.OpenExeConfiguration(
                 ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)!.FullName)!.FullName;
+            string userDataFolder = Path.Combine(parentDirectory, "temp");
             GlobalWebView2Environment = await CoreWebView2Environment.CreateAsync(
                 null, 
-                Path.Combine(parentDirectory, "temp"));
+                userDataFolder);
+            
 
             StartServer();
 
+            Console.WriteLine("Parent Directory");
+            Console.WriteLine(userDataFolder);
+            
             var mainWindow = new MainWindow();
             mainWindow.Show();
         }

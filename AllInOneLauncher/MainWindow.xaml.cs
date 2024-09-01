@@ -9,7 +9,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
+using AllInOneLauncher.Core.Builder;
 using AllInOneLauncher.Core.Managers;
+using AllInOneLauncher.Core.Services;
 using AllInOneLauncher.Data;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Pages.Primary;
@@ -30,46 +32,38 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Instance = this;
-
+        
+        InitializeServices();
+        SetupUI();
+        SetupEventHandlers();
+    }
+    
+    private void InitializeServices()
+    {
         LauncherStateManager.Init();
         LauncherUpdateManager.CheckForUpdates();
 
+        LibraryLocationManager.EnsureLibraryLocation();
+        GameInstallationChecker.CheckForInvalidInstallation();
+    }
+
+    private void SetupUI()
+    {
         TrayIcon.Visibility = Visibility.Collapsed;
         fullContent.Visibility = Visibility.Visible;
 
         Width = SystemParameters.WorkArea.Width * 0.72;
         Height = SystemParameters.WorkArea.Height * 0.85;
 
-        if (Settings.Default.LibraryLocations.Contains("NotSet"))
-        {
-            Settings.Default.LibraryLocations = [Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")];
-            Settings.Default.Save();
-        }
-        else if (!Settings.Default.LibraryLocations.Contains(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")))
-        {
-            Settings.Default.LibraryLocations.Add(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary"));
-            Settings.Default.Save();
-        }
-
-        foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)).Cast<BfmeGame>().Where(g => g != BfmeGame.NONE))
-        {
-            if (BfmeRegistryManager.IsInstalled(game) && BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath).Contains(Path.GetDirectoryName(Environment.ProcessPath)!))
-            {
-                PopupVisualizer.ShowPopup(new MessagePopup("INVALID INSTALL LOCATION",
-                        "The All In One Launcher has been installed inside one of the game's folders. This is not allowed, please reinstall the launcher in a different location!"),
-                    OnPopupClosed: () =>
-                    {
-                        Application.Current.Shutdown();
-                    });
-                break;
-            }
-        }
         CheckSize();
         ReloadContextMenu();
         ShowOffline();
+    }
 
+    private void SetupEventHandlers()
+    {
         Application.Current.Exit += OnApplicationExit;
-        Loaded += (sender, e) => ProcessCommandLineArgs();
+        Loaded += (sender, e) => CommandLineProcessor.ProcessArgs();
 
         BfmeWorkshopSyncManager.OnSyncBegin += OnSyncBegin;
         BfmeWorkshopSyncManager.OnSyncEnd += OnSyncEnd;
@@ -114,27 +108,7 @@ public partial class MainWindow : Window
 
         Instance.background.Effect = newContent is Pages.Primary.Settings ? new BlurEffect() { Radius = 20 } : null;
 
-        if (Pages.Primary.Settings.NeedsResync)
-        {
-            foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)))
-            {
-                if (!BfmeRegistryManager.IsInstalled(game) || (game == BfmeGame.ROTWK && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2)))
-                    continue;
-
-                var activeEntry = await BfmeWorkshopStateManager.GetActivePatch((int)game);
-                if (activeEntry != null)
-                {
-                    try
-                    {
-                        await BfmeWorkshopSyncManager.Sync(activeEntry.Value);
-                    }
-                    catch (Exception ex)
-                    {
-                        PopupVisualizer.ShowPopup(new ErrorPopup(ex));
-                    }
-                }
-            }
-        }
+        ContentSynchronizer.SyncIfNeeded(Pages.Primary.Settings.NeedsResync);
 
         Pages.Primary.Settings.NeedsResync = false;
     }
@@ -143,65 +117,25 @@ public partial class MainWindow : Window
     public static void ShowOffline()
     {
         SetContent(Offline.Instance);
-
-        foreach (TextBlock tab in Instance!.tabs.Children.OfType<TextBlock>())
-        {
-            if (tab == Instance.offlineTab)
-                tab.Foreground = new SolidColorBrush(Color.FromRgb(21, 167, 233));
-            else
-            {
-                tab.Foreground = Brushes.White;
-                tab.Style = (Style)Instance.FindResource("TextBlockHover");
-            }
-        }
+        TabManager.HighlightTab(Instance!.offlineTab, Instance.tabs.Children);
     }
 
     public static void ShowOnline()
     {
         SetContent(Online.Instance);
-
-        foreach (TextBlock tab in Instance!.tabs.Children.OfType<TextBlock>())
-        {
-            if (tab == Instance.onlineTab)
-                tab.Foreground = new SolidColorBrush(Color.FromRgb(21, 167, 233));
-            else
-            {
-                tab.Foreground = Brushes.White;
-                tab.Style = (Style)Instance.FindResource("TextBlockHover");
-            }
-        }
+        TabManager.HighlightTab(Instance!.onlineTab, Instance.tabs.Children);
     }
 
     public static void ShowGuides()
     {
         SetContent(Guides.Instance);
-
-        foreach (TextBlock tab in Instance!.tabs.Children.OfType<TextBlock>())
-        {
-            if (tab == Instance.guidesTab)
-                tab.Foreground = new SolidColorBrush(Color.FromRgb(21, 167, 233));
-            else
-            {
-                tab.Foreground = Brushes.White;
-                tab.Style = (Style)Instance.FindResource("TextBlockHover");
-            }
-        }
+        TabManager.HighlightTab(Instance!.guidesTab, Instance.tabs.Children);
     }
 
     public static void ShowPatreons()
     {
         SetContent(Patreons.Instance);
-
-        foreach (TextBlock tab in Instance!.tabs.Children.OfType<TextBlock>())
-        {
-            if (tab == Instance.patreonsTab)
-                tab.Foreground = new SolidColorBrush(Color.FromRgb(21, 167, 233));
-            else
-            {
-                tab.Foreground = Brushes.White;
-                tab.Style = (Style)Instance.FindResource("TextBlockHover");
-            }
-        }
+        TabManager.HighlightTab(Instance!.patreonsTab, Instance.tabs.Children);
     }
 
     private void OnOfflineTabClicked(object sender, MouseButtonEventArgs e) => ShowOffline();
@@ -236,43 +170,11 @@ public partial class MainWindow : Window
 
     private void ReloadContextMenu()
     {
-        if (TrayIcon.ContextMenu != null)
-            TrayIcon.ContextMenu = null;
-
-        ContextMenu newContextMenu = new()
-        {
-            Background = Brushes.White
-        };
-        TrayIcon.ContextMenu = newContextMenu;
-
-        MenuItem showApplicationItem = new()
-        {
-            Header = Application.Current.FindResource("TrayIconShowApplication")
-        };
-        showApplicationItem.Click += (s, e) => LauncherStateManager.Visible = true;
-        newContextMenu.Items.Add(showApplicationItem);
-
-        MenuItem closeApplicationItem = new()
-        {
-            Header = Application.Current.FindResource("TrayIconCloseApplication")
-        };
-        closeApplicationItem.Click += (s, e) => Application.Current.Shutdown();
-        newContextMenu.Items.Add(closeApplicationItem);
+        TrayIcon.ContextMenu = TrayIconContextMenuBuilder.BuildContextMenu();
     }
 
     private void OnApplicationExit(object sender, ExitEventArgs e)
     {
-        string appTempPath = Path.Combine(Path.GetTempPath(), Assembly.GetExecutingAssembly().GetName().Name!);
-        if (Directory.Exists(appTempPath))
-        {
-            try
-            {
-                Directory.Delete(appTempPath, true);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error deleting the folder with the name: {ex.Message}");
-            }
-        }
+        TempFileCleaner.CleanUp();
     }
 }
