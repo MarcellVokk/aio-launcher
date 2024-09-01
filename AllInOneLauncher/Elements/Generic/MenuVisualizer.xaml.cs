@@ -1,41 +1,37 @@
-﻿using AllInOneLauncher.Elements.Menues;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using AllInOneLauncher.Elements.Menues;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements.Generic;
+
+public partial class MenuVisualizer : UserControl
 {
-    /// <summary>
-    /// Interaction logic for ContextMenuVisualizer.xaml
-    /// </summary>
-    public partial class MenuVisualizer : UserControl
+    private static MenuVisualizer? Instance;
+    public static List<ContextMenuShell> ActiveMenues = new List<ContextMenuShell>();
+
+    public MenuVisualizer()
     {
-        private static MenuVisualizer? Instance;
-        public static List<ContextMenuShell> ActiveMenues = new List<ContextMenuShell>();
+        InitializeComponent();
+        Instance = this;
+    }
 
-        public MenuVisualizer()
-        {
-            InitializeComponent();
-            Instance = this;
-        }
+    public static Brush StandardBrush => new SolidColorBrush(Color.FromArgb(255, 37, 37, 38));
+    public static Rect GetAbsolutePlacement(FrameworkElement element) => new Rect(element.TransformToVisual(Instance!.content).Transform(new Point(0, 0)), new Size(element.ActualWidth, element.ActualHeight));
 
-        public static Brush StandardBrush => new SolidColorBrush(Color.FromArgb(255, 37, 37, 38));
-        public static Rect GetAbsolutePlacement(FrameworkElement element) => new Rect(element.TransformToVisual(Instance!.content).Transform(new Point(0, 0)), new Size(element.ActualWidth, element.ActualHeight));
+    public static ContextMenuShell? ShowMenu(string text, FrameworkElement owner, MenuSide side, double space = 2, double padding = 0, bool tint = false, CornerRadius? corners = null, ColorStyle colorStyle = ColorStyle.Acrylic, bool fullWidth = false, double minWidth = 0, double lifetime = -1, bool closeWhenMouseLeaves = false, bool targetCursor = false, Action? onDestroy = null)
+    {
+        if (Instance == null)
+            return null;
 
-        public static ContextMenuShell? ShowMenu(string text, FrameworkElement owner, MenuSide side, double space = 2, double padding = 0, bool tint = false, CornerRadius? corners = null, ColorStyle colorStyle = ColorStyle.Acrylic, bool fullWidth = false, double minWidth = 0, double lifetime = -1, bool closeWhenMouseLeaves = false, bool targetCursor = false, Action? onDestroy = null)
-        {
-            if (Instance == null)
-                return null;
+        if (ActiveMenues.Any(x => x.Owner == owner))
+            return null;
 
-            if (ActiveMenues.Any(x => x.Owner == owner))
-                return null;
-
-            ContextMenuShell menuShell = new ContextMenuShell(owner, side, corners ?? new CornerRadius(5), colorStyle, fullWidth, minWidth, lifetime, closeWhenMouseLeaves, padding, tint, onDestroy, (menu, menuWidth, menuHeight) =>
+        ContextMenuShell menuShell = new ContextMenuShell(owner, side, corners ?? new CornerRadius(5), colorStyle, fullWidth, minWidth, lifetime, closeWhenMouseLeaves, padding, tint, onDestroy, (menu, menuWidth, menuHeight) =>
             {
                 Rect ownerRect = GetAbsolutePlacement(owner);
                 Point finalPos = new Point(ownerRect.X, ownerRect.Y);
@@ -109,29 +105,29 @@ namespace AllInOneLauncher.Elements
             })
             { VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left, ContentText = text, ContentType = MenuContent.Text };
 
-            Instance.content.Children.Add(menuShell);
-            ActiveMenues.Add(menuShell);
+        Instance.content.Children.Add(menuShell);
+        ActiveMenues.Add(menuShell);
 
-            owner.IsVisibleChanged += (s, e) =>
-            {
-                if (e.NewValue == (object)false)
-                    HideMenu(menuShell);
-            };
-
-            owner.Unloaded += (s, e) => HideMenu(menuShell);
-
-            return menuShell;
-        }
-
-        public static ContextMenuShell? ShowMenu(Page content, FrameworkElement owner, MenuSide side, double space = 2, double padding = 0, bool tint = false, CornerRadius? corners = null, ColorStyle colorStyle = ColorStyle.Acrylic, bool fullWidth = false, double minWidth = 0, double lifetime = -1, bool closeWhenMouseLeaves = false, bool targetCursor = false, Action? onDestroy = null)
+        owner.IsVisibleChanged += (s, e) =>
         {
-            if (Instance == null)
-                return null;
+            if (e.NewValue == (object)false)
+                HideMenu(menuShell);
+        };
 
-            if (ActiveMenues.Any(x => x.Owner == owner))
-                return null;
+        owner.Unloaded += (s, e) => HideMenu(menuShell);
 
-            ContextMenuShell menuShell = new ContextMenuShell(owner, side, corners ?? new CornerRadius(5), colorStyle, fullWidth, minWidth, lifetime, closeWhenMouseLeaves, padding, tint, onDestroy, (menu, menuWidth, menuHeight) =>
+        return menuShell;
+    }
+
+    public static ContextMenuShell? ShowMenu(Page content, FrameworkElement owner, MenuSide side, double space = 2, double padding = 0, bool tint = false, CornerRadius? corners = null, ColorStyle colorStyle = ColorStyle.Acrylic, bool fullWidth = false, double minWidth = 0, double lifetime = -1, bool closeWhenMouseLeaves = false, bool targetCursor = false, Action? onDestroy = null)
+    {
+        if (Instance == null)
+            return null;
+
+        if (ActiveMenues.Any(x => x.Owner == owner))
+            return null;
+
+        ContextMenuShell menuShell = new ContextMenuShell(owner, side, corners ?? new CornerRadius(5), colorStyle, fullWidth, minWidth, lifetime, closeWhenMouseLeaves, padding, tint, onDestroy, (menu, menuWidth, menuHeight) =>
             {
                 Rect ownerRect = GetAbsolutePlacement(owner);
                 Point finalPos = new Point(ownerRect.X, ownerRect.Y);
@@ -205,29 +201,29 @@ namespace AllInOneLauncher.Elements
             })
             { VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left, ContentPage = content, ContentType = MenuContent.Page };
 
-            Instance.content.Children.Add(menuShell);
-            ActiveMenues.Add(menuShell);
+        Instance.content.Children.Add(menuShell);
+        ActiveMenues.Add(menuShell);
 
-            owner.IsVisibleChanged += (s, e) =>
-            {
-                if (e.NewValue == (object)false)
-                    HideMenu(menuShell);
-            };
-
-            owner.Unloaded += (s, e) => HideMenu(menuShell);
-
-            return menuShell;
-        }
-
-        public static ContextMenuShell? ShowMenu(List<ContextMenuItem> menu, FrameworkElement owner, MenuSide side, double space = 2, double padding = 0, bool tint = false, CornerRadius? corners = null, ColorStyle colorStyle = ColorStyle.Acrylic, bool fullWidth = false, double minWidth = 0, double lifetime = -1, bool closeWhenMouseLeaves = false, bool targetCursor = false, Action? onDestroy = null)
+        owner.IsVisibleChanged += (s, e) =>
         {
-            if (Instance == null)
-                return null;
+            if (e.NewValue == (object)false)
+                HideMenu(menuShell);
+        };
 
-            if (ActiveMenues.Any(x => x.Owner == owner))
-                return null;
+        owner.Unloaded += (s, e) => HideMenu(menuShell);
 
-            ContextMenuShell menuShell = new ContextMenuShell(owner, side, corners ?? new CornerRadius(5), colorStyle, fullWidth, minWidth, lifetime, closeWhenMouseLeaves, padding, tint, onDestroy, (menu, menuWidth, menuHeight) =>
+        return menuShell;
+    }
+
+    public static ContextMenuShell? ShowMenu(List<ContextMenuItem> menu, FrameworkElement owner, MenuSide side, double space = 2, double padding = 0, bool tint = false, CornerRadius? corners = null, ColorStyle colorStyle = ColorStyle.Acrylic, bool fullWidth = false, double minWidth = 0, double lifetime = -1, bool closeWhenMouseLeaves = false, bool targetCursor = false, Action? onDestroy = null)
+    {
+        if (Instance == null)
+            return null;
+
+        if (ActiveMenues.Any(x => x.Owner == owner))
+            return null;
+
+        ContextMenuShell menuShell = new ContextMenuShell(owner, side, corners ?? new CornerRadius(5), colorStyle, fullWidth, minWidth, lifetime, closeWhenMouseLeaves, padding, tint, onDestroy, (menu, menuWidth, menuHeight) =>
             {
                 Rect ownerRect = GetAbsolutePlacement(owner);
                 Point finalPos = new Point(ownerRect.X, ownerRect.Y);
@@ -301,112 +297,111 @@ namespace AllInOneLauncher.Elements
             })
             { VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left, ContentMenu = menu, ContentType = MenuContent.Menu };
 
-            Instance.content.Children.Add(menuShell);
-            ActiveMenues.Add(menuShell);
+        Instance.content.Children.Add(menuShell);
+        ActiveMenues.Add(menuShell);
 
-            owner.IsVisibleChanged += (s, e) =>
-            {
-                if (e.NewValue == (object)false)
-                    HideMenu(menuShell);
-            };
-
-            owner.Unloaded += (s, e) => HideMenu(menuShell);
-
-            return menuShell;
-        }
-
-        public static void HideMenu(ContextMenuShell popup)
+        owner.IsVisibleChanged += (s, e) =>
         {
-            if (Instance == null)
-                return;
+            if (e.NewValue == (object)false)
+                HideMenu(menuShell);
+        };
 
-            popup.StartDestroy();
-        }
+        owner.Unloaded += (s, e) => HideMenu(menuShell);
 
-        public static void HideMenuOn(FrameworkElement owner, MenuContent? ofMenuType = null)
-        {
-            if (Instance == null)
-                return;
-
-            ActiveMenues.Where(x => x.Owner == owner && (ofMenuType == null || x.ContentType == ofMenuType.Value)).ToList().ForEach(x => x.StartDestroy());
-        }
-
-        public static void DestroyMenu(ContextMenuShell menu)
-        {
-            if (Instance == null)
-                return;
-
-            ActiveMenues.Remove(menu);
-            Instance.content.Children.Remove(menu);
-        }
-
-        public static void HideAllMenues()
-        {
-            if (Instance == null)
-                return;
-
-            ActiveMenues.Clear();
-            Instance.content.Children.OfType<ContextMenuShell>().ToList().ForEach(x => x.StartDestroy());
-        }
-
-        public static void DestroyAllMenues()
-        {
-            if (Instance == null)
-                return;
-
-            ActiveMenues.Clear();
-            Instance.content.Children.Clear();
-        }
-
-        public static bool HasMenuOn(FrameworkElement owner)
-        {
-            if (Instance == null)
-                return false;
-
-            return Instance.content.Children.OfType<ContextMenuShell>().Any(x => x.Owner == owner);
-        }
-
-        private void OnResized(object sender, SizeChangedEventArgs e)
-        {
-            foreach (ContextMenuShell menu in ActiveMenues)
-                menu.UpdatePos();
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            getParent(this);
-
-            void getParent(FrameworkElement child)
-            {
-                if (child.Parent is Window)
-                    ((Window)child.Parent).PreviewMouseUp += (s, e) => HideAllMenues();
-                else if (child.Parent is FrameworkElement)
-                    getParent((FrameworkElement)child.Parent);
-            }
-        }
-
-        private void OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            foreach (ContextMenuShell menu in ActiveMenues.Where(x => x.CloseWhenMouseLeaves).ToList())
-                menu.StartDestroy();
-        }
+        return menuShell;
     }
 
-    public enum MenuSide
+    public static void HideMenu(ContextMenuShell popup)
     {
-        Left,
-        Right,
-        Top,
-        Bottom,
-        TopLeft,
-        TopRight,
-        BottomRight,
+        if (Instance == null)
+            return;
+
+        popup.StartDestroy();
     }
 
-    public enum MenuContent
+    public static void HideMenuOn(FrameworkElement owner, MenuContent? ofMenuType = null)
     {
-        Text,
-        Page,
-        Menu
+        if (Instance == null)
+            return;
+
+        ActiveMenues.Where(x => x.Owner == owner && (ofMenuType == null || x.ContentType == ofMenuType.Value)).ToList().ForEach(x => x.StartDestroy());
     }
+
+    public static void DestroyMenu(ContextMenuShell menu)
+    {
+        if (Instance == null)
+            return;
+
+        ActiveMenues.Remove(menu);
+        Instance.content.Children.Remove(menu);
+    }
+
+    public static void HideAllMenues()
+    {
+        if (Instance == null)
+            return;
+
+        ActiveMenues.Clear();
+        Instance.content.Children.OfType<ContextMenuShell>().ToList().ForEach(x => x.StartDestroy());
+    }
+
+    public static void DestroyAllMenues()
+    {
+        if (Instance == null)
+            return;
+
+        ActiveMenues.Clear();
+        Instance.content.Children.Clear();
+    }
+
+    public static bool HasMenuOn(FrameworkElement owner)
+    {
+        if (Instance == null)
+            return false;
+
+        return Instance.content.Children.OfType<ContextMenuShell>().Any(x => x.Owner == owner);
+    }
+
+    private void OnResized(object sender, SizeChangedEventArgs e)
+    {
+        foreach (ContextMenuShell menu in ActiveMenues)
+            menu.UpdatePos();
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        getParent(this);
+
+        void getParent(FrameworkElement child)
+        {
+            if (child.Parent is Window)
+                ((Window)child.Parent).PreviewMouseUp += (s, e) => HideAllMenues();
+            else if (child.Parent is FrameworkElement)
+                getParent((FrameworkElement)child.Parent);
+        }
+    }
+
+    private void OnMouseLeave(object sender, MouseEventArgs e)
+    {
+        foreach (ContextMenuShell menu in ActiveMenues.Where(x => x.CloseWhenMouseLeaves).ToList())
+            menu.StartDestroy();
+    }
+}
+
+public enum MenuSide
+{
+    Left,
+    Right,
+    Top,
+    Bottom,
+    TopLeft,
+    TopRight,
+    BottomRight,
+}
+
+public enum MenuContent
+{
+    Text,
+    Page,
+    Menu
 }

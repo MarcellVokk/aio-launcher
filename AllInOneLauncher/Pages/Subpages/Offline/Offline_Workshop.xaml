@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AllInOneLauncher.Pages.Subpages.Offline"
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              d:DesignHeight="860" d:DesignWidth="1115">
     <Grid>
@@ -34,7 +35,7 @@
                         </VisualBrush.Visual>
                     </VisualBrush>
                 </Border.OpacityMask>
-                <elements:Acrylic/>
+                <generic:Acrylic/>
             </Border>
             <Grid Grid.Column="0">
                 <Path Stretch="Uniform" Width="17" HorizontalAlignment="Left" Fill="#66FFFFFF" Margin="15,0,0,0" Data="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
@@ -47,9 +48,9 @@
                 <Path Stretch="Uniform" Width="13" Fill="White" Data="M289.088 296.704h92.992a32 32 0 0 1 0 64H232.96a32 32 0 0 1-32-32V179.712a32 32 0 0 1 64 0v50.56a384 384 0 0 1 643.84 282.88 384 384 0 0 1-383.936 384 384 384 0 0 1-384-384h64a320 320 0 1 0 640 0 320 320 0 0 0-555.712-216.448z"/>
             </Button>
         </Grid>
-        <elements:SmoothScrollViewer Grid.Row="2" x:Name="workshopContent" Visibility="Visible">
+        <generic:SmoothScrollViewer Grid.Row="2" x:Name="workshopContent" Visibility="Visible">
             <WrapPanel x:Name="workshopTiles"/>
-        </elements:SmoothScrollViewer>
+        </generic:SmoothScrollViewer>
         <elements:NoConnection Grid.Row="2" x:Name="noConnection" Visibility="Hidden"/>
     </Grid>
 </UserControl>

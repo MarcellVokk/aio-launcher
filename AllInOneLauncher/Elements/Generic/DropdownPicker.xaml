@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" d:Height="40">
     <Grid>
         <Border x:Name="border_background" CornerRadius="20" Background="Transparent">
@@ -18,10 +19,10 @@
                 </VisualBrush>
             </Border.OpacityMask>
             <Grid>
-                <local:Acrylic x:Name="acrylicStyle"/>
+                <generic:Acrylic x:Name="acrylicStyle"/>
                 <Grid x:Name="navyStyle" Background="#3A3F4C" Visibility="Collapsed"/>
                 <Grid x:Name="regularStyle" Visibility="Collapsed">
-                    <local:Acrylic/>
+                    <generic:Acrylic/>
                     <Grid Background="White" Opacity="0.1"/>
                 </Grid>
             </Grid>

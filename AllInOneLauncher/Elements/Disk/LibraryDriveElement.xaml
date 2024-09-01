@@ -1,13 +1,14 @@
-﻿<UserControl x:Class="AllInOneLauncher.Elements.LibraryDriveElement"
+﻿<UserControl x:Class="AllInOneLauncher.Elements.Disk.LibraryDriveElement"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:disk="clr-namespace:AllInOneLauncher.Elements.Disk"
              mc:Ignorable="d"
              Width="715" Margin="0,10,0,10">
     <StackPanel>
-        <local:LibraryDriveHeader x:Name="header"/>
+        <disk:LibraryDriveHeader x:Name="header"/>
         <Border CornerRadius="5" Background="Transparent" Height="10" Margin="0,10,0,0">
             <Border.OpacityMask>
                 <VisualBrush>

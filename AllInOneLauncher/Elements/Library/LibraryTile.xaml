@@ -1,9 +1,10 @@
-﻿<UserControl x:Class="AllInOneLauncher.Elements.LibraryTile"
+﻿<UserControl x:Class="AllInOneLauncher.Elements.Library.LibraryTile"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              Height="370" Width="250">
     <Border CornerRadius="15" Cursor="Hand" MouseEnter="OnEnter" MouseLeave="OnLeave" MouseUp="OnClicked" Loaded="OnLoad">
@@ -15,7 +16,7 @@
             </VisualBrush>
         </Border.OpacityMask>
         <Grid>
-            <elements:Acrylic/>
+            <generic:Acrylic/>
             <Grid Margin="12" x:Name="content">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="260"/>
@@ -75,7 +76,7 @@
                                 <TextBlock x:Name="activeText" Text="{DynamicResource LibraryTileActive}" FontSize="10" FontWeight="Bold" Margin="5,0,2,0" VerticalAlignment="Center" Foreground="White" Visibility="Visible"/>
                             </StackPanel>
                         </Border>
-                        <elements:MiniSpinner Grid.Column="2" x:Name="loadingIcon" HorizontalAlignment="Right" VerticalAlignment="Center" IsLoading="False"/>
+                        <generic:MiniSpinner Grid.Column="2" x:Name="loadingIcon" HorizontalAlignment="Right" VerticalAlignment="Center" IsLoading="False"/>
                     </Grid>
                 </Grid>
             </Grid>

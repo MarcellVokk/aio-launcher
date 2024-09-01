@@ -1,24 +1,18 @@
-﻿using AllInOneLauncher.Logic;
-using AllInOneLauncher.Pages.Primary;
-using AllInOneLauncher.Popups;
-using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System;
 using System.Windows.Controls;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements.Generic;
+
+public abstract class PopupBody : UserControl
 {
-    public abstract class PopupBody : UserControl
+    public Action<string[]>? OnSubmited;
+    public Action? ClosePopup;
+
+    public void Submit(params string[] data)
     {
-        public Action<string[]>? OnSubmited;
-        public Action? ClosePopup;
-
-        public void Submit(params string[] data)
-        {
-            OnSubmited?.Invoke(data);
-            ClosePopup?.Invoke();
-        }
-
-        public void Dismiss() => ClosePopup?.Invoke();
+        OnSubmited?.Invoke(data);
+        ClosePopup?.Invoke();
     }
+
+    public void Dismiss() => ClosePopup?.Invoke();
 }

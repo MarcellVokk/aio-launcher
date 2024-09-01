@@ -14,18 +14,26 @@ namespace AllInOneLauncher
     {
         internal static Mutex? Mutex;
         internal static string[] Args = [];
+        private string _mutexName;
+        private string _pipeName;
+
+        public App()
+        {
+            _mutexName = ConfigurationManager.AppSettings["mutexName"] ?? throw new ArgumentNullException($"mutexName needs to be specified inside the appsettings");
+            _pipeName = ConfigurationManager.AppSettings["pipeName"] ?? throw new ArgumentNullException($"pipeName needs to be specified inside the appsettings");
+        }
 
         public static CoreWebView2Environment? GlobalWebView2Environment { get; private set; }
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            Mutex = new Mutex(true, "17cf5b95-4261-4254-8978-d61580c3b057", out bool launcherNotOpenAlready);
+            Mutex = new Mutex(true, _mutexName, out bool launcherNotOpenAlready);
             bool launcherOpenAlready = !launcherNotOpenAlready;
             Args = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
             if (launcherOpenAlready)
             {
-                using var client = new NamedPipeClientStream(".", "8d9d7d24-97d9-4efc-abcc-ccd09f3480bd", PipeDirection.Out);
+                using var client = new NamedPipeClientStream(".", _pipeName, PipeDirection.Out);
                 client.Connect(3000);
                 using var writer = new StreamWriter(client);
                 writer.WriteLine("SHOW_WINDOW");
@@ -44,11 +52,11 @@ namespace AllInOneLauncher
             mainWindow.Show();
         }
 
-        private static void StartServer()
+        private void StartServer()
         {
             Task.Run(() =>
             {
-                using var server = new NamedPipeServerStream("8d9d7d24-97d9-4efc-abcc-ccd09f3480bd", PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                using var server = new NamedPipeServerStream(_pipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
 
                 while (true)
                 {

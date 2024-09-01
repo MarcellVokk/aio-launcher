@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace AllInOneLauncher.Core.Managers;
 
 internal partial class SystemInputManager
 {

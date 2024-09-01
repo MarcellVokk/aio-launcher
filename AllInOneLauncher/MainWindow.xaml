@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
+        xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
         mc:Ignorable="d"
         Title="{DynamicResource MainWindowTitle}" FontSize="14" WindowStartupLocation="CenterScreen" SizeChanged="OnSizeChanged" WindowStyle="ThreeDBorderWindow" Visibility="Visible" SnapsToDevicePixels="True" Loaded="OnLoad" Closing="LauncherMainWindow_Closing" RenderOptions.BitmapScalingMode="HighQuality">
     <Grid x:Name="windowGrid">
@@ -52,7 +53,7 @@
             <Border Grid.Row="2" x:Name="content"/>
         </Grid>
         <Border x:Name="fullContent" Visibility="Collapsed"/>
-        <elements:PopupVisualizer d:Visibility="Collapsed"/>
-        <elements:MenuVisualizer d:Visibility="Collapsed"/>
+        <generic:PopupVisualizer d:Visibility="Collapsed"/>
+        <generic:MenuVisualizer d:Visibility="Collapsed"/>
     </Grid>
 </Window>

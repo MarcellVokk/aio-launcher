@@ -1,26 +1,22 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AllInOneLauncher.Elements
+namespace AllInOneLauncher.Elements.Library;
+
+public partial class LibraryTileEmpty : UserControl
 {
-    /// <summary>
-    /// Interaction logic for LibraryTileEmpty.xaml
-    /// </summary>
-    public partial class LibraryTileEmpty : UserControl
+    public LibraryTileEmpty()
     {
-        public LibraryTileEmpty()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void OnEnter(object sender, MouseEventArgs e)
-        {
-            hoverEffect.Opacity = 1;
-        }
+    private void OnEnter(object sender, MouseEventArgs e)
+    {
+        hoverEffect.Opacity = 1;
+    }
 
-        private void OnLeave(object sender, MouseEventArgs e)
-        {
-            hoverEffect.Opacity = 0;
-        }
+    private void OnLeave(object sender, MouseEventArgs e)
+    {
+        hoverEffect.Opacity = 0;
     }
 }

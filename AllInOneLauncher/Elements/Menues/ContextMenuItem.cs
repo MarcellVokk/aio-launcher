@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 
-namespace AllInOneLauncher.Elements.Menues
+namespace AllInOneLauncher.Elements.Menues;
+
+public abstract class ContextMenuItem
 {
-    public abstract class ContextMenuItem
-    {
-        public abstract FrameworkElement GenerateElement(ContextMenuShell shell);
-    }
+    public abstract FrameworkElement GenerateElement(ContextMenuShell shell);
 }
