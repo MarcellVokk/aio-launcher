@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,35 +11,37 @@ using System.Threading.Tasks;
 using AllInOneLauncher.Elements;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Popups;
+using Windows.Storage;
 
 namespace AllInOneLauncher.Core.Managers;
 
 public static class LauncherUpdateManager
 {
+    public static string LauncherAppDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BFME All In One Launcher");
+
     public static async void CheckForUpdates()
     {
         #if DEBUG
         return;
         #endif
 
-        #pragma warning disable CS0162
-        string applicationPath = Environment.ProcessPath ?? "";
-        #pragma warning restore CS0162
+        if (Directory.Exists(LauncherAppDirectory))
+            Directory.CreateDirectory(LauncherAppDirectory);
 
-        string curentVersionHash = await Task.Run(() => FileUtils.GetFileMd5Hash(applicationPath));
+        string curentVersionHash = await Task.Run(() => FileUtils.GetFileMd5Hash(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe")));
         string latestVersionHash = await HttpUtils.Get("applications/versionHash", new Dictionary<string, string>() { { "name", "all-in-one-launcher" }, { "version", "main" }, });
 
         if (curentVersionHash == latestVersionHash)
         {
-            if (applicationPath.Contains("_new.exe"))
-            {
-                File.Move(applicationPath, applicationPath.Replace("_new.exe", ".exe"), true);
-                LauncherStateManager.Restart();
-            }
-            else if (File.Exists(applicationPath.Replace(".exe", "_new.exe")))
-            {
-                File.Delete(applicationPath.Replace(".exe", "_new.exe"));
-            }
+            if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
+                File.Delete(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"));
+
+            return;
+        }
+        else if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
+        {
+            File.Move(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"), true);
+            RestartLauncher(afterUpdate: false);
             return;
         }
 
@@ -47,13 +50,32 @@ public static class LauncherUpdateManager
             LauncherUpdatePopup updatePopup = new();
             PopupVisualizer.ShowPopup(updatePopup);
 
-            await HttpUtils.Download($"https://bfmeladder.com/api/applications/build?id=all-in-one-launcher-main", applicationPath.Replace(".exe", "_new.exe"), (progress) => updatePopup.LoadProgress = progress);
-            LauncherStateManager.Restart(true);
+            await HttpUtils.Download($"https://bfmeladder.com/api/applications/build?id=all-in-one-launcher-main", Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), (progress) => updatePopup.LoadProgress = progress);
+            RestartLauncher(afterUpdate: true);
         }
         catch (Exception ex)
         {
             PopupVisualizer.ShowPopup(new ErrorPopup(ex));
         }
+    }
+
+    private static void RestartLauncher(bool afterUpdate)
+    {
+        App.Mutex?.Dispose();
+        App.Mutex = null;
+
+        ProcessStartInfo process = new()
+        {
+            UseShellExecute = true,
+            WorkingDirectory = LauncherUpdateManager.LauncherAppDirectory,
+            FileName = afterUpdate
+                ? Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher_new.exe")
+                : Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe"),
+            Verb = "runas"
+        };
+        Process.Start(process);
+
+        Environment.Exit(0);
     }
 }
 

@@ -13,8 +13,6 @@ internal static class LauncherStateManager
 {
     internal static Dictionary<string, Type>? TypeMap { get; private set; }
 
-    public static string LauncherAppDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BFME All In One Launcher");
-
     internal static void Init()
     {
         if (!File.Exists(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal)
@@ -24,9 +22,6 @@ internal static class LauncherStateManager
             Properties.Settings.Default.Reload();
             Properties.Settings.Default.Save();
         }
-
-        if (Directory.Exists(LauncherAppDirectory))
-            Directory.CreateDirectory(LauncherAppDirectory);
 
         TypeMap = Assembly.GetExecutingAssembly().GetTypes().DistinctBy(x => x.Name).ToDictionary(x => x.Name, x => x);
 
@@ -105,24 +100,5 @@ internal static class LauncherStateManager
             Properties.Settings.Default.LauncherLanguage = value;
             Properties.Settings.Default.Save();
         }
-    }
-
-    internal static void Restart(bool update = false)
-    {
-        App.Mutex?.Dispose();
-        App.Mutex = null;
-
-        ProcessStartInfo elevated = new()
-        {
-            UseShellExecute = true,
-            WorkingDirectory = Path.GetDirectoryName(Environment.ProcessPath) ?? "./",
-            FileName = update
-                ? Environment.ProcessPath?.Replace(".exe", "_new.exe")
-                : Environment.ProcessPath?.Replace("_new.exe", ".exe"),
-            Verb = "runas"
-        };
-        Process.Start(elevated);
-
-        Environment.Exit(0);
     }
 }
