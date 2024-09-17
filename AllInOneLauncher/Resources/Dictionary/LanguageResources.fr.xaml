@@ -72,7 +72,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Paramètres du Launcher</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Général</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Bibliothèque</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">Le Seigneur des Anneaux : La Bataille pour la Terre du Milieu™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">Le Seigneur des Anneaux : La Bataille pour la Terre du Milieu™ II</system:String>
@@ -86,19 +85,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Paramètres de la bibliothèque</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Ajouter un emplacement de bibliothèque</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Disque local</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Ajouter un nouvel emplacement</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">libre sur</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">JEUX</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">ATELIER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">NON-LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">LIBRE</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Numéro de série</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Randomiser</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Résolution du jeu</system:String>

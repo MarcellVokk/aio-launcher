@@ -40,8 +40,6 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="15"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="15"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" CornerRadius="15">
                         <Border.OpacityMask>
@@ -84,42 +82,6 @@
                         </Grid>
                     </Border>
                     <Border Grid.Row="6" CornerRadius="15">
-                        <Border.OpacityMask>
-                            <VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Border Background="Black" SnapsToDevicePixels="True" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}"/>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Border.OpacityMask>
-                        <Grid>
-                            <generic:Acrylic/>
-                            <Grid Margin="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="15"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{DynamicResource OfflinePageLaunchOptions}" Foreground="White" FontSize="18" FontWeight="Black" Margin="10,10,10,0"></TextBlock>
-                                <StackPanel Grid.Row="2" Margin="10,0,10,10">
-                                    <Grid Margin="0,0,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource OfflinePageLaunchOptionsWindowedMode}" Foreground="White" FontSize="15" FontWeight="Medium" VerticalAlignment="Center"/>
-                                        <elements:DropdownPicker Grid.Column="1" x:Name="windowMode" ColorStyle="Regular" Height="40" Width="170">
-                                            <elements:DropdownPicker.Options>
-                                                <system:String>Fullscreen</system:String>
-                                                <system:String>Borderless (Bugged)</system:String>
-                                                <system:String>Windowed</system:String>
-                                            </elements:DropdownPicker.Options>
-                                        </elements:DropdownPicker>
-                                    </Grid>
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Border>
-                    <Border Grid.Row="8" CornerRadius="15">
                         <Border.OpacityMask>
                             <VisualBrush>
                                 <VisualBrush.Visual>

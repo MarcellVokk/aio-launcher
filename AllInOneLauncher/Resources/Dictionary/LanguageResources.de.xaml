@@ -88,7 +88,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Launcher Einstellungen</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Allgemein</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Bibliothek</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">Die Schlacht um Mittelerde™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">Die Schlacht um Mittelerde™ II</system:String>
@@ -102,19 +101,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Bibliotheks-Einstellungen</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Bibliothek hinzufügen</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Lokaler Datenträger</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Neuen Speicherort hinzufügen</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">frei von</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">SPIELE</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">WORKSHOP</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">FREMDSOFTWARE</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">FREI</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Seriennummer</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">CD-Key würfeln</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Spielauflösung festlegen</system:String>

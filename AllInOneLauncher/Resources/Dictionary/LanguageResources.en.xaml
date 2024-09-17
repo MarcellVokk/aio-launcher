@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Launcher Settings</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">General</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Library</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">The Battle for Middle-earth™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">The Battle for Middle-earth™ II</system:String>
@@ -94,19 +93,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Library settings</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Add Library Location</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Local Disk</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Add new location</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">free of</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">GAMES</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">WORKSHOP</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">NON-LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">FREE</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Serialnumber</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Randomize</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Game resolution</system:String>

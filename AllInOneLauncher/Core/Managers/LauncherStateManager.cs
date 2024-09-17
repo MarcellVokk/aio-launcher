@@ -13,6 +13,8 @@ internal static class LauncherStateManager
 {
     internal static Dictionary<string, Type>? TypeMap { get; private set; }
 
+    public static string LauncherAppDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BFME All In One Launcher");
+
     internal static void Init()
     {
         if (!File.Exists(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal)
@@ -22,6 +24,9 @@ internal static class LauncherStateManager
             Properties.Settings.Default.Reload();
             Properties.Settings.Default.Save();
         }
+
+        if (Directory.Exists(LauncherAppDirectory))
+            Directory.CreateDirectory(LauncherAppDirectory);
 
         TypeMap = Assembly.GetExecutingAssembly().GetTypes().DistinctBy(x => x.Name).ToDictionary(x => x.Name, x => x);
 

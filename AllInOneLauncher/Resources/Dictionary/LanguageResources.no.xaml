@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Launcher-innstillinger</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Generelt</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Bibliotek</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">The Battle for Middle-earth™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">The Battle for Middle-earth™ II</system:String>
@@ -94,19 +93,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Bibliotekinnstillinger</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Legg til bibliotekplassering</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Lokal disk</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Legg til ny plassering</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">ledig av</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">SPILL</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">VERKSTED</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">IKKE-LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">LEDIG</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Serienummer</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Tilfeldiggjør</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Spilloppløsning</system:String>

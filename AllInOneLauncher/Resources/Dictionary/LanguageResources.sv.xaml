@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Launcher-inställningar</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Allmänt</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Bibliotek</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">The Battle for Middle-earth™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">The Battle for Middle-earth™ II</system:String>
@@ -94,20 +93,7 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Bibliotekets inställningar</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Lägg till bibliotekets plats</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Lokalt disk</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Lägg till ny plats</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">ledig från</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">SPEL</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">WORKSHOP</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">INTE LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">LEDIGT</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Serienummer</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Slumptal</system:String>
-
+    
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Spelupplösning</system:String>
     <system:String x:Key="SettingsPageBFMESectionVideoGraphicsApi">Grafik-API</system:String>

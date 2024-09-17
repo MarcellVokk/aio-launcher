@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Configuración del Launcher</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">General</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Biblioteca</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">El Señor de los Anillos: La Batalla por la Tierra Media™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">El Señor de los Anillos: La Batalla por la Tierra Media™ II</system:String>
@@ -94,19 +93,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Configuración de la biblioteca</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Agregar ubicación de la Biblioteca</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Disco Local</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Agregar nueva ubicación</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">libre de</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">JUEGOS</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">TALLER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">NO-LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">LIBRE</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Número de serie</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Aleatorizar</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Resolución del juego</system:String>

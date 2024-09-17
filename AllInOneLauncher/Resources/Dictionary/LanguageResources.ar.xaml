@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">إعدادات المشغل</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">عام</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">المكتبة</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">معركة الأرض الوسطى™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">معركة الأرض الوسطى™ II</system:String>
@@ -94,19 +93,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">إعدادات المكتبة</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">إضافة موقع مكتبة</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">القرص المحلي</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">إضافة موقع جديد</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">المساحة الحرة من</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">الألعاب</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">ورشة العمل</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">غير المشغل</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">المساحة الحرة</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">الرقم التسلسلي</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">عشوائي</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">دقة اللعبة</system:String>

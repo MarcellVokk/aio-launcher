@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Настройки Launchera</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Общие</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Библиотека</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">The Battle for Middle-earth™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">The Battle for Middle-earth™ II</system:String>
@@ -94,19 +93,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Настройки библиотеки</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Добавить местоположение библиотеки</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Локальный диск</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Добавить новое местоположение</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">свободно из</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">ИГРЫ</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">МАСТЕРСКАЯ</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">НЕ В LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">СВОБОДНО</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Серийный номер</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Сгенерировать случайный</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Разрешение игры</system:String>

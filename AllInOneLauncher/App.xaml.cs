@@ -7,6 +7,8 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Web.WebView2.Core;
 using System.Configuration;
+using WindowsShortcutFactory;
+using AllInOneLauncher.Data;
 
 namespace AllInOneLauncher
 {
@@ -52,6 +54,7 @@ namespace AllInOneLauncher
                 Path.Combine(parentDirectory, "temp"));
 
             StartServer();
+            EnsureShortcut();
 
             var mainWindow = new MainWindow();
             mainWindow.Show();
@@ -95,6 +98,16 @@ namespace AllInOneLauncher
                     server.Disconnect();
                 }
             });
+        }
+
+        private void EnsureShortcut()
+        {
+            using var shortcut = new WindowsShortcut
+            {
+                Path = Environment.ProcessPath,
+                Description = "All-in-One Launcher"
+            };
+            shortcut.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "All in One Launcher.lnk"));
         }
 
         protected override void OnExit(ExitEventArgs e)

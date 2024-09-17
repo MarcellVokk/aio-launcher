@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Indító beállítások</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Általános</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Könyvtár</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">Harc Középföldéért™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">Harc Középföldéért™ II</system:String>
@@ -95,19 +94,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Könyvtár hozzáadása</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveSizeText">szabad a(z)</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Helyi Lemez</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Új hely hozzáadása</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">szabad a(z)</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">-ból</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">JÁTÉKTÁR</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">MŰHELY</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">EGYÉB</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">SZABAD</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">CD Kulcs</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Új generálása</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Játék felbontása</system:String>

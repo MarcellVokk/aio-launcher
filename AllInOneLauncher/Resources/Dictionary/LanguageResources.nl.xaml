@@ -72,7 +72,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Launcher-instellingen</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Algemeen</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Bibliotheek</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">Het Gevecht om Midden-aarde™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">Het Gevecht om Midden-aarde™ II</system:String>
@@ -86,19 +85,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Bibliotheekinstellingen</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Bibliotheeklocatie toevoegen</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Lokale schijf</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Nieuwe locatie toevoegen</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">vrij van</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">SPELLEN</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">WERKPLAATS</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">NIET-LAUNCHER</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">VRIJ</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Serienummer</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Willekeurig</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Spelresolutie</system:String>

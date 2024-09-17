@@ -38,6 +38,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Core\Services\**" />
+	  <EmbeddedResource Remove="Core\Services\**" />
+	  <None Remove="Core\Services\**" />
+	  <Page Remove="Core\Services\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="MainIcon.ico" />
 		<None Remove="Resources\Images\bfme1.png" />
 		<None Remove="Resources\Images\BFME1LanguageSupport.png" />
@@ -102,8 +109,8 @@
 
 	<ItemGroup>
 	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="1.7.6" />
-	  <PackageReference Include="BfmeFoundationProject.RegistryKit" Version="1.1.1" />
-	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="1.8.1" />
+	  <PackageReference Include="BfmeFoundationProject.RegistryKit" Version="1.1.2" />
+	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="1.8.3" />
 	  <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
 	  <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2651.64" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -162,10 +169,6 @@
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Core\Services\" />
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

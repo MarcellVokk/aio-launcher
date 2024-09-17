@@ -130,7 +130,7 @@ public partial class Offline : UserControl
     private void OnLaunchGameClicked(object sender, EventArgs e)
     {
         LauncherStateManager.Visible = false;
-        BfmeLaunchManager.LaunchGame((BfmeGame)gameTabs.SelectedIndex, windowMode.Selected);
+        BfmeLaunchManager.LaunchGame((BfmeGame)gameTabs.SelectedIndex);
         LauncherStateManager.Visible = true;
     }
 
@@ -144,10 +144,6 @@ public partial class Offline : UserControl
     {
         try
         {
-            // BfmeRegistryManager.CreateNewInstallRegistry(game, Path.Combine(selectedLocation, game < 2 ? $"BFME{game + 1}" : "RotWK"), selectedLanguage);
-            // if (game == 2 && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2)) BfmeRegistryManager.CreateNewInstallRegistry(BfmeGame.BFME2, Path.Combine(selectedLocation, "BFME2"), selectedLanguage);
-            // await BfmeWorkshopSyncManager.Sync(await BfmeWorkshopEntry.OfficialPatch(game));
-
             BfmeRegistryManager.CreateNewInstallRegistry(game, Path.Combine(selectedLocation, game == BfmeGame.ROTWK ? "RotWK" : $"BFME{(int)game + 1}"), selectedLanguage);
 
             if (game == BfmeGame.ROTWK && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2))

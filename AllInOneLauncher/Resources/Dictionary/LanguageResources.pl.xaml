@@ -80,7 +80,6 @@
     <!--=====================  Settings  =====================-->
     <system:String x:Key="SettingsPageLauncherSectionHeader">Ustawienia Launchera</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneral">Ogólne</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibrary">Biblioteka</system:String>
 
     <system:String x:Key="SettingsPageBFME1SectionHeader">Władca Pierścieni™: Bitwa o Śródziemie™</system:String>
     <system:String x:Key="SettingsPageBFME2SectionHeader">Władca Pierścieni™: Bitwa o Śródziemie™ II</system:String>
@@ -94,19 +93,6 @@
     <system:String x:Key="SettingsPageLauncherSectionGeneralLibraryHeader">Ustawienia biblioteki</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralAddLibraryLocation">Dodaj lokalizację biblioteki</system:String>
     <system:String x:Key="SettingsPageLauncherSectionGeneralDriveDefaultNameText">Dysk lokalny</system:String>
-
-    <!--=====================  Settings/Launcher Settings/Library  =====================-->
-    <system:String x:Key="SettingsPageLauncherSectionLibraryAddNewLocation">Dodaj nową lokalizację</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeText">wolnego z</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryDriveSizeTextSufix">_</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryGamesFileCategory">GRY</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryWorkshopFileCateogry">WARSZTAT</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryNonLauncherFileCateogry">POZA LAUNCHEREM</system:String>
-    <system:String x:Key="SettingsPageLauncherSectionLibraryFreeSpaceCateogry">WOLNE</system:String>
-
-    <!--=====================  Settings/BFME Settings/General  =====================-->
-    <system:String x:Key="SettingsPageBFMESectionGeneralSerialNumber">Numer seryjny</system:String>
-    <system:String x:Key="SettingsPageBFMESectionGeneralRandomizeSerial">Wygeneruj losowy</system:String>
 
     <!--=====================  Settings/BFME Settings/Video & Resolution  =====================-->
     <system:String x:Key="SettingsPageBFMESectionVideoResolution">Rozdzielczość gry</system:String>

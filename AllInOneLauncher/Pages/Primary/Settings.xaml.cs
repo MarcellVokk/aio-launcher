@@ -56,7 +56,7 @@ public partial class Settings : UserControl
 
             string pageName = value.Split('(').First();
             int gameIndex = value.Contains('(') ? int.Parse(value.Split('(').Last().Split(')').First()) : -1;
-            content.Child = gameIndex == -1 ? (FrameworkElement)Activator.CreateInstance(LauncherStateManager.TypeMap![$"Settings_{pageName}"])! : (FrameworkElement)Activator.CreateInstance(LauncherStateManager.TypeMap![$"Settings_{pageName}"], (BfmeGame)gameIndex)!;
+            content.Child = gameIndex == -1 ? (FrameworkElement)Activator.CreateInstance(LauncherStateManager.TypeMap![$"Settings{pageName}"])! : (FrameworkElement)Activator.CreateInstance(LauncherStateManager.TypeMap![$"Settings{pageName}"], (BfmeGame)gameIndex)!;
         }
     }
 

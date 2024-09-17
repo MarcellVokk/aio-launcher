@@ -19,10 +19,8 @@ public partial class InstallGameDialog : PopupBody
         InitializeComponent();
 
         locations.Children.Clear();
-        foreach (string libraryPath in Settings.Default.LibraryLocations.OfType<string>().Where(x => x != null))
+        foreach (var drive in Drives.Values)
         {
-            DriveInfo drive = Drives[$@"{libraryPath.Split(@":\").First()}:\"];
-
             locations.Children.Add(new Selectable()
             {
                 Title = new LibraryDriveHeader()
@@ -32,7 +30,7 @@ public partial class InstallGameDialog : PopupBody
                         $"{Math.Floor(drive.AvailableFreeSpace / Math.Pow(1024, 3)):N0} GB {App.Current.FindResource("GenericFree")}",
                     Mini = true
                 },
-                Tag = libraryPath,
+                Tag = drive.RootDirectory.FullName,
                 Margin = new Thickness(0, 0, 0, 5),
                 UseLayoutRounding = true,
                 SnapsToDevicePixels = true

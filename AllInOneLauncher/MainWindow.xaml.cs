@@ -40,17 +40,6 @@ public partial class MainWindow : Window
         Width = SystemParameters.WorkArea.Width * 0.72;
         Height = SystemParameters.WorkArea.Height * 0.85;
 
-        if (Settings.Default.LibraryLocations.Contains("NotSet"))
-        {
-            Settings.Default.LibraryLocations = [Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")];
-            Settings.Default.Save();
-        }
-        else if (!Settings.Default.LibraryLocations.Contains(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary")))
-        {
-            Settings.Default.LibraryLocations.Add(Path.Combine(Path.GetPathRoot(Environment.ProcessPath) ?? "C:/", "BfmeLibrary"));
-            Settings.Default.Save();
-        }
-
         foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)).Cast<BfmeGame>().Where(g => g != BfmeGame.NONE))
         {
             if (BfmeRegistryManager.IsInstalled(game) && BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath).Contains(Path.GetDirectoryName(Environment.ProcessPath)!))
