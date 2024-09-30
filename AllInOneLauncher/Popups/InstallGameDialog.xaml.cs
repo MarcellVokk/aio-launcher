@@ -21,20 +21,27 @@ public partial class InstallGameDialog : PopupBody
         locations.Children.Clear();
         foreach (var drive in Drives.Values)
         {
-            locations.Children.Add(new Selectable()
+            if (!drive.IsReady)
+                continue;
+
+            try
             {
-                Title = new LibraryDriveHeader()
+                locations.Children.Add(new Selectable()
                 {
-                    LibraryDriveName = string.Concat(drive.VolumeLabel, " (", drive.Name.Replace(@"\", ""), ")"),
-                    LibraryDriveSize =
+                    Title = new LibraryDriveHeader()
+                    {
+                        LibraryDriveName = string.Concat(drive.VolumeLabel, " (", drive.Name.Replace(@"\", ""), ")"),
+                        LibraryDriveSize =
                         $"{Math.Floor(drive.AvailableFreeSpace / Math.Pow(1024, 3)):N0} GB {App.Current.FindResource("GenericFree")}",
-                    Mini = true
-                },
-                Tag = drive.RootDirectory.FullName,
-                Margin = new Thickness(0, 0, 0, 5),
-                UseLayoutRounding = true,
-                SnapsToDevicePixels = true
-            });
+                        Mini = true
+                    },
+                    Tag = drive.RootDirectory.FullName,
+                    Margin = new Thickness(0, 0, 0, 5),
+                    UseLayoutRounding = true,
+                    SnapsToDevicePixels = true
+                });
+            }
+            catch { }
         }
     }
 

@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace AllInOneLauncher.Pages.Primary;
 
@@ -9,12 +11,7 @@ public partial class Guides : UserControl
     public Guides()
     {
         InitializeComponent();
-        InitializeWebView();
-        GuidesPage.Source = new("https://bfmelauncherfiles.ravonator.at/LauncherPages/guides/index.html");
     }
 
-    private async void InitializeWebView()
-    {
-        await GuidesPage.EnsureCoreWebView2Async(App.GlobalWebView2Environment);
-    }
+    private void OnVideoClicked(object sender, System.Windows.Input.MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo(((FrameworkElement)sender).Tag.ToString() ?? "") { UseShellExecute = true });
 }

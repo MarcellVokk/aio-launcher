@@ -119,10 +119,7 @@
                         <Grid>
                             <generic:Acrylic/>
                             <StackPanel x:Name="innerTabs" Orientation="Horizontal" Margin="5">
-                                <Border x:Name="newsTab" Margin="0,0,2,0" Background="#1EFFFFFF" CornerRadius="18" Cursor="Hand" MouseDown="OnNewsTabClicked">
-                                    <TextBlock Text="{DynamicResource OfflinePageNewsTab}" FontSize="14" FontWeight="Bold" Margin="20,10,20,10" Foreground="White"/>
-                                </Border>
-                                <Border x:Name="libraryTab" Margin="0,0,2,0" Background="Transparent" CornerRadius="18" Cursor="Hand" MouseDown="OnLibraryTabClicked">
+                                <Border x:Name="libraryTab" Margin="0,0,2,0" Background="#1EFFFFFF" CornerRadius="18" Cursor="Hand" MouseDown="OnLibraryTabClicked">
                                     <TextBlock Text="{DynamicResource OfflinePageLibraryTab}" FontSize="14" FontWeight="Bold" Margin="20,10,20,10" Foreground="White"/>
                                 </Border>
                                 <Border x:Name="workshopTab" Margin="0,0,2,0" Background="Transparent" CornerRadius="18" Cursor="Hand" MouseDown="OnWorkshopTabClicked">
@@ -131,8 +128,7 @@
                             </StackPanel>
                         </Grid>
                     </Border>
-                    <subpages:OfflineNews Grid.Row="2" x:Name="news" d:Visibility="Visible" Visibility="Visible"/>
-                    <subpages:OfflineLibrary Grid.Row="2" x:Name="library" d:Visibility="Hidden" Visibility="Hidden"/>
+                    <subpages:OfflineLibrary Grid.Row="2" x:Name="library" d:Visibility="Hidden" Visibility="Visible"/>
                     <subpages:OfflineWorkshop Grid.Row="2" x:Name="workshop" d:Visibility="Hidden" Visibility="Hidden"/>
                 </Grid>
             </Grid>

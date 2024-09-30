@@ -25,32 +25,42 @@ public static class LauncherUpdateManager
         return;
         #endif
 
-        if (Directory.Exists(LauncherAppDirectory))
-            Directory.CreateDirectory(LauncherAppDirectory);
-
-        string curentVersionHash = await Task.Run(() => FileUtils.GetFileMd5Hash(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe")));
-        string latestVersionHash = await HttpUtils.Get("applications/versionHash", new Dictionary<string, string>() { { "name", "all-in-one-launcher" }, { "version", "main" }, });
-
-        if (curentVersionHash == latestVersionHash)
-        {
-            if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
-                File.Delete(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"));
-
-            return;
-        }
-        else if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
-        {
-            File.Move(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"), true);
-            RestartLauncher(afterUpdate: false);
-            return;
-        }
-
         try
         {
+            if (!Directory.Exists(LauncherAppDirectory))
+                Directory.CreateDirectory(LauncherAppDirectory);
+
+            string curentVersionHash = "";
+            string latestVersionHash = "";
+
+            try
+            {
+                curentVersionHash = File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe")) ? await Task.Run(() => FileUtils.GetFileMd5Hash(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"))) : "";
+                latestVersionHash = await HttpUtils.Get("applications/versionHash", new Dictionary<string, string>() { { "name", "all-in-one-launcher" }, { "version", "main" }, });
+            }
+            catch
+            {
+                return;
+            }
+
+            if (curentVersionHash == latestVersionHash)
+            {
+                if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
+                    File.Delete(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"));
+
+                return;
+            }
+            else if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
+            {
+                File.Move(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"), true);
+                RestartLauncher(afterUpdate: false);
+                return;
+            }
+
             LauncherUpdatePopup updatePopup = new();
             PopupVisualizer.ShowPopup(updatePopup);
 
-            await HttpUtils.Download($"https://bfmeladder.com/api/applications/build?id=all-in-one-launcher-main", Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), (progress) => updatePopup.LoadProgress = progress);
+            await HttpUtils.Download($"https://arena-files.bfmeladder.com/application-builds/all-in-one-launcher-main", Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), (progress) => updatePopup.LoadProgress = progress);
             RestartLauncher(afterUpdate: true);
         }
         catch (Exception ex)

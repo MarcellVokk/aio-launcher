@@ -177,13 +177,13 @@ public partial class MainWindow : Window
         }
     }
 
-    public static void ShowPatreons()
+    public static void ShowAbout()
     {
-        SetContent(Patreons.Instance);
+        SetContent(About.Instance);
 
         foreach (TextBlock tab in Instance!.tabs.Children.OfType<TextBlock>())
         {
-            if (tab == Instance.patreonsTab)
+            if (tab == Instance.aboutTab)
                 tab.Foreground = new SolidColorBrush(Color.FromRgb(21, 167, 233));
             else
             {
@@ -196,10 +196,10 @@ public partial class MainWindow : Window
     private void OnOfflineTabClicked(object sender, MouseButtonEventArgs e) => ShowOffline();
     private void OnOnlineTabClicked(object sender, MouseButtonEventArgs e) => ShowOnline();
     private void OnGuidesTabClicked(object sender, MouseButtonEventArgs e) => ShowGuides();
-    private void OnPatreonsTabClicked(object sender, MouseButtonEventArgs e) => ShowPatreons();
+    private void OnAboutTabClicked(object sender, MouseButtonEventArgs e) => ShowAbout();
 
     private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Pages.Primary.Settings("LauncherGeneral"));
-    private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo("explorer", ((FrameworkElement)sender).Tag.ToString() ?? ""));
+    private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo(((FrameworkElement)sender).Tag.ToString() ?? "") { UseShellExecute = true });
 
     private void OnLoad(object sender, RoutedEventArgs e) => CheckSize();
     private void OnSizeChanged(object sender, SizeChangedEventArgs e) => CheckSize();

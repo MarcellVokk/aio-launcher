@@ -11,6 +11,7 @@ internal static class BfmeLaunchManager
 {
     internal static async void LaunchGame(Data.BfmeGame game)
     {
+        LauncherStateManager.Visible = false;
         ProcessStartInfo startInfo = new()
         {
             WorkingDirectory = BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath),
@@ -29,5 +30,6 @@ internal static class BfmeLaunchManager
         if (gameProcess == null) return;
 
         gameProcess.WaitForExit();
+        LauncherStateManager.Visible = true;
     }
 }

@@ -5,10 +5,10 @@ using System.Threading;
 using System.IO.Pipes;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.Web.WebView2.Core;
 using System.Configuration;
 using WindowsShortcutFactory;
 using AllInOneLauncher.Data;
+using AllInOneLauncher.Core.Managers;
 
 namespace AllInOneLauncher
 {
@@ -27,9 +27,7 @@ namespace AllInOneLauncher
                         throw new ArgumentNullException($"pipeName needs to be specified inside the appsettings");
         }
 
-        public static CoreWebView2Environment? GlobalWebView2Environment { get; private set; }
-
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             Mutex = new Mutex(true, _mutexName, out bool launcherNotOpenAlready);
             bool launcherOpenAlready = !launcherNotOpenAlready;
@@ -46,12 +44,6 @@ namespace AllInOneLauncher
             }
 
             base.OnStartup(e);
-
-            string parentDirectory = Directory.GetParent(Directory.GetParent(ConfigurationManager.OpenExeConfiguration(
-                ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath)!.FullName)!.FullName;
-            GlobalWebView2Environment = await CoreWebView2Environment.CreateAsync(
-                null, 
-                Path.Combine(parentDirectory, "temp"));
 
             StartServer();
             EnsureShortcut();
@@ -102,9 +94,12 @@ namespace AllInOneLauncher
 
         private void EnsureShortcut()
         {
+            if (!File.Exists(Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe")))
+                return;
+
             using var shortcut = new WindowsShortcut
             {
-                Path = Environment.ProcessPath,
+                Path = Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe"),
                 Description = "All-in-One Launcher"
             };
             shortcut.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "All in One Launcher.lnk"));

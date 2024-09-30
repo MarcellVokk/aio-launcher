@@ -14,7 +14,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="UPDATING" Foreground="White" FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="0" x:Name="title" Text="UPDATING" Foreground="White" FontSize="20" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         <Rectangle Grid.Row="1" Fill="White" Opacity="0.2" Margin="0,10,0,0" VerticalAlignment="Top" Height="1"/>
         <TextBlock Grid.Row="2" Text="Downloading launcher files" Foreground="White" FontSize="15" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,90" TextWrapping="Wrap"></TextBlock>
         <Grid Grid.Row="2" x:Name="loadingBar" VerticalAlignment="Center" HorizontalAlignment="Center" Width="350" Height="23">

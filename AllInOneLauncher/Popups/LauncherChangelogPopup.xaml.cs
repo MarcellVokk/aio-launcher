@@ -12,8 +12,6 @@ public partial class LauncherChangelogPopup : PopupBody
 
     private void ButtonCancelClicked(object sender, RoutedEventArgs e)
     {
-        ChangelogPage.Visibility = Visibility.Collapsed;
-
         Dismiss();
     }
 }

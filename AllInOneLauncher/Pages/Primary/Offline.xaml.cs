@@ -36,7 +36,6 @@ public partial class Offline : UserControl
         BfmeWorkshopSyncManager.OnSyncEnd += OnSyncEnd;
     }
 
-    private void OnNewsTabClicked(object sender, MouseButtonEventArgs e) => ShowNews();
     private void OnLibraryTabClicked(object sender, MouseButtonEventArgs e) => ShowLibrary();
     private void OnWorkshopTabClicked(object sender, MouseButtonEventArgs e) => ShowWorkshop();
 
@@ -76,23 +75,6 @@ public partial class Offline : UserControl
         }
     }
 
-    public void ShowNews()
-    {
-        foreach (Border tab in Instance!.innerTabs.Children.OfType<Border>())
-        {
-            if (tab == newsTab)
-                tab.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1EFFFFFF"));
-            else
-                tab.Background = Brushes.Transparent;
-        }
-
-        news.Visibility = Visibility.Visible;
-        library.Visibility = Visibility.Hidden;
-        workshop.Visibility = Visibility.Hidden;
-
-        news.Load((BfmeGame)gameTabs.SelectedIndex);
-    }
-
     public void ShowLibrary()
     {
         foreach (Border tab in Instance!.innerTabs.Children.OfType<Border>())
@@ -103,7 +85,6 @@ public partial class Offline : UserControl
                 tab.Background = Brushes.Transparent;
         }
 
-        news.Visibility = Visibility.Hidden;
         library.Visibility = Visibility.Visible;
         workshop.Visibility = Visibility.Hidden;
 
@@ -120,7 +101,6 @@ public partial class Offline : UserControl
                 tab.Background = Brushes.Transparent;
         }
 
-        news.Visibility = Visibility.Hidden;
         library.Visibility = Visibility.Hidden;
         workshop.Visibility = Visibility.Visible;
 
@@ -129,9 +109,7 @@ public partial class Offline : UserControl
 
     private void OnLaunchGameClicked(object sender, EventArgs e)
     {
-        LauncherStateManager.Visible = false;
         BfmeLaunchManager.LaunchGame((BfmeGame)gameTabs.SelectedIndex);
-        LauncherStateManager.Visible = true;
     }
 
     private void OnInstallGameClicked(object sender, EventArgs e)
@@ -170,9 +148,7 @@ public partial class Offline : UserControl
             UpdatePlayButton();
             UpdateEnabledEnhancements();
 
-            if (news.Visibility == Visibility.Visible)
-                ShowNews();
-            else if (library.Visibility == Visibility.Visible)
+            if (library.Visibility == Visibility.Visible)
                 ShowLibrary();
             else if (workshop.Visibility == Visibility.Visible)
                 ShowWorkshop();
