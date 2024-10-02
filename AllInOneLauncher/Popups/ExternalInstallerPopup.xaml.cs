@@ -8,12 +8,11 @@ using AllInOneLauncher.Elements.Generic;
 
 namespace AllInOneLauncher.Popups;
 
-public partial class LauncherUpdatePopup : PopupBody
+public partial class ExternalInstallerPopup : PopupBody
 {
-    public LauncherUpdatePopup()
+    public ExternalInstallerPopup()
     {
         InitializeComponent();
-        title.Text = File.Exists(Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe")) ? "UPDATING" : "INSTALLING";
         LoadProgress = 0;
     }
 
@@ -28,11 +27,11 @@ public partial class LauncherUpdatePopup : PopupBody
     }
 
     public static readonly DependencyProperty LoadProgressProperty = DependencyProperty.Register("LoadProgress",
-        typeof(double), typeof(LauncherUpdatePopup), new PropertyMetadata(OnLoadProgressChangedCallBack));
+        typeof(double), typeof(ExternalInstallerPopup), new PropertyMetadata(OnLoadProgressChangedCallBack));
 
     private static void OnLoadProgressChangedCallBack(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
-        LauncherUpdatePopup progressBar = (LauncherUpdatePopup)sender;
+        ExternalInstallerPopup progressBar = (ExternalInstallerPopup)sender;
         if (progressBar != null)
         {
             DoubleAnimation da = new DoubleAnimation()

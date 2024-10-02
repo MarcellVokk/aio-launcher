@@ -16,6 +16,7 @@
     <system:String x:Key="GenericPlay">PLAY</system:String>
     <system:String x:Key="GenericAdd">ADD</system:String>
     <system:String x:Key="GenericFree">FREE</system:String>
+    <system:String x:Key="GenericConfirm">CONFIRM</system:String>
 
 
 
