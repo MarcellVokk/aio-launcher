@@ -1,4 +1,7 @@
-# All in One Lotr Launcher originaly by Ravo92
+# All in One Launcher
+
+*Made originaly by Ravo92*
+
 #### This project is part of the Bfme Foundation Project!
 
 ## Welcome
