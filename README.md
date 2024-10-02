@@ -14,7 +14,7 @@ Welcome to the official github repository of the All in One Lotr Launcher!
 ### If you are looking for the ultimate Lord of the Rings launcher, we have some good news for you: you found it!
 The All in One Launcher uses state of the art technology to make sure you can game in peace.
 <br>
-With **built in Multiplayer support trough Arena**, Multiplayer gaming has never been this easy, join the more than 15,000 registered players, and battle it out in Arena!
+With **built in Multiplayer support trough Arena**, Multiplayer gaming has never been this easy, join the more than 20,000 registered players, and battle it out in Arena!
 <br>
 Using the Bfme Workshop, **switching between patches and mods is effortless**, and downloading new patches, mods or maps can be done in just about 4 clicks.
 
