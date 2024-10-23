@@ -8,7 +8,7 @@
 </a>
 
 ## Welcome
-Welcome to the official github repository of the All in One Lotr Launcher!
+Welcome to the official github repository of the All in One Bfme Launcher!
 <br>
 
 ![image](https://github.com/user-attachments/assets/fce13418-6b1d-4775-8699-e209ef493274)
