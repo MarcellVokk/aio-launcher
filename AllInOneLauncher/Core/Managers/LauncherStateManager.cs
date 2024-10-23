@@ -31,6 +31,15 @@ internal static class LauncherStateManager
             Language = Properties.Settings.Default.LauncherLanguage;
     }
 
+    internal static void Activate()
+    {
+        Visible = true;
+        MainWindow.Instance!.Activate();
+        MainWindow.Instance!.Topmost = true;
+        MainWindow.Instance!.Topmost = false;
+        MainWindow.Instance!.Focus();
+    }
+
     internal static bool Visible
     {
         get => MainWindow.Instance!.ShowInTaskbar;

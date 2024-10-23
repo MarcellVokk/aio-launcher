@@ -36,10 +36,26 @@ public partial class EnabledEnhancementTile : UserControl
 
             IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Game);
             activeEntry.Opacity = IsHitTestVisible ? 1 : 0.5;
-            if (IsHitTestVisible)
-                try { activeEntryIcon.Source = new BitmapImage(new Uri(value.ArtworkUrl)); } catch { }
+
+            var artwork = new BitmapImage(new Uri(value.ArtworkUrl));
+            if (!IsHitTestVisible)
+            {
+                try
+                {
+                    var grayscaleArtwork = new FormatConvertedBitmap();
+                    grayscaleArtwork.BeginInit();
+                    grayscaleArtwork.Source = artwork;
+                    grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
+                    grayscaleArtwork.EndInit();
+
+                    activeEntryIcon.Source = grayscaleArtwork;
+                }
+                catch { }
+            }
             else
-                try { activeEntryIcon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(value.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1); } catch { }
+            {
+                activeEntryIcon.Source = artwork;
+            }
         }
     }
 

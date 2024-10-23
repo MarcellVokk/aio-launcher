@@ -100,10 +100,26 @@ public partial class LibraryTileHorizontal : UserControl
 
             IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Value.Game);
             activeEntry.Opacity = IsHitTestVisible ? 1 : 0.5;
-            if (IsHitTestVisible)
-                try { activeEntryIcon.Source = new BitmapImage(new Uri(value.Value.ArtworkUrl)); } catch { }
+
+            var artwork = new BitmapImage(new Uri(value.Value.ArtworkUrl));
+            if (!IsHitTestVisible)
+            {
+                try
+                {
+                    var grayscaleArtwork = new FormatConvertedBitmap();
+                    grayscaleArtwork.BeginInit();
+                    grayscaleArtwork.Source = artwork;
+                    grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
+                    grayscaleArtwork.EndInit();
+
+                    activeEntryIcon.Source = grayscaleArtwork;
+                }
+                catch { }
+            }
             else
-                try { activeEntryIcon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(value.Value.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1); } catch { }
+            {
+                activeEntryIcon.Source = artwork;
+            }
         }
     }
 
@@ -139,7 +155,7 @@ public partial class LibraryTileHorizontal : UserControl
     {
         try
         {
-            BfmeWorkshopEntry? activeEntry = await BfmeWorkshopStateManager.GetActivePatch(WorkshopEntry!.Value.Game);
+            BfmeWorkshopEntry? activeEntry = await BfmeWorkshopManager.GetActivePatch(WorkshopEntry!.Value.Game);
             if (activeEntry != null)
             {
                 try { activeEntry = await BfmeWorkshopDownloadManager.Download(activeEntry!.Value.Guid); } catch { }
@@ -179,8 +195,8 @@ public partial class LibraryTileHorizontal : UserControl
             if (WorkshopEntry == null)
                 return;
 
-            var workshopVersion = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Value.Guid);
-            if (WorkshopEntry != null && WorkshopEntry.Value.Guid == workshopVersion.entry.Guid && WorkshopEntry.Value.Version != workshopVersion.entry.Version)
+            var latest = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Value.Guid);
+            if (WorkshopEntry != null && WorkshopEntry.Value.Guid == latest.Guid && WorkshopEntry.Value.Version != latest.Version)
                 Dispatcher.Invoke(() => IsUpdateAvailable = true);
         }
         catch { }

@@ -12,6 +12,7 @@ internal static class BfmeLaunchManager
     internal static async void LaunchGame(Data.BfmeGame game)
     {
         LauncherStateManager.Visible = false;
+
         ProcessStartInfo startInfo = new()
         {
             WorkingDirectory = BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath),
@@ -19,12 +20,17 @@ internal static class BfmeLaunchManager
                 BfmeDefaults.DefaultGameExecutableNames[(int)game])
         };
 
-        string? activeModPath = await BfmeWorkshopStateManager.GetActiveModPath((int)game);
+        string? activeModPath = await BfmeWorkshopManager.GetActiveModPath((int)game);
         if (activeModPath != null)
         {
             startInfo.ArgumentList.Add("-mod");
             startInfo.ArgumentList.Add(activeModPath);
         }
+
+        BfmeRegistryManager.EnsureCompatibilitySettings(
+            Path.Combine(BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath), BfmeDefaults.DefaultGameExecutableNames[(int)game]));
+        BfmeRegistryManager.EnsureCompatibilitySettings(
+            Path.Combine(BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath), "game.dat"));
 
         using Process? gameProcess = Process.Start(startInfo);
         if (gameProcess == null) return;

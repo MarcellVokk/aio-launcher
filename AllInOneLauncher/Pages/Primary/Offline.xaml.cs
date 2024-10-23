@@ -142,7 +142,7 @@ public partial class Offline : UserControl
         if (gameTabs.SelectedIndex != previousSelectedIndex)
         {
             previousSelectedIndex = gameTabs.SelectedIndex;
-            activeEntry.WorkshopEntry = await BfmeWorkshopStateManager.GetActivePatch(previousSelectedIndex);
+            activeEntry.WorkshopEntry = await BfmeWorkshopManager.GetActivePatch(previousSelectedIndex);
 
             UpdateTitleImage();
             UpdatePlayButton();
@@ -185,7 +185,7 @@ public partial class Offline : UserControl
     private async void UpdateEnabledEnhancements()
     {
         enabledEnhancements.Children.Clear();
-        foreach (BfmeWorkshopEntry entry in (await BfmeWorkshopStateManager.GetActiveEnhancements(gameTabs.SelectedIndex)).Values)
+        foreach (BfmeWorkshopEntry entry in (await BfmeWorkshopManager.GetActiveEnhancements(gameTabs.SelectedIndex)).Values)
             enabledEnhancements.Children.Add(new EnabledEnhancementTile() { WorkshopEntry = entry, Margin = new Thickness(0, 0, 0, 10) });
         activeEnhancementsNullIndicator.Visibility = enabledEnhancements.Children.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
     }

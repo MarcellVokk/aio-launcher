@@ -16,6 +16,7 @@ using BfmeFoundationProject.RegistryKit;
 using BfmeFoundationProject.RegistryKit.Data;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
+using Newtonsoft.Json.Linq;
 using Settings = AllInOneLauncher.Properties.Settings;
 
 namespace AllInOneLauncher.Elements.Library;
@@ -45,21 +46,30 @@ public partial class LibraryTile : UserControl
 
             IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Game);
             content.Opacity = IsHitTestVisible ? 1 : 0.5;
-            if (IsHitTestVisible)
-                try { icon.Source = new BitmapImage(new Uri(value.ArtworkUrl)); } catch { }
+
+            var artwork = new BitmapImage(new Uri(value.ArtworkUrl));
+            if (!IsHitTestVisible)
+            {
+                try
+                {
+                    var grayscaleArtwork = new FormatConvertedBitmap();
+                    grayscaleArtwork.BeginInit();
+                    grayscaleArtwork.Source = artwork;
+                    grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
+                    grayscaleArtwork.EndInit();
+
+                    icon.Source = grayscaleArtwork;
+                }
+                catch { }
+            }
             else
-                try { icon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(value.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1); } catch { }
+            {
+                icon.Source = artwork;
+            }
 
             UpdateType();
             Task.Run(UpdateIsActive);
         }
-    }
-
-    BfmeWorkshopEntryMetadata _workshopMetadata;
-    public BfmeWorkshopEntryMetadata WorkshopMetadata
-    {
-        get => _workshopMetadata;
-        set => _workshopMetadata = value;
     }
 
     public bool IsLoading
@@ -132,14 +142,26 @@ public partial class LibraryTile : UserControl
             IsLoading = false;
             IsHitTestVisible = BfmeRegistryManager.IsInstalled(WorkshopEntry.Game);
             content.Opacity = IsHitTestVisible ? 1 : 0.5;
-            try
+
+            var artwork = new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl));
+            if (!IsHitTestVisible)
             {
-                if (IsHitTestVisible)
-                    icon.Source = new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl));
-                else
-                    icon.Source = new FormatConvertedBitmap(new BitmapImage(new Uri(WorkshopEntry.ArtworkUrl)), PixelFormats.Gray16, BitmapPalettes.Gray16, 1);
+                try
+                {
+                    var grayscaleArtwork = new FormatConvertedBitmap();
+                    grayscaleArtwork.BeginInit();
+                    grayscaleArtwork.Source = artwork;
+                    grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
+                    grayscaleArtwork.EndInit();
+
+                    icon.Source = grayscaleArtwork;
+                }
+                catch { }
             }
-            catch { }
+            else
+            {
+                icon.Source = artwork;
+            }
         });
     }
 
@@ -157,7 +179,7 @@ public partial class LibraryTile : UserControl
                     menu: [
                         new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Switch to \"{WorkshopEntry.Name}\"" : "Sync again", true, clicked: () => Sync()),
                         new ContextMenuSeparatorItem(),
-                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopMetadata.Versions != null ? WorkshopMetadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: () => Sync(x)) as ContextMenuItem).ToList() : [], WorkshopMetadata.Versions != null && WorkshopMetadata.Versions.Count > 1),
+                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopEntry.Metadata.Versions != null ? WorkshopEntry.Metadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: () => Sync(x)) as ContextMenuItem).ToList() : [], WorkshopEntry.Metadata.Versions != null && WorkshopEntry.Metadata.Versions.Count > 1),
                         new ContextMenuSeparatorItem(),
                         new ContextMenuButtonItem("Open keybinds folder", true, clicked: () =>
                         {
@@ -184,7 +206,7 @@ public partial class LibraryTile : UserControl
                     menu: [
                         new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Enable \"{WorkshopEntry.Name}\"" : "Disable", true, clicked: () => Sync()),
                         new ContextMenuSeparatorItem(),
-                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopMetadata.Versions != null ? WorkshopMetadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: () => Sync(x)) as ContextMenuItem).ToList() : [], WorkshopMetadata.Versions != null && WorkshopMetadata.Versions.Count > 1),
+                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopEntry.Metadata.Versions != null ? WorkshopEntry.Metadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: () => Sync(x)) as ContextMenuItem).ToList() : [], WorkshopEntry.Metadata.Versions != null && WorkshopEntry.Metadata.Versions.Count > 1),
                         new ContextMenuSeparatorItem(),
                         new ContextMenuButtonItem("Copy package GUID", true, clicked: () => Clipboard.SetDataObject(WorkshopEntry.Guid)),
                         new ContextMenuSeparatorItem(),
@@ -218,7 +240,7 @@ public partial class LibraryTile : UserControl
     {
         if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
         {
-            bool isActive = BfmeWorkshopStateManager.IsPatchActive(WorkshopEntry.Game, WorkshopEntry.Guid);
+            bool isActive = BfmeWorkshopManager.IsPatchActive(WorkshopEntry.Game, WorkshopEntry.Guid);
             Dispatcher.Invoke(() =>
             {
                 activeText.Visibility = Visibility.Visible;
@@ -227,7 +249,7 @@ public partial class LibraryTile : UserControl
         }
         else
         {
-            bool isActive = BfmeWorkshopStateManager.IsEnhancementActive(WorkshopEntry.Game, WorkshopEntry.Guid);
+            bool isActive = BfmeWorkshopManager.IsEnhancementActive(WorkshopEntry.Game, WorkshopEntry.Guid);
             Dispatcher.Invoke(() =>
             {
                 activeText.Visibility = Visibility.Collapsed;
@@ -259,12 +281,12 @@ public partial class LibraryTile : UserControl
     {
         try
         {
-            var workshopVersion = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Guid);
-            WorkshopMetadata = workshopVersion.metadata;
-            if (WorkshopEntry.Version != workshopVersion.entry.Version)
+            var latest = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Guid);
+            _workshopEntry.Metadata = latest.Metadata;
+            if (WorkshopEntry.Version != latest.Version)
             {
-                Dispatcher.Invoke(() => WorkshopEntry = workshopVersion.entry);
-                BfmeWorkshopLibraryManager.AddOrUpdate(await BfmeWorkshopDownloadManager.Download(workshopVersion.entry.Guid));
+                Dispatcher.Invoke(() => WorkshopEntry = latest);
+                BfmeWorkshopLibraryManager.AddOrUpdate(await BfmeWorkshopDownloadManager.Download(latest.Guid));
             }
         }
         catch { }

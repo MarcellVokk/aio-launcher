@@ -110,7 +110,7 @@ public partial class MainWindow : Window
                 if (!BfmeRegistryManager.IsInstalled(game) || (game == BfmeGame.ROTWK && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2)))
                     continue;
 
-                var activeEntry = await BfmeWorkshopStateManager.GetActivePatch((int)game);
+                var activeEntry = await BfmeWorkshopManager.GetActivePatch((int)game);
                 if (activeEntry != null)
                 {
                     try

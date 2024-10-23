@@ -41,6 +41,9 @@
                         <TextBlock x:Name="title" Text="Title" FontSize="18" FontWeight="Black" TextWrapping="Wrap" Foreground="White"/>
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock x:Name="version" Text="version" FontSize="11" FontWeight="Medium" Foreground="#59FFFFFF"/>
+                            <TextBlock Text="|" FontSize="11" FontWeight="Medium" Foreground="#59FFFFFF" Margin="7,-1,7,0"/>
+                            <Path Fill="#FF72DA56" Stroke="#FF72DA56" StrokeThickness="0.3" Stretch="Uniform" Height="8" VerticalAlignment="Center" Data="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+                            <TextBlock x:Name="downloads" Text="0" FontSize="11" FontWeight="Medium" Foreground="#59FFFFFF" Margin="3,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
                     <Grid VerticalAlignment="Bottom" Height="23" Margin="0,0,5,0">

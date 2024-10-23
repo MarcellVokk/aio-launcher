@@ -33,6 +33,7 @@ public partial class WorkshopTile : UserControl
             try { icon.Source = new BitmapImage(new Uri(value.ArtworkUrl)); } catch { }
             title.Text = value.Name;
             version.Text = value.Version;
+            downloads.Text = NumberUtils.IntToPrettyShortNum(value.Metadata.Downloads);
             author.Text = value.Author;
             IsInLibrary = BfmeWorkshopLibraryManager.IsInLibrary(value.Guid);
             UpdateType();

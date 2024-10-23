@@ -9,6 +9,9 @@ using System.Configuration;
 using WindowsShortcutFactory;
 using AllInOneLauncher.Data;
 using AllInOneLauncher.Core.Managers;
+using BfmeFoundationProject.RegistryKit.Data;
+using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace AllInOneLauncher
 {
@@ -29,17 +32,38 @@ namespace AllInOneLauncher
 
         protected override void OnStartup(StartupEventArgs e)
         {
+#if DEBUG
+#else
+            if (File.Exists(Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe")) && Path.GetDirectoryName(Environment.ProcessPath)!.ToLower().Trim('\\').Trim('/') != LauncherUpdateManager.LauncherAppDirectory.ToLower().Trim('\\').Trim('/'))
+            {
+                MessageBox.Show("You already have the All In One Launcher installed. Open it from the shortcut on your desktop!", "Launcher already installed", MessageBoxButton.OK);
+                ExitImmediately();
+                return;
+            }
+#endif
+
             Mutex = new Mutex(true, _mutexName, out bool launcherNotOpenAlready);
             bool launcherOpenAlready = !launcherNotOpenAlready;
             Args = Environment.GetCommandLineArgs().Skip(1).ToArray();
 
+            if (Args.Length > 0 && Args[0] == "--Uninstall")
+            {
+                Uninstall();
+                foreach (var p in Process.GetProcessesByName("AllInOneLauncher"))
+                    p.Kill();
+                return;
+            }
+
             if (launcherOpenAlready)
             {
-                using var client = new NamedPipeClientStream(".", _pipeName, PipeDirection.Out);
-                client.Connect(3000);
-                using var writer = new StreamWriter(client);
-                writer.WriteLine("SHOW_WINDOW");
-                writer.Flush();
+                try
+                {
+                    using var client = new NamedPipeClientStream(".", _pipeName, PipeDirection.Out);
+                    client.Connect(3000);
+                    Thread.Sleep(500);
+                }
+                catch { }
+                ExitImmediately();
                 return;
             }
 
@@ -47,6 +71,7 @@ namespace AllInOneLauncher
 
             StartServer();
             EnsureShortcut();
+            EnsureAppConfig();
 
             var mainWindow = new MainWindow();
             mainWindow.Show();
@@ -65,44 +90,105 @@ namespace AllInOneLauncher
 
                 while (true)
                 {
-                    server.WaitForConnection();
-                    using var reader = new StreamReader(server);
-                    var message = reader.ReadLine();
-                    if (message == "SHOW_WINDOW")
+                    try
                     {
-                        Current.Dispatcher.Invoke(() =>
-                        {
-                            var mainWindow = Current.MainWindow;
-                            if (mainWindow != null)
-                            {
-                                if (mainWindow.WindowState == WindowState.Minimized)
-                                {
-                                    mainWindow.WindowState = WindowState.Normal;
-                                }
-                                mainWindow.Activate();
-                                mainWindow.Topmost = true;
-                                mainWindow.Topmost = false;
-                                mainWindow.Focus();
-                            }
-                        });
+                        server.WaitForConnection();
+                        Dispatcher.Invoke(() => LauncherStateManager.Activate());
+                        server.Disconnect();
                     }
-
-                    server.Disconnect();
+                    catch { }
                 }
             });
         }
 
         private void EnsureShortcut()
         {
-            if (!File.Exists(Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe")))
-                return;
-
             using var shortcut = new WindowsShortcut
             {
                 Path = Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe"),
                 Description = "All-in-One Launcher"
             };
             shortcut.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "All in One Launcher.lnk"));
+        }
+
+        private void EnsureAppConfig()
+        {
+            try
+            {
+                if (!Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "All In One Launcher")))
+                    Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "All In One Launcher"));
+
+                using var shortcut = new WindowsShortcut
+                {
+                    Path = Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe"),
+                    Description = "All-in-One Launcher"
+                };
+                shortcut.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "All In One Launcher", "All in One Launcher.lnk"));
+            }
+            catch { }
+
+            try
+            {
+                if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "Patch 2.22 Launcher")))
+                    Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "Patch 2.22 Launcher"), true);
+            }
+            catch { }
+
+            try
+            {
+                try
+                {
+                    using RegistryKey? keyOldApp = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\All In One Launcher_is1", false);
+                    string oldInstallLocation = keyOldApp?.GetValue("InstallLocation") as string ?? "";
+
+                    if (Directory.Exists(oldInstallLocation))
+                        Directory.Delete(oldInstallLocation, true);
+
+                    Registry.LocalMachine.DeleteSubKeyTree(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\All In One Launcher_is1", false);
+                }
+                catch { }
+
+                using RegistryKey? keyApp = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\All In One Launcher", true);
+                keyApp?.SetValue("DisplayIcon", Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe"));
+                keyApp?.SetValue("DisplayName", "All In One Launcher");
+                keyApp?.SetValue("DisplayVersion", BuildInfo.BuildIdentifier);
+                keyApp?.SetValue("Publisher", "The Bfme Foundation Team");
+                keyApp?.SetValue("EstimatedSize", "400000", RegistryValueKind.DWord);
+                keyApp?.SetValue("InstallDate", DateTime.Today);
+                keyApp?.SetValue("InstallLocation", LauncherUpdateManager.LauncherAppDirectory);
+                keyApp?.SetValue("VersionMajor", BuildInfo.BuildIdentifier.Split('.')[0], RegistryValueKind.DWord);
+                keyApp?.SetValue("VersionMinor", BuildInfo.BuildIdentifier.Split('.')[1], RegistryValueKind.DWord);
+                keyApp?.SetValue("Version", $"{BuildInfo.BuildIdentifier.Split('.')[2]}{BuildInfo.BuildIdentifier.Split('.')[3]}", RegistryValueKind.DWord);
+                keyApp?.SetValue("UninstallString", $"{Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe")} --Uninstall");
+            }
+            catch { }
+
+            try
+            {
+                Registry.LocalMachine.DeleteSubKeyTree(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Patch 2.22 Launcher_is1", false);
+            }
+            catch { }
+        }
+
+        public void Uninstall()
+        {
+            if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "All in One Launcher.lnk")))
+                File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "All in One Launcher.lnk"));
+
+            if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "All In One Launcher")))
+                Directory.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "Programs", "All In One Launcher"), true);
+
+            Registry.LocalMachine.DeleteSubKeyTree(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\All In One Launcher", false);
+
+            MessageBox.Show("The Launcher was uninstalled successfuly.", "Uninstall complete", MessageBoxButton.OK);
+
+            Process.Start(new ProcessStartInfo()
+            {
+                Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe") + "\"",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                FileName = "cmd.exe"
+            });
         }
 
         protected override void OnExit(ExitEventArgs e)
