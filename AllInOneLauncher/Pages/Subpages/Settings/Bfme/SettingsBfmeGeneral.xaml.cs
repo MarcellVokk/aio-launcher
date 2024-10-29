@@ -37,6 +37,11 @@ public partial class SettingsBfmeGeneral : UserControl
     private void OnLanguageOptionSelected(object sender, System.EventArgs e)
     {
         BfmeRegistryManager.SetKeyValue(Game, BfmeRegistryKey.Language, LanguageDropdown.SelectedValue);
+        if (Game == BfmeGame.ROTWK)
+            BfmeRegistryManager.SetKeyValue(BfmeGame.BFME2, BfmeRegistryKey.Language, LanguageDropdown.SelectedValue);
+        if (Game == BfmeGame.BFME2)
+            BfmeRegistryManager.SetKeyValue(BfmeGame.ROTWK, BfmeRegistryKey.Language, LanguageDropdown.SelectedValue);
+
         Primary.Settings.NeedsResync = true;
         Properties.Settings.Default.Save();
     }

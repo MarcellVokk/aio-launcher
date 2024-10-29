@@ -20,7 +20,6 @@
 
 
     <!--=====================  MainWindow  =====================-->
-    <system:String x:Key="MainWindowTitle">All-in-One Launcher av Ravo92 &amp; Bfme Foundation Project</system:String>
     <system:String x:Key="MainWindowSingleplayerTab">ENSPARE</system:String>
     <system:String x:Key="MainWindowMultiplayerTab">FLERSPARE</system:String>
     <system:String x:Key="MainWindowGuidesTab">GUIDER</system:String>

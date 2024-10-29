@@ -7,7 +7,7 @@
         xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
         xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
         mc:Ignorable="d"
-        Title="{DynamicResource MainWindowTitle}" FontSize="14" WindowStartupLocation="CenterScreen" SizeChanged="OnSizeChanged" WindowStyle="ThreeDBorderWindow" Visibility="Visible" SnapsToDevicePixels="True" Loaded="OnLoad" Closing="LauncherMainWindow_Closing" RenderOptions.BitmapScalingMode="HighQuality">
+        Title="All in One Bfme Launcher" FontSize="14" WindowStartupLocation="CenterScreen" SizeChanged="OnSizeChanged" WindowStyle="ThreeDBorderWindow" Visibility="Visible" SnapsToDevicePixels="True" Loaded="OnLoad" Closing="LauncherMainWindow_Closing" RenderOptions.BitmapScalingMode="HighQuality">
     <Grid x:Name="windowGrid">
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/BGMap.png"/>

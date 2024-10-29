@@ -20,7 +20,6 @@
 
 
     <!--=====================  MainWindow  =====================-->
-    <system:String x:Key="MainWindowTitle">All-in-One Launcher от Ravo92 &amp; Проект Bfme Foundation</system:String>
     <system:String x:Key="MainWindowSingleplayerTab">ОДИНОЧНАЯ ИГРА</system:String>
     <system:String x:Key="MainWindowMultiplayerTab">МНОГОПОЛЬЗОВАТЕЛЬСКАЯ ИГРА</system:String>
     <system:String x:Key="MainWindowGuidesTab">РУКОВОДСТВА</system:String>

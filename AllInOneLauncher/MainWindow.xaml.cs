@@ -105,7 +105,9 @@ public partial class MainWindow : Window
 
         if (Pages.Primary.Settings.NeedsResync)
         {
-            foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)))
+            Pages.Primary.Settings.NeedsResync = false;
+
+            foreach (BfmeGame game in Enum.GetValues(typeof(BfmeGame)).Cast<BfmeGame>().Where(g => g != BfmeGame.NONE))
             {
                 if (!BfmeRegistryManager.IsInstalled(game) || (game == BfmeGame.ROTWK && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2)))
                     continue;
@@ -124,8 +126,6 @@ public partial class MainWindow : Window
                 }
             }
         }
-
-        Pages.Primary.Settings.NeedsResync = false;
     }
 
 

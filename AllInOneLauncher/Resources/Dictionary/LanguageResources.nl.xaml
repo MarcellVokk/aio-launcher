@@ -16,7 +16,6 @@
     <system:String x:Key="GenericFree">GRATIS</system:String>
 
     <!--=====================  MainWindow  =====================-->
-    <system:String x:Key="MainWindowTitle">All-in-One Launcher door Ravo92 &amp; het Bfme Foundation Project</system:String>
     <system:String x:Key="MainWindowSingleplayerTab">SINGLEPLAYER</system:String>
     <system:String x:Key="MainWindowMultiplayerTab">MULTIPLAYER</system:String>
     <system:String x:Key="MainWindowGuidesTab">HANDLEIDINGEN</system:String>

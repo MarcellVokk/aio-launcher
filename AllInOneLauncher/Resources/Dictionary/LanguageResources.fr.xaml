@@ -16,7 +16,6 @@
     <system:String x:Key="GenericFree">GRATUIT</system:String>
 
     <!--=====================  MainWindow  =====================-->
-    <system:String x:Key="MainWindowTitle">Launcher Tout-en-un par Ravo92 &amp; le Projet Bfme Foundation</system:String>
     <system:String x:Key="MainWindowSingleplayerTab">SOLO</system:String>
     <system:String x:Key="MainWindowMultiplayerTab">MULTIJOUEUR</system:String>
     <system:String x:Key="MainWindowGuidesTab">GUIDES</system:String>
