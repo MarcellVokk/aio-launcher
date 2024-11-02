@@ -5,6 +5,7 @@ namespace AllInOneLauncher.Elements.Generic;
 
 public abstract class PopupBody : UserControl
 {
+    public virtual ColorStyle ColorStyle => ColorStyle.Regular;
     public Action<string[]>? OnSubmited;
     public Action? ClosePopup;
 

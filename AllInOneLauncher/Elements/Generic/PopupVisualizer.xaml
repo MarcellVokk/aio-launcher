@@ -4,25 +4,46 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AllInOneLauncher.Elements"
+             xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid x:Name="root" Opacity="0" d:Opacity="1" IsHitTestVisible="False">
         <Grid x:Name="background" Background="#CC0A0A0C" MouseUp="OnMouseUp"/>
-        <Grid x:Name="popupBody">
-            <Border CornerRadius="6" Margin="-19.8" Background="Black">
-                <Border.Effect>
-                    <DropShadowEffect BlurRadius="50" Opacity="0.5" Color="Black" ShadowDepth="8" Direction="270"/>
-                </Border.Effect>
-            </Border>
-            <Border CornerRadius="6" Margin="-20">
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                        <GradientStop Color="#FF232831" Offset="1"/>
-                        <GradientStop Color="#FF292D37"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
-            <Border x:Name="content"/>
-        </Grid>
+        <generic:SmoothScrollViewer>
+            <Grid x:Name="popupBody">
+                <Border x:Name="border_background" CornerRadius="6" Margin="-19.8" Background="Black">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="50" Opacity="0.5" Color="Black" ShadowDepth="8" Direction="270"/>
+                    </Border.Effect>
+                </Border>
+                <Border x:Name="navyStyle" CornerRadius="6" Margin="-20" Visibility="Visible">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                            <GradientStop Color="#FF232831" Offset="1"/>
+                            <GradientStop Color="#FF292D37"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Grid x:Name="acrylicStyle" Margin="-20" Visibility="Collapsed">
+                    <Grid.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Background="Black" SnapsToDevicePixels="True" CornerRadius="{Binding ElementName=border_background, Path=CornerRadius}" Width="{Binding ElementName=border_background, Path=ActualWidth}" Height="{Binding ElementName=border_background, Path=ActualHeight}"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Grid.OpacityMask>
+                    <generic:Acrylic/>
+                </Grid>
+                <Border x:Name="content">
+                    <Border.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Background="Black" SnapsToDevicePixels="True" CornerRadius="{Binding ElementName=border_background, Path=CornerRadius}" Width="{Binding ElementName=border_background, Path=ActualWidth}" Height="{Binding ElementName=border_background, Path=ActualHeight}"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Border.OpacityMask>
+                </Border>
+            </Grid>
+        </generic:SmoothScrollViewer>
     </Grid>
 </UserControl>

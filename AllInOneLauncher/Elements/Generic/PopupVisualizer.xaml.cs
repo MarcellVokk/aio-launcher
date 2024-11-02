@@ -68,6 +68,10 @@ public partial class PopupVisualizer : UserControl
         popup.VerticalAlignment = VerticalAlignment.Stretch;
         popup.HorizontalAlignment = HorizontalAlignment.Stretch;
 
+        Instance.navyStyle.Visibility = (popup.ColorStyle == ColorStyle.Navy || popup.ColorStyle == ColorStyle.Regular) ? Visibility.Visible : Visibility.Collapsed;
+        Instance.acrylicStyle.Visibility = popup.ColorStyle == ColorStyle.Acrylic ? Visibility.Visible : Visibility.Collapsed;
+        ((SolidColorBrush)Instance.background.Background).Opacity = (popup.ColorStyle == ColorStyle.Navy || popup.ColorStyle == ColorStyle.Regular) ? 0.8 : 0.7;
+
         Instance.popupBody.RenderTransformOrigin = new Point(0.5, 0.5);
         Instance.popupBody.RenderTransform = new ScaleTransform(1, 1);
 
@@ -79,6 +83,18 @@ public partial class PopupVisualizer : UserControl
         Instance.root.BeginAnimation(OpacityProperty, opacityAnimation);
 
         ((Panel)Instance.Parent).Children.OfType<FrameworkElement>().First(x => x.Name == "outerContent").Effect = new BlurEffect() { Radius = 8 };
+
+        Task.Run(async () =>
+        {
+            await Task.Delay(TimeSpan.FromSeconds(0.05));
+            popup.Dispatcher.Invoke(() => popup.InvalidateVisual());
+            await Task.Delay(TimeSpan.FromSeconds(0.05));
+            popup.Dispatcher.Invoke(() => popup.InvalidateVisual());
+            await Task.Delay(TimeSpan.FromSeconds(0.05));
+            popup.Dispatcher.Invoke(() => popup.InvalidateVisual());
+            await Task.Delay(TimeSpan.FromSeconds(0.05));
+            popup.Dispatcher.Invoke(() => popup.InvalidateVisual());
+        });
     }
 
     public static void HidePopup()

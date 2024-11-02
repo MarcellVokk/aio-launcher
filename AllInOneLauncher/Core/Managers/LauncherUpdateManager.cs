@@ -12,6 +12,7 @@ using AllInOneLauncher.Core.Utils;
 using AllInOneLauncher.Elements;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Popups;
+using BfmeFoundationProject.HttpInstruments;
 using Windows.Storage;
 
 namespace AllInOneLauncher.Core.Managers;
@@ -28,6 +29,8 @@ public static class LauncherUpdateManager
 
         try
         {
+            using HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
+
             if (!Directory.Exists(LauncherAppDirectory))
                 Directory.CreateDirectory(LauncherAppDirectory);
 
@@ -37,7 +40,7 @@ public static class LauncherUpdateManager
             try
             {
                 curentVersionHash = File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe")) ? await Task.Run(() => FileUtils.GetFileMd5Hash(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"))) : "";
-                latestVersionHash = await HttpUtils.Get("applications/versionHash", new Dictionary<string, string>() { { "name", "all-in-one-launcher" }, { "version", "main" }, });
+                latestVersionHash = await client.GetStringAsync($"https://bfmeladder.com/api/applications/versionHash?name=all-in-one-launcher&version=main");
             }
             catch
             {
@@ -61,7 +64,7 @@ public static class LauncherUpdateManager
             LauncherUpdatePopup updatePopup = new();
             PopupVisualizer.ShowPopup(updatePopup);
 
-            await HttpUtils.Download($"https://arena-files.bfmeladder.com/application-builds/all-in-one-launcher-main", Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), (progress) => updatePopup.LoadProgress = progress);
+            await HttpsInstruments.Download($"https://arena-files.bfmeladder.com/application-builds/all-in-one-launcher-main", Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), (progress) => updatePopup.LoadProgress = progress);
             RestartLauncher(afterUpdate: true);
         }
         catch (Exception ex)

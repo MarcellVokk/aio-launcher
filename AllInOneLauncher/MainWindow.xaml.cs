@@ -198,7 +198,8 @@ public partial class MainWindow : Window
     private void OnGuidesTabClicked(object sender, MouseButtonEventArgs e) => ShowGuides();
     private void OnAboutTabClicked(object sender, MouseButtonEventArgs e) => ShowAbout();
 
-    private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Pages.Primary.Settings("LauncherGeneral"));
+    //private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Pages.Primary.Settings("LauncherGeneral"));
+    private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => PopupVisualizer.ShowPopup(new MessagePopup("Hello", "Hello world"));
     private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo(((FrameworkElement)sender).Tag.ToString() ?? "") { UseShellExecute = true });
 
     private void OnLoad(object sender, RoutedEventArgs e) => CheckSize();

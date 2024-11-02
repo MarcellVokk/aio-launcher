@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace AllInOneLauncher.Elements.Generic;
 
@@ -19,9 +20,10 @@ public partial class Acrylic : UserControl
             return;
 
         Point pos = this.TransformToVisual(MainWindow.Instance!.windowGrid).Transform(new Point(0, 0));
+        var rsz = MainWindow.Instance!.windowGrid.TransformToDescendant(this).TransformBounds(new Rect(0, 0, MainWindow.Instance!.windowGrid.ActualWidth, MainWindow.Instance!.windowGrid.ActualHeight));
         image.Margin = new Thickness(-pos.X, -pos.Y, 0, 0);
-        image.Width = MainWindow.Instance!.windowGrid.ActualWidth;
-        image.Height = MainWindow.Instance!.windowGrid.ActualHeight;
+        image.Width = rsz.Width;
+        image.Height = rsz.Height;
     }
 
     private void OnLayoutUpdated(object sender, EventArgs e)

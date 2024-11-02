@@ -6,7 +6,7 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="10,0,10,0"/>
+        <Setter Property="Padding" Value="15,0,15,0"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontWeight" Value="Medium"/>
@@ -16,7 +16,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
                         <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0" CornerRadius="0" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="15,0,15,0" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
