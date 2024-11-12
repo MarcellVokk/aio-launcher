@@ -9,7 +9,7 @@ using System.Configuration;
 using WindowsShortcutFactory;
 using AllInOneLauncher.Data;
 using AllInOneLauncher.Core.Managers;
-using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.BfmeKit.Data;
 using Microsoft.Win32;
 using System.Diagnostics;
 

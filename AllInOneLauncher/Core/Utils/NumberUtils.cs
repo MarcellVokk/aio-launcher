@@ -8,7 +8,7 @@ namespace AllInOneLauncher.Core.Utils
 {
     public static class NumberUtils
     {
-        public static string IntToPrettyShortNum(int num)
+        public static string IntAsPrettyNumber(int num)
         {
             int i = (int)Math.Pow(10, (int)Math.Max(0, Math.Log10(num) - 2));
             num = num / i * i;

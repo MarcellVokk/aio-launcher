@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Popups;
 using AllInOneLauncher.Properties;
-using BfmeFoundationProject.RegistryKit;
+using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 

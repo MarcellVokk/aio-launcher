@@ -14,8 +14,8 @@ using AllInOneLauncher.Data;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Pages.Primary;
 using AllInOneLauncher.Popups;
-using BfmeFoundationProject.RegistryKit;
-using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.BfmeKit;
+using BfmeFoundationProject.BfmeKit.Data;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 using Settings = AllInOneLauncher.Properties.Settings;
@@ -198,8 +198,7 @@ public partial class MainWindow : Window
     private void OnGuidesTabClicked(object sender, MouseButtonEventArgs e) => ShowGuides();
     private void OnAboutTabClicked(object sender, MouseButtonEventArgs e) => ShowAbout();
 
-    //private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Pages.Primary.Settings("LauncherGeneral"));
-    private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => PopupVisualizer.ShowPopup(new MessagePopup("Hello", "Hello world"));
+    private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Pages.Primary.Settings("LauncherGeneral"));
     private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo(((FrameworkElement)sender).Tag.ToString() ?? "") { UseShellExecute = true });
 
     private void OnLoad(object sender, RoutedEventArgs e) => CheckSize();

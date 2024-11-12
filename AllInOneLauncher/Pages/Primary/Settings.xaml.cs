@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using AllInOneLauncher.Core.Managers;
 using AllInOneLauncher.Data;
-using BfmeFoundationProject.RegistryKit;
+using BfmeFoundationProject.BfmeKit;
 
 namespace AllInOneLauncher.Pages.Primary;
 

@@ -14,6 +14,8 @@
     <system:String x:Key="GenericPlay">JOUER</system:String>
     <system:String x:Key="GenericAdd">AJOUTER</system:String>
     <system:String x:Key="GenericFree">GRATUIT</system:String>
+    <system:String x:Key="GenericYes">YES</system:String>
+    <system:String x:Key="GenericNo">NO</system:String>
 
     <!--=====================  MainWindow  =====================-->
     <system:String x:Key="MainWindowSingleplayerTab">SOLO</system:String>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AllInOneLauncher.Elements"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignWidth="800">
     <Border Background="#28B7B7B7" CornerRadius="6">
         <StackPanel>
             <Grid Margin="10">
@@ -15,86 +15,11 @@
                 </TextBlock>
                 <TextBlock x:Name="date" Text="2 days ago" HorizontalAlignment="Right" Foreground="#4CFFFFFF" FontSize="14" FontWeight="Regular"/>
             </Grid>
-            <TextBlock x:Name="content" Foreground="White" FontSize="15" FontWeight="Regular" Margin="10,10,10,0">
-        Campaign<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Added Train Archers ability to Haldir (level 4)<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Damrod's Distortion range increased by 100%<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Gondor Mounted Rangers' command points cost decreased to  10  (was 15)<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Eomer Eored Rohirrim's health increased to  500  (was 350)<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Dol Amroth (Swan) Knight's health increased to  500<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Dol Amroth (Swan) Knight's armor vs Pikemen increased by 25%<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Dol Amroth (Swan) Knight's armor vs arrows increased by 5%<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Noldor Warrior's health increased to  320  (was 220)<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Added a Banner Carrier for Noldor Warriors<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Rohan Royal Guard's health increased to  550  (was 450)<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Added a Banner Carrier for Royal Royal Guards<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Gondor Citadel Guard's health increased to  550  (was 450)<LineBreak/>
-        <BulletDecorator Margin="24,0,5,2">
-            <BulletDecorator.Bullet>
-                <Ellipse Height="6" Width="6" Fill="White"/>
-            </BulletDecorator.Bullet>
-        </BulletDecorator>
-        Good Campaign: Added a Banner Carrier for Gondor Citadel Guards<LineBreak/>
+            <TextBlock x:Name="content" Foreground="White" FontSize="15" FontWeight="Regular" Margin="10,10,10,10">
+                Bug Fixes:<LineBreak/>
+                    - fix1<LineBreak/>
+                    - fix2<LineBreak/>
+                    - fix3
             </TextBlock>
         </StackPanel>
     </Border>

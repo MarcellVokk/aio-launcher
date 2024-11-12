@@ -16,6 +16,8 @@
     <system:String x:Key="GenericPlay">SPEL</system:String>
     <system:String x:Key="GenericAdd">LÄGG TILL</system:String>
     <system:String x:Key="GenericFree">GRATIS</system:String>
+    <system:String x:Key="GenericYes">YES</system:String>
+    <system:String x:Key="GenericNo">NO</system:String>
 
 
 

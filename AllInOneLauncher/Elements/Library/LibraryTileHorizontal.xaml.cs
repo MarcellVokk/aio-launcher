@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Popups;
 using AllInOneLauncher.Properties;
-using BfmeFoundationProject.RegistryKit;
+using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 
@@ -101,25 +101,29 @@ public partial class LibraryTileHorizontal : UserControl
             IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Value.Game);
             activeEntry.Opacity = IsHitTestVisible ? 1 : 0.5;
 
-            var artwork = new BitmapImage(new Uri(value.Value.ArtworkUrl));
-            if (!IsHitTestVisible)
+            try
             {
-                try
+                var artwork = new BitmapImage(new Uri(value.Value.ArtworkUrl));
+                if (!IsHitTestVisible)
                 {
-                    var grayscaleArtwork = new FormatConvertedBitmap();
-                    grayscaleArtwork.BeginInit();
-                    grayscaleArtwork.Source = artwork;
-                    grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
-                    grayscaleArtwork.EndInit();
+                    try
+                    {
+                        var grayscaleArtwork = new FormatConvertedBitmap();
+                        grayscaleArtwork.BeginInit();
+                        grayscaleArtwork.Source = artwork;
+                        grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
+                        grayscaleArtwork.EndInit();
 
-                    activeEntryIcon.Source = grayscaleArtwork;
+                        activeEntryIcon.Source = grayscaleArtwork;
+                    }
+                    catch { }
                 }
-                catch { }
+                else
+                {
+                    activeEntryIcon.Source = artwork;
+                }
             }
-            else
-            {
-                activeEntryIcon.Source = artwork;
-            }
+            catch { }
         }
     }
 

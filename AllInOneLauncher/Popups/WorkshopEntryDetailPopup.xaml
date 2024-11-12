@@ -7,7 +7,7 @@
              xmlns:elements="clr-namespace:AllInOneLauncher.Elements"
              xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
-             Width="1300" d:Height="1600" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,50,0,50">
+             Width="1300" MinHeight="1300" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,50">
     <Grid Margin="-20" ClipToBounds="True">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -94,46 +94,20 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <Button Grid.Column="2" Style="{StaticResource HiglightButton}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="ADD TO LIBRARY" Margin="0,0,0,10" Padding="22,12,22,12"/>
+                <Button Grid.Column="2" x:Name="mainButton" Style="{StaticResource HiglightButton}" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,10" Padding="22,12,22,12" Click="OnMainButtonClicked">
+                    <Grid>
+                        <Grid x:Name="mainButtonText" Visibility="Visible">
+                            <TextBlock x:Name="mainButtonAddToLibraryText" Text="ADD TO LIBRARY" HorizontalAlignment="Center" Visibility="Hidden"/>
+                            <TextBlock x:Name="mainButtonAlreadyInLibraryText" Text="IN YOUR LIBRARY" HorizontalAlignment="Center" Visibility="Hidden"/>
+                            <TextBlock x:Name="mainButtonPlayText" Text="{DynamicResource GenericPlay}" HorizontalAlignment="Center" Visibility="Visible"/>
+                        </Grid>
+                        <generic:MiniSpinner x:Name="mainButtonLoadingSpinner" HorizontalAlignment="Center" VerticalAlignment="Center" IsLoading="False" d:IsLoading="True"/>
+                    </Grid>
+                </Button>
             </Grid>
             <StackPanel Margin="0,50,0,0">
                 <TextBlock Text="Screenshots" FontSize="20" FontWeight="Black" Foreground="White" HorizontalAlignment="Left"/>
-                <Grid Margin="0,15,0,0">
-                    <Grid>
-                        <Grid.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                <GradientStop Color="White"/>
-                                <GradientStop Color="Transparent" Offset="1"/>
-                                <GradientStop Color="White" Offset="0.9"/>
-                            </LinearGradientBrush>
-                        </Grid.OpacityMask>
-                        <StackPanel Orientation="Horizontal">
-                            <Border Background="#2DD8D8D8" CornerRadius="6">
-                                <Border.OpacityMask>
-                                    <VisualBrush>
-                                        <VisualBrush.Visual>
-                                            <Border SnapsToDevicePixels="True" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}" Background="Black"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Border.OpacityMask>
-                                <Image Width="576" Height="324" Source="https://media.moddb.com/cache/images/mods/1/52/51966/thumb_620x2000/evillvl.png"/>
-                            </Border>
-                            <Border Background="#2DD8D8D8" CornerRadius="6" Margin="10,0,0,0">
-                                <Border.OpacityMask>
-                                    <VisualBrush>
-                                        <VisualBrush.Visual>
-                                            <Border SnapsToDevicePixels="True" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}" Background="Black"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Border.OpacityMask>
-                                <Image Width="576" Height="324" Source="https://media.moddb.com/cache/images/mods/1/52/51966/thumb_620x2000/theoden.png"/>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Center" Padding="12,12,9,12" Background="Transparent">
-                        <Path Fill="#BFFFFFFF" Stroke="#BFFFFFFF" StrokeThickness="0.3" Stretch="Uniform" Height="35" VerticalAlignment="Center" Data="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"/>
-                    </Button>
-                </Grid>
+                <elements:EntryPageScreenshotLibrary x:Name="screenshots" Margin="0,15,0,0"/>
             </StackPanel>
             <StackPanel Margin="0,40,0,0">
                 <TextBlock Text="Description" FontSize="20" FontWeight="Black" Foreground="White" HorizontalAlignment="Left"/>
@@ -144,7 +118,7 @@
                 <StackPanel x:Name="changelog" Margin="0,15,0,0"/>
             </StackPanel>
         </StackPanel>
-        <Button Style="{StaticResource FlatButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="15" Margin="20" Click="OnDismiss">
+        <Button x:Name="button_close" Style="{StaticResource FlatButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="15" Margin="20" Click="OnDismiss">
             <Button.OpacityMask>
                 <VisualBrush>
                     <VisualBrush.Visual>

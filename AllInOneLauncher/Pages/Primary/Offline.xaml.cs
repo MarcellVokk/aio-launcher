@@ -11,7 +11,7 @@ using AllInOneLauncher.Data;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Elements.Offline;
 using AllInOneLauncher.Popups;
-using BfmeFoundationProject.RegistryKit;
+using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using BfmeFoundationProject.RegistryKit;
-using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.BfmeKit;
+using BfmeFoundationProject.BfmeKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 
 namespace AllInOneLauncher.Core.Managers;

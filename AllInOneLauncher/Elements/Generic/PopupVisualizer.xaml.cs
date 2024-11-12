@@ -72,6 +72,9 @@ public partial class PopupVisualizer : UserControl
         Instance.acrylicStyle.Visibility = popup.ColorStyle == ColorStyle.Acrylic ? Visibility.Visible : Visibility.Collapsed;
         ((SolidColorBrush)Instance.background.Background).Opacity = (popup.ColorStyle == ColorStyle.Navy || popup.ColorStyle == ColorStyle.Regular) ? 0.8 : 0.7;
 
+        Instance.acrylicStyle.Children.Clear();
+        if (popup.ColorStyle == ColorStyle.Acrylic) Instance.acrylicStyle.Children.Add(new Acrylic());
+
         Instance.popupBody.RenderTransformOrigin = new Point(0.5, 0.5);
         Instance.popupBody.RenderTransform = new ScaleTransform(1, 1);
 

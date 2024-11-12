@@ -16,6 +16,8 @@
     <system:String x:Key="GenericPlay">تشغيل</system:String>
     <system:String x:Key="GenericAdd">إضافة</system:String>
     <system:String x:Key="GenericFree">مجاني</system:String>
+    <system:String x:Key="GenericYes">YES</system:String>
+    <system:String x:Key="GenericNo">NO</system:String>
 
 
 

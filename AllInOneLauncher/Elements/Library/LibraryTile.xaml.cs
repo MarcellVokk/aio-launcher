@@ -12,11 +12,12 @@ using System.Windows.Media.Imaging;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Elements.Menues;
 using AllInOneLauncher.Popups;
-using BfmeFoundationProject.RegistryKit;
-using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.BfmeKit;
+using BfmeFoundationProject.BfmeKit.Data;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 using Newtonsoft.Json.Linq;
+using Windows.Graphics.DirectX;
 using Settings = AllInOneLauncher.Properties.Settings;
 
 namespace AllInOneLauncher.Elements.Library;

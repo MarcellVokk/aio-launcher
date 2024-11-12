@@ -16,6 +16,8 @@
     <system:String x:Key="GenericPlay">ИГРАТЬ</system:String>
     <system:String x:Key="GenericAdd">ДОБАВИТЬ</system:String>
     <system:String x:Key="GenericFree">БЕСПЛАТНО</system:String>
+    <system:String x:Key="GenericYes">YES</system:String>
+    <system:String x:Key="GenericNo">NO</system:String>
 
 
 

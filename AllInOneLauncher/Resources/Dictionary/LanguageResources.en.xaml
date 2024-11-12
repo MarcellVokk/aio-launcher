@@ -17,6 +17,8 @@
     <system:String x:Key="GenericAdd">ADD</system:String>
     <system:String x:Key="GenericFree">FREE</system:String>
     <system:String x:Key="GenericConfirm">CONFIRM</system:String>
+    <system:String x:Key="GenericYes">YES</system:String>
+    <system:String x:Key="GenericNo">NO</system:String>
 
 
 

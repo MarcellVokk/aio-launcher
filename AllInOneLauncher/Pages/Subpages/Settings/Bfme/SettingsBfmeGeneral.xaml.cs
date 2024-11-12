@@ -3,8 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using AllInOneLauncher.Core.Managers;
 using AllInOneLauncher.Data;
-using BfmeFoundationProject.RegistryKit;
-using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.BfmeKit;
+using BfmeFoundationProject.BfmeKit.Data;
 
 namespace AllInOneLauncher.Pages.Subpages.Settings.Bfme;
 

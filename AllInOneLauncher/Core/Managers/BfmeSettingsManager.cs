@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AllInOneLauncher.Data;
-using BfmeFoundationProject.RegistryKit;
-using BfmeFoundationProject.RegistryKit.Data;
+using BfmeFoundationProject.BfmeKit;
+using BfmeFoundationProject.BfmeKit.Data;
 
 namespace AllInOneLauncher.Core.Managers;
 

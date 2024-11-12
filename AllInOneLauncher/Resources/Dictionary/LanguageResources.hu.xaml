@@ -16,6 +16,8 @@
     <system:String x:Key="GenericPlay">INDÍTTÁS</system:String>
     <system:String x:Key="GenericAdd">HOZZÁADÁS</system:String>
     <system:String x:Key="GenericFree">SZABAD</system:String>
+    <system:String x:Key="GenericYes">IGEN</system:String>
+    <system:String x:Key="GenericNo">NEM</system:String>
 
 
 

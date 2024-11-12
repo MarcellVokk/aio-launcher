@@ -34,7 +34,7 @@ public partial class WorkshopTile : UserControl
             try { icon.Source = new BitmapImage(new Uri(value.ArtworkUrl)); } catch { }
             title.Text = value.Name;
             version.Text = value.Version;
-            downloads.Text = NumberUtils.IntToPrettyShortNum(value.Metadata.Downloads);
+            downloads.Text = NumberUtils.IntAsPrettyNumber(value.Metadata.Downloads);
             author.Text = value.Author;
             IsInLibrary = BfmeWorkshopLibraryManager.IsInLibrary(value.Guid);
             UpdateType();
@@ -54,8 +54,8 @@ public partial class WorkshopTile : UserControl
     {
         if (e.ChangedButton == MouseButton.Left)
         {
-            AddToLibrary();
-            //PopupVisualizer.ShowPopup(new WorkshopEntryDetailPopup() { WorkshopEntry = WorkshopEntry });
+            //AddToLibrary();
+            PopupVisualizer.ShowPopup(new WorkshopEntryDetailPopup() { WorkshopEntry = WorkshopEntry });
         }
         else if (e.ChangedButton == MouseButton.Right)
         {

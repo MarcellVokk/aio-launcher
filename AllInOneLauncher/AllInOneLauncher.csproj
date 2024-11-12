@@ -124,10 +124,10 @@ public static class BuildInfo
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="BfmeFoundationProject.HttpInstruments" Version="1.0.0" />
-	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="1.8.4" />
-	  <PackageReference Include="BfmeFoundationProject.RegistryKit" Version="1.1.7" />
-	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="2.0.3" />
+	  <PackageReference Include="BfmeFoundationProject.BfmeKit" Version="1.1.0" />
+	  <PackageReference Include="BfmeFoundationProject.HttpInstruments" Version="1.1.0" />
+	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="1.9.0" />
+	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="2.2.0" />
 	  <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="WindowsShortcutFactory" Version="1.2.0" />
@@ -148,6 +148,9 @@ public static class BuildInfo
 		</Compile>
 		<Compile Update="Pages\Subpages\Settings\Bfme\SettingsBfmeGeneral.xaml.cs">
 			<SubType>Code</SubType>
+		</Compile>
+		<Compile Update="Popups\YesNoPopup.xaml.cs">
+		  <SubType>Code</SubType>
 		</Compile>
 		<Compile Update="Popups\LauncherChangelogPopup.xaml.cs">
 		  <SubType>Code</SubType>
