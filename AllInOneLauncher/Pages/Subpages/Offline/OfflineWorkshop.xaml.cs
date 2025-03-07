@@ -13,9 +13,9 @@ public partial class OfflineWorkshop : UserControl
     public OfflineWorkshop()
     {
         InitializeComponent();
-        typeFilter.Options = ["{WorkshopPageFilterPatchesAndMods}", "{WorkshopPageFilterEnhancements}", "{WorkshopPageFilterEverything}"];
+        typeFilter.Options = ["{WorkshopPageFilterPatchesAndMods}", "{WorkshopPageFilterEnhancements}", "{WorkshopPageFilterMapPacks}", "{WorkshopPageFilterEverything}"];
         searchFilter.Options = ["{WorkshopPageSortByMostDownloads}", "{WorkshopPageSortByMostRecent}", "{WorkshopPageSortAlphabetical}"];
-        typeFilter.Selected = 2;
+        typeFilter.Selected = 3;
     }
 
     private int Game = 0;
@@ -45,7 +45,7 @@ public partial class OfflineWorkshop : UserControl
             noConnection.Visibility = Visibility.Hidden;
 
             workshopTiles.Children.Clear();
-            List<BfmeWorkshopEntryPreview> entries = await BfmeWorkshopQueryManager.Query(game: Game, keyword: search.Text, type: new[]{ -2, -3, -1 }[typeFilter.Selected], sortMode: searchFilter.Selected);
+            List<BfmeWorkshopEntryPreview> entries = await BfmeWorkshopQueryManager.Query(game: Game, keyword: search.Text, type: new[]{ -2, 2, 3, -1 }[typeFilter.Selected], sortMode: searchFilter.Selected);
             workshopTiles.Children.Clear();
             foreach (BfmeWorkshopEntryPreview entry in entries)
                 workshopTiles.Children.Add(new WorkshopTile() { WorkshopEntry = entry, Margin = new Thickness(0, 0, 10, 10) });

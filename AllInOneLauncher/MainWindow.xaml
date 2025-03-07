@@ -55,5 +55,6 @@
         <Border x:Name="fullContent" Visibility="Collapsed"/>
         <generic:PopupVisualizer d:Visibility="Collapsed"/>
         <generic:MenuVisualizer d:Visibility="Collapsed"/>
+        <!--<TextBlock Text="DEVELOPMENT VERSION" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="White"/>-->
     </Grid>
 </Window>

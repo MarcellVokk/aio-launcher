@@ -1,12 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using AllInOneLauncher.Core.Managers;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Data;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Elements.Offline;
@@ -19,7 +18,8 @@ namespace AllInOneLauncher.Pages.Primary;
 
 public partial class Offline : UserControl
 {
-    internal static readonly Offline Instance = new();
+    public static Offline Instance = new Offline();
+
     private int previousSelectedIndex = -1;
 
     public Offline()
@@ -48,8 +48,6 @@ public partial class Offline : UserControl
                 activeEntry.WorkshopEntry = entry;
                 activeEntry.IsLoading = true;
             }
-
-            Disabled = true;
         });
     }
 
@@ -58,7 +56,7 @@ public partial class Offline : UserControl
         Dispatcher.Invoke(() =>
         {
             activeEntry.IsLoading = false;
-            Disabled = false;
+            UpdatePlayButton();
             UpdateEnabledEnhancements();
         });
     }
@@ -72,6 +70,7 @@ public partial class Offline : UserControl
             innerTabs.IsHitTestVisible = !value;
             library.IsHitTestVisible = !value;
             enabledEnhancements.IsHitTestVisible = !value;
+            activeEntry.IsHitTestVisible = !value;
         }
     }
 
@@ -114,27 +113,8 @@ public partial class Offline : UserControl
 
     private void OnInstallGameClicked(object sender, EventArgs e)
     {
-        PopupVisualizer.ShowPopup(new InstallGameDialog(),
-            OnPopupSubmited: (submittedData) => InstallGame((BfmeGame)gameTabs.SelectedIndex, submittedData[0], submittedData[1]));
-    }
-
-    public async void InstallGame(BfmeGame game, string selectedLanguage, string selectedLocation)
-    {
-        try
-        {
-            BfmeRegistryManager.CreateNewInstallRegistry(game, Path.Combine(selectedLocation, game == BfmeGame.ROTWK ? "RotWK" : $"BFME{(int)game + 1}"), selectedLanguage);
-
-            if (game == BfmeGame.ROTWK && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2))
-                BfmeRegistryManager.CreateNewInstallRegistry(BfmeGame.BFME2, Path.Combine(selectedLocation, "BFME2"), selectedLanguage);
-
-            await BfmeWorkshopSyncManager.Sync(await BfmeWorkshopEntry.OfficialPatch((int)game));
-
-            UpdatePlayButton();
-        }
-        catch (Exception ex)
-        {
-            PopupVisualizer.ShowPopup(new ErrorPopup(ex));
-        }
+        PopupVisualizer.ShowPopup(new InstallGamePopup(),
+            OnPopupSubmited: async (submittedData) => await BfmeSyncManager.InstallGame((BfmeGame)gameTabs.SelectedIndex, submittedData[0], submittedData[1]));
     }
 
     private async void TabChanged(object sender, EventArgs e)

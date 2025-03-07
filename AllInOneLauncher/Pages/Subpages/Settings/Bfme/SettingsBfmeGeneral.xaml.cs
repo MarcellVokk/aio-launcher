@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using AllInOneLauncher.Core.Managers;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Data;
 using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.BfmeKit.Data;
+using BfmeFoundationProject.BfmeKit.Logic;
 
 namespace AllInOneLauncher.Pages.Subpages.Settings.Bfme;
 
@@ -25,6 +26,7 @@ public partial class SettingsBfmeGeneral : UserControl
 
         ResolutionDropdown.SelectedValue = BfmeSettingsManager.Get(Game, "Resolution") ?? ResolutionDropdown.Options.First();
         LanguageDropdown.SelectedValue = BfmeRegistryManager.GetKeyValue(Game, BfmeRegistryKey.Language);
+
         title.Text = Game switch
         {
             BfmeGame.BFME1 => Application.Current.FindResource("SettingsPageBFME1SectionHeader").ToString(),

@@ -1,27 +1,26 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.BfmeKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 
-namespace AllInOneLauncher.Core.Managers;
+namespace AllInOneLauncher.Core;
 
 internal static class BfmeLaunchManager
 {
-    internal static async void LaunchGame(Data.BfmeGame game)
+    internal static void LaunchGame(Data.BfmeGame game)
     {
         LauncherStateManager.Visible = false;
 
         ProcessStartInfo startInfo = new()
         {
             WorkingDirectory = BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath),
-            FileName = Path.Combine(BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath), 
+            FileName = Path.Combine(BfmeRegistryManager.GetKeyValue(game, BfmeRegistryKey.InstallPath),
                 BfmeDefaults.DefaultGameExecutableNames[(int)game])
         };
 
-        string? activeModPath = await BfmeWorkshopManager.GetActiveModPath((int)game);
-        if (activeModPath != null)
+        string activeModPath = BfmeWorkshopManager.GetActiveModPath((int)game);
+        if (activeModPath != "")
         {
             startInfo.ArgumentList.Add("-mod");
             startInfo.ArgumentList.Add(activeModPath);

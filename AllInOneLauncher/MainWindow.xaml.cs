@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
-using AllInOneLauncher.Core.Managers;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Data;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Pages.Primary;
@@ -60,8 +60,8 @@ public partial class MainWindow : Window
         Application.Current.Exit += OnApplicationExit;
         Loaded += (sender, e) => ProcessCommandLineArgs();
 
-        BfmeWorkshopSyncManager.OnSyncBegin += OnSyncBegin;
-        BfmeWorkshopSyncManager.OnSyncEnd += OnSyncEnd;
+        BfmeWorkshopSyncManager.OnSyncBegin += (e) => OnSyncBegin();
+        BfmeWorkshopSyncManager.OnSyncEnd += () => OnSyncEnd();
     }
 
     private static void ProcessCommandLineArgs()
@@ -73,19 +73,21 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnSyncBegin(BfmeWorkshopEntry entry)
+    public void OnSyncBegin()
     {
         Dispatcher.Invoke(() =>
         {
+            Offline.Instance.Disabled = true;
             settingsIcon.IsHitTestVisible = false;
             settingsIcon.Opacity = 0.4;
         });
     }
 
-    private void OnSyncEnd()
+    public void OnSyncEnd()
     {
         Dispatcher.Invoke(() =>
         {
+            Offline.Instance.Disabled = false;
             settingsIcon.IsHitTestVisible = true;
             settingsIcon.Opacity = 1;
         });
@@ -112,18 +114,8 @@ public partial class MainWindow : Window
                 if (!BfmeRegistryManager.IsInstalled(game) || (game == BfmeGame.ROTWK && !BfmeRegistryManager.IsInstalled(BfmeGame.BFME2)))
                     continue;
 
-                var activeEntry = await BfmeWorkshopManager.GetActivePatch((int)game);
-                if (activeEntry != null)
-                {
-                    try
-                    {
-                        await BfmeWorkshopSyncManager.Sync(activeEntry.Value);
-                    }
-                    catch (Exception ex)
-                    {
-                        PopupVisualizer.ShowPopup(new ErrorPopup(ex));
-                    }
-                }
+                if (await BfmeWorkshopManager.GetActivePatch((int)game) is BfmeWorkshopEntry activeEntry)
+                    await BfmeSyncManager.SyncPackage($"{activeEntry.Guid}:{activeEntry.Version}");
             }
         }
     }
@@ -199,7 +191,7 @@ public partial class MainWindow : Window
     private void OnAboutTabClicked(object sender, MouseButtonEventArgs e) => ShowAbout();
 
     private void OnSettingsButtonClicked(object sender, MouseButtonEventArgs e) => SetFullContent(new Pages.Primary.Settings("LauncherGeneral"));
-    private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo(((FrameworkElement)sender).Tag.ToString() ?? "") { UseShellExecute = true });
+    private void OnLinkButtonClicked(object sender, MouseButtonEventArgs e) => Process.Start(new ProcessStartInfo() { FileName = ((FrameworkElement)sender).Tag.ToString() ?? "", UseShellExecute = true });
 
     private void OnLoad(object sender, RoutedEventArgs e) => CheckSize();
     private void OnSizeChanged(object sender, SizeChangedEventArgs e) => CheckSize();

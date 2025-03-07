@@ -22,7 +22,7 @@
             <TextBlock Name="message" Text="Message body" Foreground="White" FontSize="15" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap"></TextBlock>
         </Border>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Grid.Column="1" Grid.Row="2" Content="Okay" VerticalAlignment="Center" Click="ButtonCancelClicked" Width="150"/>
+            <Button Grid.Column="1" Grid.Row="2" Content="{DynamicResource GenericClose}" VerticalAlignment="Center" Click="OnCancelClicked" Width="150"/>
         </StackPanel>
     </Grid>
 </generic:PopupBody>

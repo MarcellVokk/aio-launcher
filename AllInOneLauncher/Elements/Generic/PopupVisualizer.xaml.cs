@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -75,8 +76,15 @@ public partial class PopupVisualizer : UserControl
         Instance.acrylicStyle.Children.Clear();
         if (popup.ColorStyle == ColorStyle.Acrylic) Instance.acrylicStyle.Children.Add(new Acrylic());
 
-        Instance.popupBody.RenderTransformOrigin = new Point(0.5, 0.5);
+        Instance.InvalidateVisual();
+        Instance.UpdateLayout();
+        Instance.popupBody.InvalidateVisual();
+        Instance.popupBody.UpdateLayout();
+
+        Instance.popupBody.RenderTransformOrigin = new Point(0.5, (Instance.popupBody.ActualHeight - Math.Max(0, Instance.popupBody.ActualHeight - Math.Min(Instance.ActualHeight, Instance.popupBody.ActualHeight)) - Math.Min(Instance.ActualHeight / 2, Instance.popupBody.ActualHeight / 2)) / Instance.popupBody.ActualHeight);
         Instance.popupBody.RenderTransform = new ScaleTransform(1, 1);
+
+        Instance.scrollViewer.ScrollToVerticalOffset(0);
 
         DoubleAnimation scaleAnimation = new() { From = 0.4, To = 1, Duration = TimeSpan.FromSeconds(0.2), EasingFunction = new QuadraticEase() };
         Instance.popupBody.RenderTransform.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnimation);
@@ -139,5 +147,19 @@ public partial class PopupVisualizer : UserControl
     private void OnMouseUp(object sender, MouseButtonEventArgs e)
     {
         //HidePopup();
+    }
+}
+
+public class BorderSizeConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
+    {
+        var s = value as double? ?? 0;
+        return 40;
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, System.Globalization.CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

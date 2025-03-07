@@ -5,16 +5,15 @@ using System.Linq;
 using System.Windows;
 using AllInOneLauncher.Elements.Disk;
 using AllInOneLauncher.Elements.Generic;
-using AllInOneLauncher.Properties;
 
 namespace AllInOneLauncher.Popups;
 
-public partial class InstallGameDialog : PopupBody
+public partial class InstallGamePopup : PopupBody
 {
     private static readonly Dictionary<string, DriveInfo> Drives =
         DriveInfo.GetDrives().ToDictionary(x => x.RootDirectory.FullName);
 
-    public InstallGameDialog()
+    public InstallGamePopup()
     {
         InitializeComponent();
 
@@ -45,8 +44,7 @@ public partial class InstallGameDialog : PopupBody
         }
     }
 
-    private void ButtonAcceptClicked(object sender, RoutedEventArgs e) => Submit(LanguageDropdown.SelectedValue,
-        Selectable.GetSelectedTagInContainer(locations)!.ToString()!);
+    private void OnInstallClicked(object sender, RoutedEventArgs e) => Submit(LanguageDropdown.SelectedValue, Selectable.GetSelectedTagInContainer(locations)!.ToString()!);
 
-    private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
+    private void OnCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
 }

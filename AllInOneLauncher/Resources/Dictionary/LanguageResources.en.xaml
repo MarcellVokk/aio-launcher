@@ -45,6 +45,7 @@
 
     <system:String x:Key="LibraryPageFilterPatchesAndMods">Patches and mods</system:String>
     <system:String x:Key="LibraryPageFilterEnhancements">Enhancements</system:String>
+    <system:String x:Key="LibraryPageFilterMapPacks">Map packs</system:String>
     <system:String x:Key="LibraryPageFilterSnapshots">Snapshots</system:String>
     <system:String x:Key="LibraryPageFilterEverything">Everything</system:String>
 
@@ -53,6 +54,7 @@
     
     <system:String x:Key="WorkshopPageFilterPatchesAndMods">Patches and mods</system:String>
     <system:String x:Key="WorkshopPageFilterEnhancements">Enhancements</system:String>
+    <system:String x:Key="WorkshopPageFilterMapPacks">Map packs</system:String>
     <system:String x:Key="WorkshopPageFilterEverything">Everything</system:String>
     
     <system:String x:Key="WorkshopPageSortByMostDownloads">Most downloads</system:String>
@@ -102,20 +104,40 @@
 
     <!--=====================  Settings/BFME Settings/Language & Sound  =====================-->
     <system:String x:Key="SettingsPageBFMESectionLanguageLanguage">Game language</system:String>
-    
-    
 
-    <!--=====================  InstallGameDialog  =====================-->
-    <system:String x:Key="InstallGameDialogTitle">INSTALL GAME</system:String>
-    <system:String x:Key="InstallGameDialogLanguage">Language</system:String>
-    <system:String x:Key="InstallGameDialogLocation">Location</system:String>
 
-    <!--=====================  SelectNewLocationPopup  =====================-->
-    <system:String x:Key="SelectNewLocationPopupTitle">ADD NEW LIBRARY</system:String>
-    <system:String x:Key="SelectNewLocationPopupSelectCustom">Select custom location</system:String>
+
+    <!--=====================  LauncherUpdatePopup  =====================-->
+    <system:String x:Key="LauncherUpdatePopupTitle">UPDATING</system:String>
+    <system:String x:Key="LauncherUpdatePopupDescription">Downloading launcher files</system:String>
+
+    <!--=====================  InstallGamePopup  =====================-->
+    <system:String x:Key="InstallGamePopupTitle">INSTALL GAME</system:String>
+    <system:String x:Key="InstallGamePopupLanguage">Language</system:String>
+    <system:String x:Key="InstallGamePopupLocation">Location</system:String>
+
+    <!--=====================  InstallGamePopup  =====================-->
+    <system:String x:Key="PackagePagePopupAddToLibrary">ADD TO LIBRARY</system:String>
+    <system:String x:Key="PackagePagePopupInYourLibrary">IN YOUR LIBRARY</system:String>
+    <system:String x:Key="PackagePagePopupDownloads">Downloads</system:String>
+    <system:String x:Key="PackagePagePopupGame">Game</system:String>
+    <system:String x:Key="PackagePagePopupType">Type</system:String>
+    <system:String x:Key="PackagePagePopupLanguage">Language</system:String>
+    <system:String x:Key="PackagePagePopupSize">Size</system:String>
+    <system:String x:Key="PackagePagePopupScreenshots">Screenshots</system:String>
+    <system:String x:Key="PackagePagePopupDescription">Description</system:String>
+    <system:String x:Key="PackagePagePopupWhatsNew">What's new</system:String>
+
+    <!--=====================  ScriptedPackagePopup  =====================-->
+    <system:String x:Key="ScriptedPackagePopupRequirements">Requirements:</system:String>
+
+    <!--=====================  ScriptedPackagePopup/RequirementItem  =====================-->
+    <system:String x:Key="ScriptedPackageRequirementComplete">Complete</system:String>
+    <system:String x:Key="ScriptedPackageRequirementActionRequired">Action required</system:String>
+    <system:String x:Key="ScriptedPackageRequirementCompletePrevious">Complete previous</system:String>
 
     <!--=====================  ErrorPopup  =====================-->
     <system:String x:Key="ErrorPopupTitle">ERROR</system:String>
     <system:String x:Key="ErrorPopupCopyError">Copy text</system:String>
-    <system:String x:Key="ErrorPopupCopyErrorClicked">Text copied to clipboard!</system:String>
+    <system:String x:Key="ErrorPopupErrorCopied">Copied!</system:String>
 </ResourceDictionary>

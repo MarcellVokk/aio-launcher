@@ -124,10 +124,10 @@ public static class BuildInfo
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="BfmeFoundationProject.BfmeKit" Version="1.1.0" />
-	  <PackageReference Include="BfmeFoundationProject.HttpInstruments" Version="1.1.0" />
-	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="1.9.0" />
-	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="2.2.0" />
+	  <PackageReference Include="BfmeFoundationProject.BfmeKit" Version="2.0.0" />
+	  <PackageReference Include="BfmeFoundationProject.HttpInstruments" Version="2.0.0" />
+	  <PackageReference Include="BfmeFoundationProject.OnlineKit" Version="2.0.0" />
+	  <PackageReference Include="BfmeFoundationProject.WorkshopKit" Version="2.5.0" />
 	  <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	  <PackageReference Include="WindowsShortcutFactory" Version="1.2.0" />
@@ -155,7 +155,7 @@ public static class BuildInfo
 		<Compile Update="Popups\LauncherChangelogPopup.xaml.cs">
 		  <SubType>Code</SubType>
 		</Compile>
-		<Compile Update="Popups\ExternalInstallerPopup.xaml.cs">
+		<Compile Update="Popups\ScriptedPackagePopup.xaml.cs">
 		  <SubType>Code</SubType>
 		</Compile>
 		<Compile Update="Popups\LauncherUpdatePopup.xaml.cs">
@@ -167,7 +167,7 @@ public static class BuildInfo
 		<Compile Update="Popups\ConfirmPopup.xaml.cs">
 		  <SubType>Code</SubType>
 		</Compile>
-		<Compile Update="Popups\WorkshopEntryDetailPopup.xaml.cs">
+		<Compile Update="Popups\PackagePagePopup.xaml.cs">
 		  <SubType>Code</SubType>
 		</Compile>
 		<Compile Update="Popups\MessagePopup.xaml.cs">

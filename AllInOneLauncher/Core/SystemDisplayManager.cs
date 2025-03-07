@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace AllInOneLauncher.Core.Managers;
+namespace AllInOneLauncher.Core;
 
 public static class SystemDisplayManager
 {
@@ -63,8 +63,8 @@ public static class SystemDisplayManager
         allResolutions = allResolutions
             .Select(r => new
             {
-                Resolution = r, 
-                Width = int.Parse(r.Split(' ')[0]), 
+                Resolution = r,
+                Width = int.Parse(r.Split(' ')[0]),
                 Height = int.Parse(r.Split(' ')[1])
             })
             .OrderBy(r => r.Width)
@@ -79,7 +79,7 @@ public static class SystemDisplayManager
 
     public static Size GetPrimaryScreenResolution()
     {
-        using Graphics g = Graphics.FromHwnd(IntPtr.Zero);
+        using Graphics g = Graphics.FromHwnd(nint.Zero);
         return new Size((int)(Screen.PrimaryScreen!.Bounds.Width / (g.DpiX / 96)), (int)(Screen.PrimaryScreen.Bounds.Height / (g.DpiY / 96)));
     }
 }

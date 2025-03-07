@@ -10,8 +10,5 @@ public partial class LauncherChangelogPopup : PopupBody
         InitializeComponent();
     }
 
-    private void ButtonCancelClicked(object sender, RoutedEventArgs e)
-    {
-        Dismiss();
-    }
+    private void OnCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
 }

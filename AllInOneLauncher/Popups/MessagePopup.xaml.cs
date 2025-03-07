@@ -21,5 +21,5 @@ public partial class MessagePopup : PopupBody
                     : ((Application.Current.FindResource(x.Split("}")[0]).ToString() ?? "") + x.Split("}")[1])));
     }
 
-    private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
+    private void OnCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
 }

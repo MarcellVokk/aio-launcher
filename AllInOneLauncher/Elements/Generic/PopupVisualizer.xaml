@@ -7,41 +7,42 @@
              xmlns:generic="clr-namespace:AllInOneLauncher.Elements.Generic"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <generic:BorderSizeConverter x:Key="BorderSizeConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid x:Name="root" Opacity="0" d:Opacity="1" IsHitTestVisible="False">
         <Grid x:Name="background" Background="#CC0A0A0C" MouseUp="OnMouseUp"/>
-        <generic:SmoothScrollViewer>
+        <generic:SmoothScrollViewer x:Name="scrollViewer">
             <Grid x:Name="popupBody">
-                <Border x:Name="border_background" CornerRadius="6" Margin="-19.8" Background="Black">
+                <Border CornerRadius="5" SnapsToDevicePixels="True" Margin="-19" Background="Black">
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="50" Opacity="0.5" Color="Black" ShadowDepth="8" Direction="270"/>
                     </Border.Effect>
                 </Border>
-                <Border x:Name="navyStyle" CornerRadius="6" Margin="-20" Visibility="Visible">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                            <GradientStop Color="#FF232831" Offset="1"/>
-                            <GradientStop Color="#FF292D37"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                </Border>
-                <Grid x:Name="acrylicStyle" Margin="-20" Visibility="Collapsed">
-                    <Grid.OpacityMask>
-                        <VisualBrush>
-                            <VisualBrush.Visual>
-                                <Border Background="Black" SnapsToDevicePixels="True" CornerRadius="{Binding ElementName=border_background, Path=CornerRadius}" Width="{Binding ElementName=border_background, Path=ActualWidth}" Height="{Binding ElementName=border_background, Path=ActualHeight}"/>
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Grid.OpacityMask>
-                    <generic:Acrylic/>
-                </Grid>
-                <Border x:Name="content">
+                <Border CornerRadius="6" SnapsToDevicePixels="True">
                     <Border.OpacityMask>
                         <VisualBrush>
                             <VisualBrush.Visual>
-                                <Border Background="Black" SnapsToDevicePixels="True" CornerRadius="{Binding ElementName=border_background, Path=CornerRadius}" Width="{Binding ElementName=border_background, Path=ActualWidth}" Height="{Binding ElementName=border_background, Path=ActualHeight}"/>
+                                <Border Background="Black" SnapsToDevicePixels="True" CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Border}}"/>
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Border.OpacityMask>
+                    <Grid ClipToBounds="True" Margin="-20">
+                        <Border x:Name="navyStyle" CornerRadius="6" Visibility="Visible">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                    <GradientStop Color="#FF232831" Offset="1"/>
+                                    <GradientStop Color="#FF292D37"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Grid x:Name="acrylicStyle" Visibility="Collapsed">
+                            <generic:Acrylic ClipToBounds="True"/>
+                        </Grid>
+                        <Border x:Name="content" Margin="20"/>
+                    </Grid>
                 </Border>
             </Grid>
         </generic:SmoothScrollViewer>

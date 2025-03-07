@@ -1,36 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Threading;
 using System.Threading.Tasks;
 using AllInOneLauncher.Core.Utils;
-using AllInOneLauncher.Elements;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Popups;
 using BfmeFoundationProject.HttpInstruments;
-using Windows.Storage;
 
-namespace AllInOneLauncher.Core.Managers;
+namespace AllInOneLauncher.Core;
 
 public static class LauncherUpdateManager
 {
+    private const string LATEST_VERSION_SOURCE_URL = "https://bfmeladder.com/api/applications/versionHash?name=all-in-one-launcher&version=main";
+    private const string LATEST_BUILD_SOURCE_URL = "https://arena-files.bfmeladder.com/application-builds/all-in-one-launcher-main";
+
     public static string LauncherAppDirectory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BFME All In One Launcher");
 
     public static async void CheckForUpdates()
     {
-        #if DEBUG
+#if DEBUG
         return;
-        #endif
+#endif
 
         try
         {
-            using HttpClient client = new HttpClient() { Timeout = TimeSpan.FromSeconds(10) };
-
             if (!Directory.Exists(LauncherAppDirectory))
                 Directory.CreateDirectory(LauncherAppDirectory);
 
@@ -40,7 +33,7 @@ public static class LauncherUpdateManager
             try
             {
                 curentVersionHash = File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe")) ? await Task.Run(() => FileUtils.GetFileMd5Hash(Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"))) : "";
-                latestVersionHash = await client.GetStringAsync($"https://bfmeladder.com/api/applications/versionHash?name=all-in-one-launcher&version=main");
+                latestVersionHash = await HttpMarshal.GetString(url: LATEST_VERSION_SOURCE_URL, headers: []);
             }
             catch
             {
@@ -56,19 +49,33 @@ public static class LauncherUpdateManager
             }
             else if (File.Exists(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")))
             {
-                File.Move(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"), true);
-                RestartLauncher(afterUpdate: false);
+                try
+                {
+                    File.Move(Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"), true);
+                    RestartLauncher(afterUpdate: false);
+                }
+                catch
+                {
+                    RestartLauncher(afterUpdate: true);
+                }
+
                 return;
             }
 
             LauncherUpdatePopup updatePopup = new();
             PopupVisualizer.ShowPopup(updatePopup);
 
-            await HttpsInstruments.Download($"https://arena-files.bfmeladder.com/application-builds/all-in-one-launcher-main", Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"), (progress) => updatePopup.LoadProgress = progress);
+            await HttpMarshal.GetFile(
+            url: LATEST_BUILD_SOURCE_URL,
+            localPath: Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe"),
+            headers: [],
+            OnProgressUpdate: (progress) => updatePopup.Dispatcher.Invoke(() => updatePopup.LoadProgress = progress));
+
             RestartLauncher(afterUpdate: true);
         }
         catch (Exception ex)
         {
+            PopupVisualizer.HidePopup();
             PopupVisualizer.ShowPopup(new ErrorPopup(ex));
         }
     }
@@ -81,10 +88,10 @@ public static class LauncherUpdateManager
         ProcessStartInfo process = new()
         {
             UseShellExecute = true,
-            WorkingDirectory = LauncherUpdateManager.LauncherAppDirectory,
+            WorkingDirectory = LauncherAppDirectory,
             FileName = afterUpdate
-                ? Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher_new.exe")
-                : Path.Combine(LauncherUpdateManager.LauncherAppDirectory, "AllInOneLauncher.exe"),
+                ? Path.Combine(LauncherAppDirectory, "AllInOneLauncher_new.exe")
+                : Path.Combine(LauncherAppDirectory, "AllInOneLauncher.exe"),
             Verb = "runas"
         };
         Process.Start(process);

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,7 +7,6 @@ using AllInOneLauncher.Core.Utils;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Elements.Menues;
 using AllInOneLauncher.Popups;
-using BfmeFoundationProject.HttpInstruments;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
 
@@ -55,7 +51,7 @@ public partial class WorkshopTile : UserControl
         if (e.ChangedButton == MouseButton.Left)
         {
             //AddToLibrary();
-            PopupVisualizer.ShowPopup(new WorkshopEntryDetailPopup() { WorkshopEntry = WorkshopEntry });
+            PopupVisualizer.ShowPopup(new PackagePagePopup() { WorkshopEntry = WorkshopEntry });
         }
         else if (e.ChangedButton == MouseButton.Right)
         {
@@ -92,32 +88,8 @@ public partial class WorkshopTile : UserControl
         {
             var entry = await BfmeWorkshopDownloadManager.Download(WorkshopEntry.Guid);
 
-            if (entry.ExternalInstallerUrl() != "")
-            {
-                var externalInstallerPopup = new ExternalInstallerPopup();
-                PopupVisualizer.ShowPopup(externalInstallerPopup);
-
-                try
-                {
-                    string externalInstallerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BFME Workshop", "External", $"{string.Join("", entry.Name.Select(x => Path.GetInvalidPathChars().Contains(x) ? '_' : x))}-{entry.Guid}", "extinst.exe");
-                    if (!Directory.Exists(Path.GetDirectoryName(externalInstallerPath))) Directory.CreateDirectory(Path.GetDirectoryName(externalInstallerPath)!);
-                    await HttpsInstruments.Download(entry.ExternalInstallerUrl(), externalInstallerPath, (progress) => Dispatcher.Invoke(() => externalInstallerPopup.LoadProgress = progress));
-
-                    PopupVisualizer.ShowPopup(new ConfirmPopup("EXTERNAL INSTALLER", "Warning, you are about to run an unofficial third party installer! By clicking continue, you acknowledge that the Launcher does not guarantee the safety of this installer, and is not responsible for any problems or damages that might arrise from it's use."),
-                    OnPopupSubmited: (submitedData) => Process.Start(externalInstallerPath));
-                    externalInstallerPopup.Dismiss();
-                }
-                catch
-                {
-                    externalInstallerPopup.Dismiss();
-                    throw;
-                }
-            }
-            else
-            {
-                BfmeWorkshopLibraryManager.AddOrUpdate(entry);
-                IsInLibrary = true;
-            }
+            BfmeWorkshopLibraryManager.AddOrUpdate(entry);
+            IsInLibrary = true;
         }
         catch (Exception ex)
         {

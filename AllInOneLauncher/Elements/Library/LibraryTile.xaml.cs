@@ -9,15 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Elements.Generic;
 using AllInOneLauncher.Elements.Menues;
-using AllInOneLauncher.Popups;
 using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.BfmeKit.Data;
 using BfmeFoundationProject.WorkshopKit.Data;
 using BfmeFoundationProject.WorkshopKit.Logic;
-using Newtonsoft.Json.Linq;
-using Windows.Graphics.DirectX;
 using Settings = AllInOneLauncher.Properties.Settings;
 
 namespace AllInOneLauncher.Elements.Library;
@@ -78,8 +76,17 @@ public partial class LibraryTile : UserControl
         get => loadingBar.Visibility == Visibility.Visible;
         set
         {
-            loadingBar.Visibility = value ? Visibility.Visible : Visibility.Hidden;
-            tags.Visibility = value ? Visibility.Hidden : Visibility.Visible;
+            if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
+            {
+                loadingBar.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+                tags.Visibility = value ? Visibility.Hidden : Visibility.Visible;
+            }
+            else
+            {
+                loadingBar.Visibility = Visibility.Hidden;
+                tags.Visibility = Visibility.Visible;
+            }
+
             loadingIcon.IsLoading = value;
             isActiveIcon.Visibility = value ? Visibility.Collapsed : Visibility.Visible;
 
@@ -115,22 +122,20 @@ public partial class LibraryTile : UserControl
 
     private void OnSyncBegin(BfmeWorkshopEntry entry)
     {
-        if (entry.Game != WorkshopEntry.Game)
-            return;
-
         Dispatcher.Invoke(() =>
         {
-            IsHitTestVisible = false;
             if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
                 IsLoading = entry.Guid == WorkshopEntry.Guid;
+            else if (entry.Guid == WorkshopEntry.Guid)
+                IsLoading = true;
         });
     }
 
-    private void OnSyncUpdate(int progress)
+    private void OnSyncUpdate(int progress, string status)
     {
         Dispatcher.Invoke(() =>
         {
-            if (IsLoading)
+            if (IsLoading && (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4))
                 LoadProgress = progress;
         });
     }
@@ -141,6 +146,7 @@ public partial class LibraryTile : UserControl
         Dispatcher.Invoke(() =>
         {
             IsLoading = false;
+
             IsHitTestVisible = BfmeRegistryManager.IsInstalled(WorkshopEntry.Game);
             content.Opacity = IsHitTestVisible ? 1 : 0.5;
 
@@ -166,11 +172,23 @@ public partial class LibraryTile : UserControl
         });
     }
 
-    private void OnClicked(object sender, MouseButtonEventArgs e)
+    private async void OnClicked(object sender, MouseButtonEventArgs e)
     {
         if (e.ChangedButton == MouseButton.Left)
         {
-            Sync();
+            IsLoading = true;
+
+            if (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1 || WorkshopEntry.Type == 4)
+            {
+                await BfmeSyncManager.SyncPackage(WorkshopEntry.Guid);
+            }
+            else
+            {
+                if (isActiveIcon.Opacity == 0d)
+                    await BfmeSyncManager.EnableEnhancement(WorkshopEntry.Guid);
+                else
+                    await BfmeSyncManager.DisableEnhancement(WorkshopEntry.Guid);
+            }
         }
         else if (e.ChangedButton == MouseButton.Right)
         {
@@ -178,9 +196,9 @@ public partial class LibraryTile : UserControl
             {
                 MenuVisualizer.ShowMenu(
                     menu: [
-                        new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Switch to \"{WorkshopEntry.Name}\"" : "Sync again", true, clicked: () => Sync()),
+                        new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Switch to \"{WorkshopEntry.Name}\"" : "Sync again", true, clicked: async () => await BfmeSyncManager.SyncPackage(WorkshopEntry.Guid)),
                         new ContextMenuSeparatorItem(),
-                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopEntry.Metadata.Versions != null ? WorkshopEntry.Metadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: () => Sync(x)) as ContextMenuItem).ToList() : [], WorkshopEntry.Metadata.Versions != null && WorkshopEntry.Metadata.Versions.Count > 1),
+                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopEntry.Metadata.Versions != null ? WorkshopEntry.Metadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: async () => await BfmeSyncManager.SyncPackage($"{WorkshopEntry.Guid}:{x}")) as ContextMenuItem).ToList() : [], WorkshopEntry.Metadata.Versions != null && WorkshopEntry.Metadata.Versions.Count > 1),
                         new ContextMenuSeparatorItem(),
                         new ContextMenuButtonItem("Open keybinds folder", true, clicked: () =>
                         {
@@ -205,9 +223,9 @@ public partial class LibraryTile : UserControl
             {
                 MenuVisualizer.ShowMenu(
                     menu: [
-                        new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Enable \"{WorkshopEntry.Name}\"" : "Disable", true, clicked: () => Sync()),
+                        new ContextMenuButtonItem(isActiveIcon.Opacity == 0d ? $"Enable \"{WorkshopEntry.Name}\"" : "Disable", true, clicked: isActiveIcon.Opacity == 0d ? async () => await BfmeSyncManager.EnableEnhancement(WorkshopEntry.Guid) : async () => await BfmeSyncManager.DisableEnhancement(WorkshopEntry.Guid)),
                         new ContextMenuSeparatorItem(),
-                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopEntry.Metadata.Versions != null ? WorkshopEntry.Metadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: () => Sync(x)) as ContextMenuItem).ToList() : [], WorkshopEntry.Metadata.Versions != null && WorkshopEntry.Metadata.Versions.Count > 1),
+                        new ContextMenuSubmenuItem("Sync old version", submenu: WorkshopEntry.Metadata.Versions != null ? WorkshopEntry.Metadata.Versions.Where(x => x != WorkshopEntry.Version).Reverse<string>().Select(x => new ContextMenuButtonItem(x, true, clicked: async () => await BfmeSyncManager.EnableEnhancement($"{WorkshopEntry.Guid}:{x}")) as ContextMenuItem).ToList() : [], WorkshopEntry.Metadata.Versions != null && WorkshopEntry.Metadata.Versions.Count > 1),
                         new ContextMenuSeparatorItem(),
                         new ContextMenuButtonItem("Copy package GUID", true, clicked: () => Clipboard.SetDataObject(WorkshopEntry.Guid)),
                         new ContextMenuSeparatorItem(),
@@ -256,25 +274,6 @@ public partial class LibraryTile : UserControl
                 activeText.Visibility = Visibility.Collapsed;
                 isActiveIcon.Opacity = isActive ? 1d : 0d;
             });
-        }
-    }
-
-    private async void Sync(string version = "")
-    {
-        try
-        {
-            if (version == "")
-                await BfmeWorkshopSyncManager.Sync((await BfmeWorkshopLibraryManager.Get(WorkshopEntry.Guid)).Value);
-            else
-                await BfmeWorkshopSyncManager.Sync(await BfmeWorkshopDownloadManager.Download($"{WorkshopEntry.Guid}:{version}"));
-        }
-        catch (BfmeWorkshopEnhancementIncompatibleSyncException ex)
-        {
-            PopupVisualizer.ShowPopup(new MessagePopup("COMPATIBILITY ERROR", ex.Message));
-        }
-        catch (Exception ex)
-        {
-            PopupVisualizer.ShowPopup(new ErrorPopup(ex));
         }
     }
 

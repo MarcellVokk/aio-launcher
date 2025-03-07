@@ -5,8 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using AllInOneLauncher.Elements.Generic;
-using AllInOneLauncher.Popups;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Properties;
 using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.WorkshopKit.Data;
@@ -74,56 +73,55 @@ public partial class LibraryTileHorizontal : UserControl
         {
             _workshopEntry = value;
 
-            if (value == null)
-            {
-                activeEntry.Visibility = Visibility.Hidden;
-                activeEntryNullIndicator.Visibility = Visibility.Visible;
-                return;
-            }
-            else
+            if (value != null)
             {
                 activeEntry.Visibility = Visibility.Visible;
                 activeEntryNullIndicator.Visibility = Visibility.Hidden;
-            }
 
-            activeEntryIcon.Source = null;
-            activeEntryTitle.Text = value.Value.Name;
-            activeEntryVersion.Text = value.Value.Version;
-            activeEntryAuthor.Text = value.Value.Author;
-            IsUpdateAvailable = false;
-            UpdateType();
-            Task.Run(CheckForUpdates);
+                activeEntryIcon.Source = null;
+                activeEntryTitle.Text = value.Value.Name;
+                activeEntryVersion.Text = value.Value.Version;
+                activeEntryAuthor.Text = value.Value.Author;
+                IsUpdateAvailable = false;
+                UpdateType();
+                Task.Run(CheckForUpdates);
 
-            activeEntryLoading.Visibility = IsLoading ? Visibility.Visible : Visibility.Hidden;
-            activeEntryActive.Visibility = IsLoading ? Visibility.Hidden : Visibility.Visible;
-            activeEntryReloadButton.Visibility = IsLoading ? Visibility.Hidden : Visibility.Visible;
+                activeEntryLoading.Visibility = IsLoading ? Visibility.Visible : Visibility.Hidden;
+                activeEntryActive.Visibility = IsLoading ? Visibility.Hidden : Visibility.Visible;
+                activeEntryReloadButton.Visibility = IsLoading ? Visibility.Hidden : Visibility.Visible;
 
-            IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Value.Game);
-            activeEntry.Opacity = IsHitTestVisible ? 1 : 0.5;
+                IsHitTestVisible = BfmeRegistryManager.IsInstalled(value.Value.Game);
+                activeEntry.Opacity = IsHitTestVisible ? 1 : 0.5;
 
-            try
-            {
-                var artwork = new BitmapImage(new Uri(value.Value.ArtworkUrl));
-                if (!IsHitTestVisible)
+                try
                 {
-                    try
+                    var artwork = new BitmapImage(new Uri(value.Value.ArtworkUrl));
+                    if (!IsHitTestVisible)
                     {
-                        var grayscaleArtwork = new FormatConvertedBitmap();
-                        grayscaleArtwork.BeginInit();
-                        grayscaleArtwork.Source = artwork;
-                        grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
-                        grayscaleArtwork.EndInit();
+                        try
+                        {
+                            var grayscaleArtwork = new FormatConvertedBitmap();
+                            grayscaleArtwork.BeginInit();
+                            grayscaleArtwork.Source = artwork;
+                            grayscaleArtwork.DestinationFormat = PixelFormats.Gray32Float;
+                            grayscaleArtwork.EndInit();
 
-                        activeEntryIcon.Source = grayscaleArtwork;
+                            activeEntryIcon.Source = grayscaleArtwork;
+                        }
+                        catch { }
                     }
-                    catch { }
+                    else
+                    {
+                        activeEntryIcon.Source = artwork;
+                    }
                 }
-                else
-                {
-                    activeEntryIcon.Source = artwork;
-                }
+                catch { }
             }
-            catch { }
+            else
+            {
+                activeEntry.Visibility = Visibility.Hidden;
+                activeEntryNullIndicator.Visibility = Visibility.Visible;
+            }
         }
     }
 
@@ -157,51 +155,41 @@ public partial class LibraryTileHorizontal : UserControl
 
     private async void OnResyncActiveEntry(object sender, RoutedEventArgs e)
     {
-        try
+        if (WorkshopEntry is BfmeWorkshopEntry activeEntry)
         {
-            BfmeWorkshopEntry? activeEntry = await BfmeWorkshopManager.GetActivePatch(WorkshopEntry!.Value.Game);
-            if (activeEntry != null)
-            {
-                try { activeEntry = await BfmeWorkshopDownloadManager.Download(activeEntry!.Value.Guid); } catch { }
-                WorkshopEntry = activeEntry.Value;
-                IsUpdateAvailable = false;
-                IsLoading = false;
-                await BfmeWorkshopSyncManager.Sync(activeEntry.Value);
-            }
-        }
-        catch(Exception ex)
-        {
-            PopupVisualizer.ShowPopup(new ErrorPopup(ex));
+            IsUpdateAvailable = false;
+            IsLoading = true;
+            await BfmeSyncManager.SyncPackage(activeEntry.Guid, useFastFileCompare: false);
         }
     }
 
     private void UpdateType()
     {
-        if (WorkshopEntry == null)
-            return;
-
-        if (WorkshopEntry.Value.Type == 0)
-            entryType.Text = Application.Current.FindResource("LibraryTilePatchType").ToString()!;
-        else if (WorkshopEntry.Value.Type == 1)
-            entryType.Text = Application.Current.FindResource("LibraryTileModType").ToString()!;
-        else if (WorkshopEntry.Value.Type == 2)
-            entryType.Text = Application.Current.FindResource("LibraryTileEnhancementType").ToString()!;
-        else if (WorkshopEntry.Value.Type == 3)
-            entryType.Text = Application.Current.FindResource("LibraryTileMapPackType").ToString()!;
-        else if (WorkshopEntry.Value.Type == 4)
-            entryType.Text = Application.Current.FindResource("LibraryTileSnapshotType").ToString()!;
+        if (WorkshopEntry is BfmeWorkshopEntry activeEntry)
+        {
+            if (activeEntry.Type == 0)
+                entryType.Text = Application.Current.FindResource("LibraryTilePatchType").ToString()!;
+            else if (activeEntry.Type == 1)
+                entryType.Text = Application.Current.FindResource("LibraryTileModType").ToString()!;
+            else if (activeEntry.Type == 2)
+                entryType.Text = Application.Current.FindResource("LibraryTileEnhancementType").ToString()!;
+            else if (activeEntry.Type == 3)
+                entryType.Text = Application.Current.FindResource("LibraryTileMapPackType").ToString()!;
+            else if (activeEntry.Type == 4)
+                entryType.Text = Application.Current.FindResource("LibraryTileSnapshotType").ToString()!;
+        }
     }
 
     public async void CheckForUpdates()
     {
         try
         {
-            if (WorkshopEntry == null)
-                return;
-
-            var latest = await BfmeWorkshopQueryManager.Get(WorkshopEntry.Value.Guid);
-            if (WorkshopEntry != null && WorkshopEntry.Value.Guid == latest.Guid && WorkshopEntry.Value.Version != latest.Version)
-                Dispatcher.Invoke(() => IsUpdateAvailable = true);
+            if (WorkshopEntry is BfmeWorkshopEntry activeEntry)
+            {
+                var latest = await BfmeWorkshopQueryManager.Get(activeEntry.Guid);
+                if (activeEntry.Guid == latest.Guid && activeEntry.Version != latest.Version)
+                    Dispatcher.Invoke(() => IsUpdateAvailable = true);
+            }
         }
         catch { }
     }

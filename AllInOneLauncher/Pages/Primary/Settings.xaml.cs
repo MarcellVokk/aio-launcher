@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using AllInOneLauncher.Core.Managers;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Data;
 using BfmeFoundationProject.BfmeKit;
 

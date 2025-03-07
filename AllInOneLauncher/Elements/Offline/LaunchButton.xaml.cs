@@ -21,16 +21,16 @@ public partial class LaunchButton : UserControl
     private void OnSyncBegin(BfmeFoundationProject.WorkshopKit.Data.BfmeWorkshopEntry entry)
     {
         IsLoading = true;
-        Dispatcher.Invoke(() =>
-        {
-            LoadStatus = $"Switching to {entry.Name}";
-            ButtonState = _buttonState;
-        });
+        Dispatcher.Invoke(() => ButtonState = _buttonState);
     }
 
-    private void OnSyncUpdate(int progress)
+    private void OnSyncUpdate(int progress, string status)
     {
-        Dispatcher.Invoke(() => LoadProgress = progress);
+        Dispatcher.Invoke(() =>
+        {
+            LoadProgress = progress;
+            LoadStatus = status;
+        });
     }
 
     private void OnSyncEnd()
@@ -53,7 +53,6 @@ public partial class LaunchButton : UserControl
             if (IsLoading)
             {
                 button.Content = "";
-                LoadStatus = Application.Current.FindResource("GenericLoading").ToString()!;
                 button.Opacity = 0.4d;
                 button.IsHitTestVisible = false;
                 LoadProgress = 0;

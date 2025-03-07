@@ -7,11 +7,9 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Configuration;
 using WindowsShortcutFactory;
-using AllInOneLauncher.Data;
-using AllInOneLauncher.Core.Managers;
-using BfmeFoundationProject.BfmeKit.Data;
 using Microsoft.Win32;
 using System.Diagnostics;
+using AllInOneLauncher.Core;
 
 namespace AllInOneLauncher
 {

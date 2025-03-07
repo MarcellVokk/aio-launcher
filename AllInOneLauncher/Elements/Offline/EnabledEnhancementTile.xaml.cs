@@ -3,12 +3,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using AllInOneLauncher.Elements.Generic;
-using AllInOneLauncher.Popups;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Properties;
 using BfmeFoundationProject.BfmeKit;
 using BfmeFoundationProject.WorkshopKit.Data;
-using BfmeFoundationProject.WorkshopKit.Logic;
 
 namespace AllInOneLauncher.Elements.Offline;
 
@@ -71,15 +69,8 @@ public partial class EnabledEnhancementTile : UserControl
             entryType.Text = Application.Current.FindResource("LibraryTileMapPackType").ToString()!;
     }
 
-    private async void OnDeactivateClicked(object sender, RoutedEventArgs e)
+    private async void OnDisableClicked(object sender, RoutedEventArgs e)
     {
-        try
-        {
-            await BfmeWorkshopSyncManager.Sync(WorkshopEntry);
-        }
-        catch(Exception ex)
-        {
-            PopupVisualizer.ShowPopup(new ErrorPopup(ex));
-        }
+        await BfmeSyncManager.DisableEnhancement(WorkshopEntry.Guid);
     }
 }

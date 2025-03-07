@@ -17,8 +17,8 @@ public partial class OfflineLibrary : UserControl
     public OfflineLibrary()
     {
         InitializeComponent();
-        filter.Options = ["{LibraryPageFilterPatchesAndMods}", "{LibraryPageFilterEnhancements}", "{LibraryPageFilterSnapshots}", "{LibraryPageFilterEverything}"];
-        filter.Selected = 3;
+        filter.Options = ["{LibraryPageFilterPatchesAndMods}", "{LibraryPageFilterEnhancements}", "{LibraryPageFilterMapPacks}", "{LibraryPageFilterSnapshots}", "{LibraryPageFilterEverything}"];
+        filter.Selected = 4;
     }
 
     private int Game = 0;
@@ -48,11 +48,11 @@ public partial class OfflineLibrary : UserControl
     private async void UpdateQuery()
     {
         libraryTiles.Children.Clear();
-        List<BfmeWorkshopEntryPreview> entries = await BfmeWorkshopLibraryManager.Query(game: Game, keyword: search.Text, type: new []{ -2, -3, 4, -1 }[filter.Selected]);
+        List<BfmeWorkshopEntryPreview> entries = await BfmeWorkshopLibraryManager.Query(game: Game, keyword: search.Text, type: new []{ -2, 2, 3, 4, -1 }[filter.Selected]);
         libraryTiles.Children.Clear();
         foreach (BfmeWorkshopEntryPreview entry in entries)
             libraryTiles.Children.Add(new LibraryTile() { WorkshopEntry = entry, Margin = new Thickness(0, 0, 10, 10) });
-        if (filter.Selected != 2) libraryTiles.Children.Add(emptyLibraryTile);
+        if (filter.Selected != 3) libraryTiles.Children.Add(emptyLibraryTile);
     }
 
     private async void OnCreateSnapshotClicked(object sender, RoutedEventArgs e)

@@ -1,24 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AllInOneLauncher.Elements
 {
     /// <summary>
-    /// Interaction logic for EntryPageChangelogItem.xaml
+    /// Interaction logic for PackagePageChangelogItem.xaml
     /// </summary>
-    public partial class EntryPageChangelogItem : UserControl
+    public partial class PackagePageChangelogItem : UserControl
     {
         const int SECOND = 1;
         const int MINUTE = 60 * SECOND;
@@ -26,7 +14,7 @@ namespace AllInOneLauncher.Elements
         const int DAY = 24 * HOUR;
         const int MONTH = 30 * DAY;
 
-        public EntryPageChangelogItem()
+        public PackagePageChangelogItem()
         {
             InitializeComponent();
         }

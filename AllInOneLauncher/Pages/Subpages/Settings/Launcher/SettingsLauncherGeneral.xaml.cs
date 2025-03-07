@@ -1,10 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using AllInOneLauncher.Core.Managers;
-using AllInOneLauncher.Data;
-using WindowsShortcutFactory;
+using AllInOneLauncher.Core;
 
 namespace AllInOneLauncher.Pages.Subpages.Settings.Launcher;
 

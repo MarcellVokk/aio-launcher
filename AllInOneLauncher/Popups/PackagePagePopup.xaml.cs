@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using AllInOneLauncher.Core.Utils;
 using System.Windows.Media.Imaging;
@@ -9,20 +8,14 @@ using BfmeFoundationProject.WorkshopKit.Logic;
 using BfmeFoundationProject.BfmeKit;
 using System.Globalization;
 using AllInOneLauncher.Elements;
-using Newtonsoft.Json.Linq;
-using BfmeFoundationProject.HttpInstruments;
-using System.Diagnostics;
-using System.IO;
-using AllInOneLauncher.Core.Managers;
-using AllInOneLauncher.Data;
 
 namespace AllInOneLauncher.Popups;
 
-public partial class WorkshopEntryDetailPopup : PopupBody
+public partial class PackagePagePopup : PopupBody
 {
     public override ColorStyle ColorStyle => ColorStyle.Acrylic;
 
-    public WorkshopEntryDetailPopup()
+    public PackagePagePopup()
     {
         InitializeComponent();
     }
@@ -82,7 +75,7 @@ public partial class WorkshopEntryDetailPopup : PopupBody
                 size_number.Text = Math.Round(value.Size / 1024d, 2).ToString(CultureInfo.InvariantCulture).Replace(".", ",");
             }
 
-            changelog.Children.Add(new EntryPageChangelogItem() { Version = value.Version, CreationTime = value.CreationTime, Text = value.Changelog });
+            changelog.Children.Add(new PackagePageChangelogItem() { Version = value.Version, CreationTime = value.CreationTime, Text = value.Changelog });
         }
     }
 
@@ -100,14 +93,13 @@ public partial class WorkshopEntryDetailPopup : PopupBody
 
     public bool IsInLibrary
     {
-        get => mainButtonPlayText.Visibility == Visibility.Visible;
+        get => mainButtonAlreadyInLibraryText.Visibility == Visibility.Visible;
         set
         {
             mainButtonAddToLibraryText.Visibility = value ? Visibility.Hidden : Visibility.Visible;
-            mainButtonPlayText.Visibility = (value && (WorkshopEntry.Type == 0 || WorkshopEntry.Type == 1)) ? Visibility.Visible : Visibility.Hidden;
-            mainButtonAlreadyInLibraryText.Visibility = (value && WorkshopEntry.Type != 0 && WorkshopEntry.Type != 1) ? Visibility.Visible : Visibility.Hidden;
-            mainButton.Opacity = mainButtonAlreadyInLibraryText.Visibility == Visibility.Visible ? 0.4 : 1;
-            mainButton.IsHitTestVisible = mainButtonAlreadyInLibraryText.Visibility == Visibility.Visible ? false : true;
+            mainButtonAlreadyInLibraryText.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+            //mainButton.Opacity = value ? 0.4 : 1;
+            mainButton.IsHitTestVisible = value ? false : true;
         }
     }
 
@@ -119,26 +111,8 @@ public partial class WorkshopEntryDetailPopup : PopupBody
 
             var entry = await BfmeWorkshopDownloadManager.Download(WorkshopEntry.Guid);
 
-            if (entry.ExternalInstallerUrl() != "")
-            {
-                try
-                {
-                    string externalInstallerPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BFME Workshop", "External", $"{string.Join("", entry.Name.Select(x => Path.GetInvalidPathChars().Contains(x) ? '_' : x))}-{entry.Guid}", "extinst.exe");
-                    if (!Directory.Exists(Path.GetDirectoryName(externalInstallerPath))) Directory.CreateDirectory(Path.GetDirectoryName(externalInstallerPath)!);
-                    await HttpsInstruments.Download(entry.ExternalInstallerUrl(), externalInstallerPath);
-
-                    Process.Start(externalInstallerPath);
-                }
-                catch
-                {
-                    throw;
-                }
-            }
-            else
-            {
-                BfmeWorkshopLibraryManager.AddOrUpdate(entry);
-                IsInLibrary = true;
-            }
+            BfmeWorkshopLibraryManager.AddOrUpdate(entry);
+            IsInLibrary = true;
 
             IsLoading = false;
         }
@@ -151,39 +125,13 @@ public partial class WorkshopEntryDetailPopup : PopupBody
         IsLoading = false;
     }
 
-    private async void Launch()
-    {
-        IsLoading = true;
-        button_close.IsHitTestVisible = false;
-
-        try
-        {
-            BfmeWorkshopEntry? activeEntry = await BfmeWorkshopManager.GetActivePatch(WorkshopEntry.Game);
-            if (activeEntry == null || activeEntry.Value.Guid != WorkshopEntry.Guid)
-                await BfmeWorkshopSyncManager.Sync(await BfmeWorkshopDownloadManager.Download(WorkshopEntry.Guid));
-
-            BfmeLaunchManager.LaunchGame((BfmeGame)WorkshopEntry.Game);
-        }
-        catch (Exception ex)
-        {
-            PopupVisualizer.ShowPopup(new ErrorPopup(ex));
-            Dismiss();
-        }
-
-        IsLoading = false;
-        button_close.IsHitTestVisible = true;
-    }
-
     private void OnMainButtonClicked(object sender, RoutedEventArgs e)
     {
         if (IsLoading)
             return;
 
-        if (IsInLibrary)
-            Launch();
-        else
-            AddToLibrary();
+        AddToLibrary();
     }
 
-    private void OnDismiss(object sender, RoutedEventArgs e) => Dismiss();
+    private void OnDismissClicked(object sender, RoutedEventArgs e) => Dismiss();
 }

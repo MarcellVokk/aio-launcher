@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using AllInOneLauncher.Core.Managers;
+using AllInOneLauncher.Core;
 using AllInOneLauncher.Elements.Generic;
 
 namespace AllInOneLauncher.Popups;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using AllInOneLauncher.Elements.Generic;
 
 namespace AllInOneLauncher.Popups;
@@ -14,15 +13,12 @@ public partial class ErrorPopup : PopupBody
         stackTrace.Text = $"{exception.Message}\n{exception.StackTrace}";
     }
 
-    private void ButtonCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
+    private void OnCancelClicked(object sender, RoutedEventArgs e) => Dismiss();
 
-    private void OnCopyErrorClicked(object sender, RoutedEventArgs e)
+    private void OnCopyError(object sender, RoutedEventArgs e)
     {
         Clipboard.SetDataObject($"{title.Text}\n{stackTrace.Text}");
 
-        if (sender is Button button)
-        {
-            button.Content = Application.Current.FindResource("ErrorPopupCopyErrorClicked").ToString()!;
-        }
+        MenuVisualizer.ShowMenu(Application.Current.FindResource("ErrorPopupErrorCopied").ToString() ?? "", copyError, MenuSide.Bottom, colorStyle: ColorStyle.Navy, lifetime: 3000);
     }
 }

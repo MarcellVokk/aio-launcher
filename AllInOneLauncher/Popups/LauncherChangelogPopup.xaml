@@ -20,7 +20,7 @@
         <Rectangle Grid.Row="1" Fill="White" Opacity="0.2" Margin="0,10,0,0" VerticalAlignment="Top" Height="1"/>
         <TextBlock Grid.Row="2" Text="This update fixes several critical patch switching bugs, and also contains some UI and performance improvements!" Foreground="White" TextWrapping="Wrap" FontSize="20"/>
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Grid.Column="1" Grid.Row="2" Content="Okay" VerticalAlignment="Center" Click="ButtonCancelClicked" Width="150"/>
+            <Button Grid.Column="1" Grid.Row="2" Content="{DynamicResource GenericClose}" VerticalAlignment="Center" Click="OnCancelClicked" Width="150"/>
         </StackPanel>
     </Grid>
 </generic:PopupBody>
