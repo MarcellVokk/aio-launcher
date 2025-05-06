@@ -1,11 +1,6 @@
 # All in One Launcher
 
-*Developed originaly by Ravo92*
-
-#### This project is part of the Bfme Foundation Project!
-<a href="https://github.com/MarcellVokk/bfme-foundation-project">
-    <img src="https://img.shields.io/badge/GitHub-Foundation Project-lime"/>
-</a>
+# WE'VE MOVED! YOU CAN FIND THE LATEST SOURCE CODE AT https://github.com/MarcellVokk/BfmeFoundationProject
 
 ## Welcome
 Welcome to the official github repository of the All in One Bfme Launcher!
